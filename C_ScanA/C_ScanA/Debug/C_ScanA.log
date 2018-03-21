@@ -1,0 +1,4 @@
+﻿  C_ScanA.c
+c:\users\david gurevich\dropbox\work\yura program\c_scana\c_scana\cbw.h(531): warning C4005: 'HIGH_LEVEL': macro redefinition
+  c:\program files (x86)\windows kits\10\include\10.0.16299.0\shared\kernelspecs.h(55): note: see previous definition of 'HIGH_LEVEL'
+  C_ScanA.vcxproj -> C:\Users\David Gurevich\Dropbox\Work\Yura Program\C_ScanA\Debug\C_ScanA.exe
