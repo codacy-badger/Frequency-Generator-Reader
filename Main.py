@@ -36,7 +36,7 @@ while True:
         SECONDS = int(input("How many seconds to run the scan?: \n"))
         break
     except:
-        print("You did not enter a vslid time")
+        print("You did not enter a valid time")
 
 while True:
     try:
@@ -45,49 +45,24 @@ while True:
     except:
         print("You did not enter a valid frequency")
 
-while True:
-    try:
-        SMOOTH_BOOL = str(input("Smooth output? (True/False): \n")).lower()
-        if SMOOTH_BOOL == "true" or "t":
-            SMOOTH_BOOL = True
-            break
-    except:
-        print("You did not enter a valid input.")
-
-if SMOOTH_BOOL:
-    SMOOTH_DEGREE = int(input("To what degree should the output be smoothed?: \n"))
-
 COUNT = SCAN_RATE * SECONDS
 
 # ---------------- FUNCTION READER ------------------
 
-WAVE = []
 
 if __name__ == '__main__':
-    try:
-        function_generator = hantek.HantekDDS()
-        if not function_generator.connect():
-            print("Failed to Connect to Hantek DDS.")
-            sys.exit()
-        function_generator.drive_periodic(VOLTAGE, FREQUENCY)
-
-        f = open('config.txt', 'w')
-        f.write(str(COUNT) + "\n" + str(SCAN_RATE))
-        f.close()
-
-        DAQ.scan(WAVE)
-
-        if SMOOTH_BOOL:
-            WAVE = DAQ.smoothListGaussian(WAVE, SMOOTH_DEGREE)
-
-        f = open('Final_Output.txt', 'w')
-        for element in WAVE:
-            f.write(str(element))
-            f.write("\n")
-        f.close()
-        show_data(WAVE)
+    function_generator = hantek.HantekDDS()
+    if not function_generator.connect():
+        print("Failed to Connect to Hantek DDS.")
         sys.exit()
+    function_generator.drive_periodic(VOLTAGE, FREQUENCY)
 
-    except:
-        print("Program Failed!")
-        sys.exit()
+    f = open('config.txt', 'w')
+    f.write(str(COUNT) + "\n" + str(SCAN_RATE))
+    f.close()
+
+    DAQ.scan()
+    f = open("Final Output.txt", "r")
+    to_graph = [float(i) for i in f.readlines()]
+    show_data(to_graph)
+    sys.exit()

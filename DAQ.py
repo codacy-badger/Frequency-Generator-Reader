@@ -36,8 +36,6 @@ def smoothListGaussian(list, degree=5):
 
         weightGauss.append(gauss)
 
-        progress(i, window)
-
     weight = numpy.array(weightGauss) * weight
 
     smoothed = [0.0] * (len(list) - window)
@@ -59,27 +57,22 @@ def progress(count, total, status=''):
     sys.stdout.flush()
 
 
-# def scan(wave, count):
-#     for i in range(count):
-#         try:
-#             value = ul.a_in(board_num, channel, ai_range)
-#             eng_units_value = ul.to_eng_units(board_num, ai_range, value)
-#             wave.append(eng_units_value)
-#         except ULError as e:
-#             print("A UL error has occured. Code: ", str(e.errorcode), " Message: ", e.message)
-
-def scan(wave):
+def scan():
     os.system("C_ScanA.exe")
 
     f = open("output.txt", "r")
     lines = f.readlines()
+    lines = [int(x) for x in lines]
     f.close()
+    print("Successfully Read Output.txt File.\n")
 
-    f = open("output.txt", "w")
-    f.writelines([item for item in lines[:-1]])
-    f.close()
+    lines.pop()
+    # IF YOU WOULD LIKE TO SMOOTH THE DATA, UNCOMMENT THE FOLLOWING LINE
+    # lines = smoothListGaussian(lines, 10)
 
-    f = open("output.txt", "r")
-    for line in f.readlines():
-        wave.append(ul.to_eng_units(board_num, ai_range, int(line)))
-    f.close()
+    f_write = open("Final Output.txt", "w")
+    for x in range(len(lines)):
+        f_write.write(str((ul.to_eng_units(board_num, ai_range, int(lines[x])))))
+        f_write.write("\n")
+        progress(x, len(lines))
+    f_write.close()
