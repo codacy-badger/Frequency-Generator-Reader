@@ -1,11 +1,12 @@
-####################################################
-# File Name: DAQ.py                                #
-# Project: CURRENTLY UNNAMED                       #
-# Company: Research in Flows, Inc                  #
-# Author: David Gurevich                           #
-# Required Modules:                                #
-#       mcculw                                     #
-####################################################
+#############################################################
+# File Name: DAQ.py                                         #
+# Project: CURRENTLY UNNAMED                                #
+# Company: Research in Flows, Inc                           #
+# Author: David Gurevich                                    #
+# Copyright (c) 2018, David Gurevich. All rights reserved   #
+# Required Modules:                                         #
+#       mcculw                                              #
+#############################################################
 
 import os
 import sys

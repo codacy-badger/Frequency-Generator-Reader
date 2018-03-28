@@ -1,13 +1,14 @@
-####################################################
-# File Name: Main.py                               #
-# Project: CURRENTLY UNNAMED                       #
-# Company: Research in Flows, Inc                  #
-# Author: David Gurevich                           #
-# Required Modules:                                #
-#       DAQ.py                                     #
-#       Functions.py                                #
-#       hantekdds/htdds_wrapper.py                 #
-####################################################
+#############################################################
+# File Name: Main.py                                        #
+# Project: CURRENTLY UNNAMED                                #
+# Company: Research in Flows, Inc                           #
+# Author: David Gurevich                                    #
+# Copyright (c) 2018, David Gurevich. All rights reserved   #
+# Required Modules:                                         #
+#       DAQ.py                                              #
+#       Functions.py                                        #
+#       hantekdds/htdds_wrapper.py                          #
+#############################################################
 
 import sys
 

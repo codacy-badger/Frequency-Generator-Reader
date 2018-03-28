@@ -1,11 +1,13 @@
-####################################################
-# File Name: Functions.py                           #
-# Project: CURRENTLY UNNAMED                       #
-# Company: Research in Flows, Inc                  #
-# Author: David Gurevich                           #
-# Required Modules:                                #
-#       MatPlotLib                                 #
-####################################################
+#############################################################
+# File Name: Functions.py                                   #
+# Project: CURRENTLY UNNAMED                                #
+# Company: Research in Flows, Inc                           #
+# Author: David Gurevich                                    #
+# Copyright (c) 2018, David Gurevich. All rights reserved   #
+# Required Modules:                                         #
+#       DAQ.py                                              #
+#       matplotlib                                          #
+#############################################################
 
 from matplotlib import pyplot as pl
 
