@@ -23,15 +23,20 @@
 #include <conio.h>
 #include "cbw.h"
 
-void scan_a_in(long count, long rate) {
+void scan_a_in(long count, long rate, int scanType)
+{
 	int BoardNum = 1;
 	int ULStat = 0;
 	int LowChan = 0;
 	int HighChan = 1;
-	int Gain = BIP2VOLTS;
+	int Gain = scanType; // Change this when changing voltage range of input
 	long Count = count;
 	long Rate = rate;
-	
+
+	printf("\nGain: %d\n", Gain);
+	printf("Count: %d\n", Count);
+	printf("Rate: %d\n", Rate);
+
 	HANDLE MemHandle = 0;
 	WORD *ADData = NULL;
 	DWORD *ADData32 = NULL;
@@ -50,37 +55,43 @@ void scan_a_in(long count, long rate) {
 	if (ADRes > 16)
 		HighResAD = TRUE;
 
-	if (HighResAD) {
+	if (HighResAD)
+	{
 		MemHandle = cbWinBufAlloc32(Count);
 		ADData32 = (DWORD*)MemHandle;
-		}
-	else {
+	}
+
+	else
+	{
 		MemHandle = cbWinBufAlloc(Count);
 		ADData = (WORD*)MemHandle;
-		}
+	}
 
-	if (!MemHandle) {
+	if (!MemHandle)
+	{
 		printf("\nOut Of Memory\n");
 		exit(1);
-		}
+	}
 
+	// BLOCKIO DETERMINES HOW TO DELIVER DATA. THIS IS VERY EXPERIMENTAL.
 	Options = CONVERTDATA;
 	ULStat = cbAInScan(BoardNum, LowChan, HighChan, Count, &Rate, Gain, MemHandle, Options);
+	printf("Scan Complete! \n");
 
 	fp = fopen("output.txt", "w+");
 
-	for (int i = 0; i < Count / 2; i++) {
+	for (int i = 0; i < Count / 2; i++)
+	{
 		fprintf(fp, "%4u\n", ADData[i * 2]);
-		// printf("%4u", ADData[i*2]);
-		// printf("\n");
 	}
-	printf("Complete!\n");
+	printf("Write Complete!\n");
 	fclose(fp);
 
 	cbWinBufFree(MemHandle);
 }
 
-int main() {
+int main()
+{
 	FILE * fp;
 	fp = fopen("config.txt", "r");
 
@@ -90,13 +101,19 @@ int main() {
 	char rate_count[150];
 	fgets(rate_count, 150, fp);
 
+	char scan_type[5];
+	fgets(scan_type, 5, fp);
+
 	fclose(fp);
 
 	int count;
 	int rate;
+	int type;
+
 	sscanf(char_count, "%d", &count);
 	sscanf(rate_count, "%d", &rate);
+	sscanf(scan_type, "%d", &type);
 
-	scan_a_in(count, rate);
+	scan_a_in(count, rate, type);
 	return 0;
 }
