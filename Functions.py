@@ -15,11 +15,29 @@ import DAQ
 
 
 def show_data(wave):
+    '''
+    Use PyPlot from MatPlotLib to plot the wave, and then display it in a TKinter window.                             \n
+    :param wave: List containing all voltage values of scanned wave.
+    :type wave: list
+    :return: None
+    '''
     pl.plot(wave)
     pl.show()
 
 
 def get_input():
+    '''
+    Prompts the user with multiple messages, each to enter a certain element of information, each prompt is
+    "idiot proof" (Hopefully).                                                                                        \n
+
+    :FREQUENCY: The frequency the generator should generate the function at.
+    :VOLTAGE: The voltage the generator should generate the function at.
+    :SECONDS: How long to scan the wave for (in seconds).
+    :SCAN_RATE: The frequency the DAQ should probe the analog value of the input at.
+    :SCAN_OPTION: The MCCULW range used to determine the expected range of the analog input. (ex: BIP5VOLTS)
+
+    :return: FREQUENCY, VOLTAGE, SECONDS, SCAN_RATE, SCAN_OPTION
+    '''
     while True:
         try:
             FREQUENCY = float(input("Input Frequency (Hz): \n-->"))

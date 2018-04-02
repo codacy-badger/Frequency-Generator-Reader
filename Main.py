@@ -16,14 +16,14 @@ import DAQ
 from Functions import show_data, get_input
 from hantekdds import htdds_wrapper as hantek
 
-FREQUENCY, VOLTAGE, SECONDS, SCAN_RATE, SCAN_OPTION = get_input()
-COUNT = SCAN_RATE * SECONDS
-
 if __name__ == '__main__':
     function_generator = hantek.HantekDDS()
     if not function_generator.connect():
         print("Failed to Connect to HantekDDS.")
         sys.exit()
+
+    FREQUENCY, VOLTAGE, SECONDS, SCAN_RATE, SCAN_OPTION = get_input()
+    COUNT = SCAN_RATE * SECONDS
     function_generator.drive_periodic(VOLTAGE, FREQUENCY)
 
     f = open('config.txt', 'w')

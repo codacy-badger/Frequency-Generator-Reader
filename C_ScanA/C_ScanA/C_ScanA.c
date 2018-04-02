@@ -31,14 +31,10 @@ void scan_a_in(long count, long rate, int scanType)
 	int BoardNum = 1;
 	int ULStat = 0;
 	int LowChan = 0;
-	int HighChan = 1;
-	int Gain = scanType; // Change this when changing voltage range of input
+	int HighChan = 0;
+	int Gain = scanType;
 	long Count = count;
 	long Rate = rate;
-
-	printf("\nGain: %d\n", Gain);
-	printf("Count: %d\n", Count);
-	printf("Rate: %d\n", Rate);
 
 	HANDLE MemHandle = 0;
 	WORD *ADData = NULL;
@@ -55,8 +51,10 @@ void scan_a_in(long count, long rate, int scanType)
 	cbErrHandling(PRINTALL, DONTSTOP);
 	cbGetConfig(BOARDINFO, BoardNum, 0, BIADRES, &ADRes);
 
-	if (ADRes > 16)
+	if (ADRes > 16) 
+	{
 		HighResAD = TRUE;
+	}
 
 	if (HighResAD)
 	{
@@ -76,16 +74,18 @@ void scan_a_in(long count, long rate, int scanType)
 		exit(1);
 	}
 
-	// BLOCKIO DETERMINES HOW TO DELIVER DATA. THIS IS VERY EXPERIMENTAL.
-	Options = CONVERTDATA;
+	Options = CONVERTDATA + BURSTIO;
+
 	ULStat = cbAInScan(BoardNum, LowChan, HighChan, Count, &Rate, Gain, MemHandle, Options);
+
 	printf("Scan Complete! \n");
+	printf("&Rate: %d\nRate: %d \n", &Rate, Rate);
 
 	fp = fopen("output.txt", "w+");
 
-	for (int i = 0; i < Count / 2; i++)
+	for (int i = 0; i <= Count; i++)
 	{
-		fprintf(fp, "%4u\n", ADData[i * 2]);
+		fprintf(fp, "%4u\n", ADData[i]);
 	}
 	printf("Write Complete!\n");
 	fclose(fp);
