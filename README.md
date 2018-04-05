@@ -28,4 +28,4 @@ The output constists of 2 files and 1 window.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the Attribution-NonCommercial-NoDerivs 3.0 Unported (CC BY-NC-ND 3.0) - see the [LICENSE.md](LICENSE.md) file for details
