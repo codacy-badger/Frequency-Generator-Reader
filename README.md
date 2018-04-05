@@ -28,4 +28,6 @@ The output constists of 2 files and 1 window.
 
 ## License
 
-This project is licensed under the Attribution-NonCommercial-NoDerivs 3.0 Unported (CC BY-NC-ND 3.0) - see the [LICENSE.md](LICENSE.md) file for details
+This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/3.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+![image](https://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png)
