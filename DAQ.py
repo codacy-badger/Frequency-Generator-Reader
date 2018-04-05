@@ -1,12 +1,18 @@
-#############################################################
-# File Name: DAQ.py                                         #
-# Project: CURRENTLY UNNAMED                                #
-# Company: Research in Flows, Inc                           #
-# Author: David Gurevich                                    #
-# Copyright (c) 2018, David Gurevich. All rights reserved   #
-# Required Modules:                                         #
-#       mcculw                                              #
-#############################################################
+"""
+ **File Name:** DAQ .py                                                                                               \n
+ **Project:** CURRENTLY UNNAMED                                                                                       \n
+ **Company:** Research in Flows, Inc                                                                                  \n
+ **Author:** David Gurevich                                                                                           \n
+ **Copyright (c) 2018, David Gurevich. All rights reserved**                                                          \n
+ **Required Modules:**
+       * mcculw/ul.py                                                                                                 \n
+       * mcculw/enums.py                                                                                              \n
+       * hantekdds/htdds_wrapper.py                                                                                   \n
+
+This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License.
+To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/3.0/ or send a letter to
+Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+"""
 
 import os
 import sys
@@ -27,7 +33,7 @@ SCAN_OPTIONS = {
 
 
 def progress(count, total, duration):
-    '''
+    """
     Print Progress bar and estimated time until completion.                                                           \n
     :param count: Current Number out of the Total to display (ex: 36 (out of 100))
     :type count: int
@@ -36,7 +42,7 @@ def progress(count, total, duration):
     :param duration: The duration (in milliseconds) that the process requires
     :type duration: int
     :return: None
-    '''
+    """
     bar_len = 60
     filled_len = int(round(bar_len * count / float(total)))
 
@@ -50,7 +56,7 @@ def progress(count, total, duration):
 
 
 def scan(scan_option):
-    '''
+    """
     Execute "C_ScanA.exe", which produces the "Output.txt" file, with raw analog values.                             \n
     Open "output.txt", in read mode, and create a list (lines) which consists of each line of the file.              \n
     Convert each element of the list "lines" from str to int.                                                        \n
@@ -65,7 +71,7 @@ def scan(scan_option):
     :param scan_option: The MCCULW analog input range, for example BIP5VOLTS
     :type scan_option: str
     :return: None
-    '''
+    """
     os.system("C_ScanA.exe")
 
     f = open("output.txt", "r")

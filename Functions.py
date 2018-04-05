@@ -1,13 +1,16 @@
-#############################################################
-# File Name: Functions.py                                   #
-# Project: CURRENTLY UNNAMED                                #
-# Company: Research in Flows, Inc                           #
-# Author: David Gurevich                                    #
-# Copyright (c) 2018, David Gurevich. All rights reserved   #
-# Required Modules:                                         #
-#       DAQ.py                                              #
-#       matplotlib                                          #
-#############################################################
+"""
+ **File Name:** Functions.py                                                                                          \n
+ **Project:** CURRENTLY UNNAMED                                                                                       \n
+ **Company:** Research in Flows, Inc                                                                                  \n
+ **Author:** David Gurevich                                                                                           \n
+ **Required Modules:**
+       * DAQ.py                                                                                                       \n
+       * matplotlib                                                                                                   \n
+
+This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License.
+To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/3.0/ or send a letter to
+Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+"""
 
 from matplotlib import pyplot as pl
 
@@ -15,18 +18,18 @@ import DAQ
 
 
 def show_data(wave):
-    '''
+    """
     Use PyPlot from MatPlotLib to plot the wave, and then display it in a TKinter window.                             \n
     :param wave: List containing all voltage values of scanned wave.
     :type wave: list
     :return: None
-    '''
+    """
     pl.plot(wave)
     pl.show()
 
 
 def get_input():
-    '''
+    """
     Prompts the user with multiple messages, each to enter a certain element of information, each prompt is
     "idiot proof" (Hopefully).                                                                                        \n
 
@@ -37,43 +40,44 @@ def get_input():
     :SCAN_OPTION: The MCCULW range used to determine the expected range of the analog input. (ex: BIP5VOLTS)
 
     :return: FREQUENCY, VOLTAGE, SECONDS, SCAN_RATE, SCAN_OPTION
-    '''
+    :rtype: tuple
+    """
     while True:
         try:
-            FREQUENCY = float(input("Input Frequency (Hz): \n-->"))
+            frequency = float(input("Input Frequency (Hz): \n-->"))
             break
-        except:
+        except TypeError:
             print("You did not enter a valid frequency!")
 
     while True:
         try:
-            VOLTAGE = float(input("Input Voltage (V): \n-->"))
+            voltage = float(input("Input Voltage (V): \n-->"))
             break
-        except:
+        except TypeError:
             print("You did not enter a valid voltage")
 
     while True:
         try:
-            SECONDS = float(input("How many seconds to run the scan?: \n-->"))
+            seconds = float(input("How many seconds to run the scan?: \n-->"))
             break
-        except:
+        except TypeError:
             print("You did not enter a valid time")
 
     while True:
         try:
-            SCAN_RATE = int(input("Input the Scan frequency (Hz): \n-->"))
+            scan_rate = int(input("Input the Scan frequency (Hz): \n-->"))
             break
-        except:
+        except TypeError:
             print("You did not enter a valid frequency")
 
     while True:
         try:
-            SCAN_OPTION = str(input("Input the Scan options (ex. BIP5VOLTS):\n-->"))
-            if SCAN_OPTION in DAQ.SCAN_OPTIONS:
+            scan_option = str(input("Input the Scan options (ex. BIP5VOLTS):\n-->"))
+            if scan_option in DAQ.SCAN_OPTIONS:
                 break
             else:
                 print("You did not enter a valid scan option.")
-        except:
+        except TypeError:
             print("You did not enter a valid scan option")
 
-    return FREQUENCY, VOLTAGE, SECONDS, SCAN_RATE, SCAN_OPTION
+    return frequency, voltage, seconds, scan_rate, scan_option
