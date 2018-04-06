@@ -4,7 +4,6 @@
  **Company:** Research in Flows, Inc                                                                                  \n
  **Author:** David Gurevich                                                                                           \n
  **Required Modules:**
-       * DAQ.py                                                                                                       \n
        * matplotlib                                                                                                   \n
 
 This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License.
@@ -14,7 +13,14 @@ Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 
 from matplotlib import pyplot as pl
 
-import DAQ
+from mcculw.enums import ULRange
+
+SCAN_OPTIONS = {
+    "BIP5VOLTS": ULRange.BIP5VOLTS,
+    "BIP2VOLTS": ULRange.BIP2VOLTS,
+    "BIP1VOLTS": ULRange.BIP1VOLTS,
+    "BIP10VOLTS": ULRange.BIP10VOLTS
+}
 
 
 def show_data(wave):
@@ -46,38 +52,38 @@ def get_input():
         try:
             frequency = float(input("Input Frequency (Hz): \n-->"))
             break
-        except TypeError:
+        except ValueError:
             print("You did not enter a valid frequency!")
 
     while True:
         try:
             voltage = float(input("Input Voltage (V): \n-->"))
             break
-        except TypeError:
+        except ValueError:
             print("You did not enter a valid voltage")
 
     while True:
         try:
             seconds = float(input("How many seconds to run the scan?: \n-->"))
             break
-        except TypeError:
+        except ValueError:
             print("You did not enter a valid time")
 
     while True:
         try:
             scan_rate = int(input("Input the Scan frequency (Hz): \n-->"))
             break
-        except TypeError:
+        except ValueError:
             print("You did not enter a valid frequency")
 
     while True:
         try:
             scan_option = str(input("Input the Scan options (ex. BIP5VOLTS):\n-->"))
-            if scan_option in DAQ.SCAN_OPTIONS:
+            if scan_option in SCAN_OPTIONS:
                 break
             else:
                 print("You did not enter a valid scan option.")
-        except TypeError:
+        except ValueError:
             print("You did not enter a valid scan option")
 
     return frequency, voltage, seconds, scan_rate, scan_option

@@ -36,6 +36,8 @@ void scan_a_in(long count, long rate, int scanType)
 	int Gain = scanType;
 	long Count = count;
 	long Rate = rate;
+	
+	double engUnitOutput;
 
 	HANDLE MemHandle = 0;
 	WORD *ADData = NULL;
@@ -46,7 +48,8 @@ void scan_a_in(long count, long rate, int scanType)
 	BOOL HighResAD = FALSE;
 	int ADRes;
 
-	FILE * fp;
+	FILE * fOutput;
+	FILE * fVoltageOutput;
 
 	ULStat = cbDeclareRevision(&RevLevel);
 	cbErrHandling(PRINTALL, DONTSTOP);
@@ -80,19 +83,30 @@ void scan_a_in(long count, long rate, int scanType)
 	ULStat = cbAInScan(BoardNum, LowChan, HighChan, Count, &Rate, Gain, MemHandle, Options);
 
 	printf("Scan Complete! \n");
-	printf("&Rate: %d\nRate: %d \n", &Rate, Rate);
 
-	fp = fopen("output.txt", "w+");
+	fOutput = fopen("output.txt", "w+");
+	fVoltageOutput = fopen("voltage output.txt", "w+");
 
-	for (int i = 0; i <= Count; i++)
+	printf("Writing results to file...\n");
+
+	for (int i = 0; i < Count; i++)
 	{
-		fprintf(fp, "%4u\n", ADData[i]);
+		fprintf(fOutput, "%4u\n\n", ADData[i]);
+
+		cbToEngUnits32(BoardNum, Gain, ADData[i], &engUnitOutput);
+		fprintf(fVoltageOutput, "%.8f\n", engUnitOutput);
+
+		int percentage = ((double)i / (int)Count)*100;
+		printf("\r%d / %d --- %d %%", i, Count, percentage);
+
 	}
-	printf("Write Complete!\n");
-	fclose(fp);
+	printf("\nWrite Complete!\n");
+	fclose(fOutput);
+	fclose(fVoltageOutput);
 
 	cbWinBufFree(MemHandle);
 }
+
 
 int main()
 {

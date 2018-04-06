@@ -6,7 +6,6 @@
  **Company:** Research in Flows, Inc                                                                                  \n
  **Author:** David Gurevich                                                                                           \n
  **Required Modules:**
-       * DAQ.py                                                                                                       \n
        * Functions.py                                                                                                 \n
        * hantekdds/htdds_wrapper.py                                                                                   \n
 
@@ -15,10 +14,10 @@ To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-
 Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 """
 
+import os
 import sys
 
-import DAQ
-from Functions import show_data, get_input
+from Functions import show_data, get_input, SCAN_OPTIONS
 from hantekdds import htdds_wrapper as hantek
 
 if __name__ == '__main__':
@@ -32,11 +31,11 @@ if __name__ == '__main__':
     function_generator.drive_periodic(VOLTAGE, FREQUENCY)
 
     f = open('config.txt', 'w')
-    f.write(str(COUNT) + "\n" + str(SCAN_RATE) + "\n" + str(int(DAQ.SCAN_OPTIONS[SCAN_OPTION])))
+    f.write(str(COUNT) + "\n" + str(SCAN_RATE) + "\n" + str(int(SCAN_OPTIONS[SCAN_OPTION])))
     f.close()
 
-    DAQ.scan(SCAN_OPTION)
-    f = open("Final Output.txt", "r")
+    os.system("C_ScanA.exe")
+    f = open("voltage output.txt", "r")
     to_graph = [float(i) for i in f.readlines()]
     show_data(to_graph)
     sys.exit()
