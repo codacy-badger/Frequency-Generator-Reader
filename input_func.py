@@ -1,5 +1,5 @@
 """
- **File Name:** Functions.py                                                                                          \n
+ **File Name:** input_func.py                                                                                          \n
  **Project:** CURRENTLY UNNAMED                                                                                       \n
  **Company:** Research in Flows, Inc                                                                                  \n
  **Author:** David Gurevich                                                                                           \n

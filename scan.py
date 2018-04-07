@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 """
- **File Name:** Main.py                                                                                               \n
+ **File Name:** scan.py                                                                                               \n
  **Project** CURRENTLY UNNAMED                                                                                        \n
  **Company:** Research in Flows, Inc                                                                                  \n
  **Author:** David Gurevich                                                                                           \n
  **Required Modules:**
-       * Functions.py                                                                                                 \n
+       * input_func.py                                                                                                 \n
        * hantekdds/htdds_wrapper.py                                                                                   \n
 
 This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License.
@@ -17,7 +17,7 @@ Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 import os
 import sys
 
-from Functions import show_data, get_input, SCAN_OPTIONS
+from input_func import show_data, get_input, SCAN_OPTIONS
 from hantekdds import htdds_wrapper as hantek
 
 if __name__ == '__main__':

@@ -1,6 +1,6 @@
 # Frequency Generator and Reader
 
-The currently unnamed frequency generator and reader, which, upon competion will be used in CrossFlow utilities in industrial applications.
+The currently unnamed frequency generator and reader, which, upon completion will be used in CrossFlow utilities in industrial applications.
 
 It interacts with the Hantek 1025G 25MHz Arbitrary function generator as well as the Measurement Computing USB 2020 high-speed simultaneous USB DAQ device.
 
@@ -10,7 +10,7 @@ Project was built using JetBrain PyCharm and Microsoft Visual Studio.
 
 ## Output
 
-The output constists of 2 files and 1 window.
+The output consists of 2 files and 1 window.
 * ```output.txt``` - This file contains (scan_rate \*duration] elements that are the raw, 12 bit analog value received by the DAQ
 * ```Final Output.txt``` - This file converts all elements in ```output.txt``` into voltage values based on ```scan mode```
 * PyPlot window that graphs all elements in ```Final Output.txt```

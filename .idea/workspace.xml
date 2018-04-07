@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="75e03c26-2ada-4ed6-8d28-94d89100dfdf" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/C_ScanA.exe" beforeDir="false" afterPath="$PROJECT_DIR$/C_ScanA.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/C_ScanA/.vs/C_ScanA/v15/.suo" beforeDir="false" afterPath="$PROJECT_DIR$/C_ScanA/.vs/C_ScanA/v15/.suo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/C_ScanA/.vs/C_ScanA/v15/ipch/AutoPCH/6cd1b109d09750d0/C_SCANA.ipch" beforeDir="false" afterPath="$PROJECT_DIR$/C_ScanA/.vs/C_ScanA/v15/ipch/AutoPCH/6cd1b109d09750d0/C_SCANA.ipch" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/C_ScanA/C_ScanA/C_ScanA.c" beforeDir="false" afterPath="$PROJECT_DIR$/C_ScanA/C_ScanA/C_ScanA.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/C_ScanA/C_ScanA/Debug/C_ScanA.log" beforeDir="false" afterPath="$PROJECT_DIR$/C_ScanA/C_ScanA/Debug/C_ScanA.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/C_ScanA/C_ScanA/Debug/C_ScanA.obj" beforeDir="false" afterPath="$PROJECT_DIR$/C_ScanA/C_ScanA/Debug/C_ScanA.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/C_ScanA/C_ScanA/Debug/C_ScanA.tlog/link.read.1.tlog" beforeDir="false" afterPath="$PROJECT_DIR$/C_ScanA/C_ScanA/Debug/C_ScanA.tlog/link.read.1.tlog" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/C_ScanA/C_ScanA/Debug/vc141.idb" beforeDir="false" afterPath="$PROJECT_DIR$/C_ScanA/C_ScanA/Debug/vc141.idb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/C_ScanA/C_ScanA/Debug/vc141.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/C_ScanA/C_ScanA/Debug/vc141.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/C_ScanA/C_ScanA/output.txt" beforeDir="false" afterPath="$PROJECT_DIR$/C_ScanA/C_ScanA/output.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/C_ScanA/Debug/C_ScanA.exe" beforeDir="false" afterPath="$PROJECT_DIR$/C_ScanA/Debug/C_ScanA.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/C_ScanA/Debug/C_ScanA.ilk" beforeDir="false" afterPath="$PROJECT_DIR$/C_ScanA/Debug/C_ScanA.ilk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/C_ScanA/Debug/C_ScanA.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/C_ScanA/Debug/C_ScanA.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/input_func.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/scan.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/Yura_Program$Unnamed.coverage" NAME="Unnamed Coverage Results" MODIFIED="1521600018593" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="scan.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/scan.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="598">
+              <caret line="26" column="18" selection-start-line="26" selection-start-column="18" selection-end-line="26" selection-end-column="18" />
+              <folding>
+                <element signature="e#1058#1067#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="input_func.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/input_func.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="46">
+              <caret line="2" column="25" selection-start-line="2" selection-start-column="25" selection-end-line="2" selection-end-column="25" />
+              <folding>
+                <element signature="e#913#948#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>set</find>
+      <find>print</find>
+      <find>import sys</find>
+      <find>Con</find>
+      <find>BIP10</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="David Gurevich &lt;david.gurevich111@gmail.com&gt;" />
+        <option value="David Gurevich" />
+      </list>
+    </option>
+    <option name="PUSH_AUTO_UPDATE" value="true" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/mcculw/props/ai.py" />
+        <option value="$PROJECT_DIR$/FunctionGenerator.py" />
+        <option value="$PROJECT_DIR$/DAQ/DAQ.c" />
+        <option value="$PROJECT_DIR$/ShowData.py" />
+        <option value="$PROJECT_DIR$/hantekdds/htdds_wrapper.py" />
+        <option value="$PROJECT_DIR$/C_ScanA/C_ScanA/C_ScanA.c" />
+        <option value="$PROJECT_DIR$/DAQ.py" />
+        <option value="$PROJECT_DIR$/Functions.py" />
+        <option value="$PROJECT_DIR$/Main.py" />
+        <option value="$PROJECT_DIR$/input_func.py" />
+        <option value="$PROJECT_DIR$/scan.py" />
+        <option value="$PROJECT_DIR$/Execute.bat" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="320" />
+    <option name="y" value="-28" />
+    <option name="width" value="975" />
+    <option name="height" value="830" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Yura Program" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Yura Program" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/CallGraph" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\David Gurevich\Dropbox\Work\Yura Program\DAQ" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\David Gurevich\Dropbox\Work\Yura Program\mcculw" />
+      <recent name="C:\Users\David Gurevich\Dropbox\Work\Yura Program" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="Unnamed" type="PythonConfigurationType" factoryName="Python">
+      <module name="Yura Program" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\David Gurevich\venv1\Scripts\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\David Gurevich\Dropbox\Work\Yura Program\scan.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="Yura Program" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="75e03c26-2ada-4ed6-8d28-94d89100dfdf" name="Default" comment="" />
+      <created>1519011592876</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1519011592876</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Initial Commit">
+      <created>1521641529800</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1521641529800</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Initial Commit">
+      <created>1521681890564</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1521681890564</updated>
+    </task>
+    <task id="LOCAL-00003" summary="General fixes, added voltage range option.">
+      <created>1522272446123</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1522272446123</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Added Copyright.">
+      <created>1522274722702</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1522274722702</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Added ETA, Docstrings, other general clean up.">
+      <created>1522640197125</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1522640197125</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Updated documentation. &#10;Added better copyright protection.&#10;Changed variable names to conform to PEP8 standards.">
+      <created>1522964728895</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1522964728895</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Removed DAQ.py&#10;Moved analog to voltage conversion process to C_ScanA.exe&#10;Memory usage is now ~30MB rather than 500MB">
+      <created>1522985225130</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1522985225130</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <layout>
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50208336" side_tool="true" weight="0.32928178" />
+      <window_info anchor="right" x="0" y="0" width="434" height="856" id="Documentation" order="6" sideWeight="0.5028169" side_tool="true" visible="true" weight="0.28385416" />
+      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="11" weight="0.3287483" />
+      <window_info anchor="bottom" id="Python Console" order="8" weight="0.32928178" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49791667" weight="0.5237581" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.32937366" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13958333" />
+      <window_info anchor="bottom" id="Docker" order="10" show_stripe_button="false" />
+      <window_info anchor="right" id="Database" order="4" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32937366" />
+      <window_info anchor="right" id="SciView" order="3" sideWeight="0.49718308" weight="0.365625" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3997879" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Coverage" order="5" side_tool="true" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection Results" order="12" weight="0.3287483" />
+      <window_info anchor="bottom" id="Messages" order="7" weight="0.3286638" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Concurrent Activities Diagram" order="12" weight="0.32979852" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_NEW_TODO" value="false" />
+    <MESSAGE value="Initial Commit" />
+    <MESSAGE value="General fixes, added voltage range option." />
+    <MESSAGE value="Added Copyright." />
+    <MESSAGE value="Added ETA, Docstrings, other general clean up." />
+    <MESSAGE value="Updated documentation. &#10;Added better copyright protection.&#10;Changed variable names to conform to PEP8 standards." />
+    <MESSAGE value="Removed DAQ.py&#10;Moved analog to voltage conversion process to C_ScanA.exe&#10;Memory usage is now ~30MB rather than 500MB" />
+    <option name="LAST_COMMIT_MESSAGE" value="Removed DAQ.py&#10;Moved analog to voltage conversion process to C_ScanA.exe&#10;Memory usage is now ~30MB rather than 500MB" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="8" />
+    </breakpoint-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/DAQ.py" />
+    <entry file="file://$PROJECT_DIR$/input_func.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="920">
+          <caret line="40" column="15" lean-forward="true" selection-start-line="40" selection-start-column="15" selection-end-line="40" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/input_func.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scan.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1702">
+          <caret line="78" column="19" selection-start-line="78" selection-start-column="19" selection-end-line="78" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hantekdds/htdds_wrapper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1127">
+          <caret line="49" column="31" selection-start-line="49" selection-start-column="31" selection-end-line="49" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/input_func.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DAQ.py" />
+    <entry file="file://$PROJECT_DIR$/hantekdds/htdds_wrapper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="833">
+          <caret line="49" column="31" selection-start-line="49" selection-start-column="31" selection-end-line="49" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/input_func.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DAQ.py" />
+    <entry file="file://$PROJECT_DIR$/hantekdds/htdds_wrapper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="884">
+          <caret line="52" column="20" selection-start-line="52" selection-start-column="20" selection-end-line="52" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/input_func.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DAQ.py" />
+    <entry file="file://$PROJECT_DIR$/Received Signal Screenshots/Small Scale Fluctuations.png" />
+    <entry file="file://$PROJECT_DIR$/input_func.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="35" selection-start-line="9" selection-start-column="35" selection-end-line="9" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DAQ.py" />
+    <entry file="file://$PROJECT_DIR$/hantekdds/htdds_wrapper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1190">
+          <caret line="70" column="58" selection-start-line="70" selection-start-column="58" selection-end-line="70" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mcculw/props/ai.py" />
+    <entry file="file://$PROJECT_DIR$/hantekdds/htdds_wrapper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="7" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hantekdds/HTDDSDll.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="11" selection-start-column="11" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mcculw/console/a_in.py" />
+    <entry file="file://$PROJECT_DIR$/mcculw/props/ai.py" />
+    <entry file="file://$PROJECT_DIR$/hantekdds/htdds_wrapper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="9" column="7" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hantekdds/HTDDSDll.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="11" selection-start-column="11" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mcculw/console/a_in.py" />
+    <entry file="file://$PROJECT_DIR$/mcculw/props/ai.py" />
+    <entry file="file://$PROJECT_DIR$/hantekdds/htdds_wrapper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="9" column="7" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hantekdds/HTDDSDll.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="11" selection-start-column="11" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mcculw/console/a_in.py" />
+    <entry file="file://$PROJECT_DIR$/mcculw/props/ai.py" />
+    <entry file="file://$PROJECT_DIR$/mcculw/console/digital_in.py" />
+    <entry file="file://$PROJECT_DIR$/mcculw/props/daqi.py" />
+    <entry file="file://$PROJECT_DIR$/measurement_computing/mcculw-master/examples/ui/CInScan01.py" />
+    <entry file="file://$PROJECT_DIR$/mcculw/console/a_in.py" />
+    <entry file="file://$PROJECT_DIR$/FunctionGenerator.py" />
+    <entry file="file://$PROJECT_DIR$/hantekdds/HTDDSDll.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="11" selection-start-column="11" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/venv1/Lib/site-packages/mcculw/ul.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="45" column="14" lean-forward="true" selection-start-line="45" selection-start-column="14" selection-end-line="45" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DAQ/cbw.h" />
+    <entry file="file://$PROJECT_DIR$/DAQ/DAQ.c" />
+    <entry file="file://$PROJECT_DIR$/Received Signal Screenshots/Small Scale Fluctuations.png" />
+    <entry file="file://$PROJECT_DIR$/hantekdds/htdds_wrapper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="49" column="31" selection-start-line="49" selection-start-column="31" selection-end-line="49" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://Python/#C:/Users/David Gurevich/Dropbox/Work/Yura Program/DAQ.py">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>Python</ID>
+          <OriginalElement />
+          <nodes />
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="792.0" y="428.0" />
+          <SelectedNodes />
+          <Categories />
+          <SCOPE>All</SCOPE>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://Python/#C:/Users/David Gurevich/Dropbox/Work/Yura Program/Functions.py">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>Python</ID>
+          <OriginalElement />
+          <nodes />
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="792.0" y="428.0" />
+          <SelectedNodes />
+          <Categories />
+          <SCOPE>All</SCOPE>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/venv1/Lib/io.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-345" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/C_ScanA/C_ScanA/C_ScanA.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="8" column="53" lean-forward="true" selection-start-line="8" selection-start-column="53" selection-end-line="8" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DAQ.py" />
+    <entry file="file://$PROJECT_DIR$/output.txt">
+      <provider selected="true" editor-type-id="LargeFileEditor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/input_func.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="46">
+          <caret line="2" column="25" selection-start-line="2" selection-start-column="25" selection-end-line="2" selection-end-column="25" />
+          <folding>
+            <element signature="e#913#948#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Execute.bat">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="1" column="8" selection-start-line="1" selection-start-column="8" selection-end-line="1" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scan.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="598">
+          <caret line="26" column="18" selection-start-line="26" selection-start-column="18" selection-end-line="26" selection-end-column="18" />
+          <folding>
+            <element signature="e#1058#1067#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
