@@ -37,7 +37,7 @@ class HantekDDS():
                            'trap_fall': 0.2,
                            'exp_mode': 'decay',
                            'exp_time': 0.001,
-                          }
+                           }
         self.halt = False
 
     def connect(self, dev=0):
@@ -49,6 +49,8 @@ class HantekDDS():
                     self.dev_id = dev
                     print('HANTEK: Connected as device {:d}'.format(dev))
                     return True
+                else:
+                    time.sleep(1)
         print('ERROR: Failed to establish connection with HantekDDS.')
         return False
 

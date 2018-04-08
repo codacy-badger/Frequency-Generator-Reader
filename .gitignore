@@ -8,3 +8,7 @@ Scans/
 
 # Developer BuildC File
 *.bat
+
+# Coverage
+.coverage
+coverage.xml
