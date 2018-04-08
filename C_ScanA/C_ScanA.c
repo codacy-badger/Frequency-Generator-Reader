@@ -5,8 +5,10 @@
   Company: Research in Flows, Inc
   Author: David Gurevich
 
-   This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License.
-       To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/3.0/ or send a letter to
+   This work is licensed under the Creative Commons
+  Attribution-NonCommercial-NoDerivs 3.0 Unported License.
+       To view a copy of this license, visit
+  http://creativecommons.org/licenses/by-nc-nd/3.0/ or send a letter to
        Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 
   Dependencies:
@@ -40,6 +42,7 @@ void scan_a_in(long count, long rate, int scanType) {
   long Rate = rate;
 
   double engUnitOutput;
+  int inputDetected = 0;
 
   HANDLE MemHandle = 0;
   WORD *ADData = NULL;
@@ -55,7 +58,7 @@ void scan_a_in(long count, long rate, int scanType) {
 
   ULStat = cbDeclareRevision(&RevLevel);
 
-  cbErrHandling(PRINTALL, DONTSTOP);
+  cbErrHandling(PRINTALL, STOPALL);
   cbGetConfig(BOARDINFO, BoardNum, 0, BIADRES, &ADRes);
 
   if (ADRes > 16) {
@@ -79,27 +82,37 @@ void scan_a_in(long count, long rate, int scanType) {
 
   ULStat = cbAInScan(BoardNum, LowChan, HighChan, Count, &Rate, Gain, MemHandle,
                      Options);
-
-  printf("Scan Complete! \n");
-
-  fOutput = fopen("Output/output.txt", "w+");
-  fVoltageOutput = fopen("Output/voltage output.txt", "w+");
-
-  printf("Writing results to file...\n");
-
-  for (int i = 0; i < Count; i++) {
-    fprintf(fOutput, "%4u\n", ADData[i]);
-
-    cbToEngUnits32(BoardNum, Gain, ADData[i], &engUnitOutput);
-    fprintf(fVoltageOutput, "%.8f\n", engUnitOutput);
-
-    int percentage = ((double)i / (int)Count) * 100;
-    printf("\r%d / %ld --- %d%%", i, Count, percentage);
+  for (int j = 0; j < Count; j++) {
+    if (ADData[j] != 0) {
+      inputDetected = 1;
+      break;
+    }
   }
 
-  printf("\nWrite Complete!\n");
-  fclose(fOutput);
-  fclose(fVoltageOutput);
+  if (inputDetected == 1) {
+    printf("Scan Complete! \n");
+
+    fOutput = fopen("Output/output.txt", "w+");
+    fVoltageOutput = fopen("Output/voltage output.txt", "w+");
+
+    printf("Writing results to file...\n");
+
+    for (int i = 0; i < Count; i++) {
+      fprintf(fOutput, "%4u\n", ADData[i]);
+
+      cbToEngUnits32(BoardNum, Gain, ADData[i], &engUnitOutput);
+      fprintf(fVoltageOutput, "%.8f\n", engUnitOutput);
+
+      int percentage = ((double)i / (int)Count) * 100;
+      printf("\r%d / %ld --- %d%%", i, Count, percentage);
+    }
+
+    printf("\nWrite Complete!\n");
+    fclose(fOutput);
+    fclose(fVoltageOutput);
+  } else {
+    printf("Scan Failed!\n");
+  }
 
   cbWinBufFree(MemHandle);
 }

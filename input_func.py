@@ -37,6 +37,7 @@ def show_data(wave):
     pl.savefig('Output/OutputPlot.png')
     pl.show()
 
+
 def get_input():
     """
     Prompts the user with multiple messages, each to enter a certain element of information, each prompt is
@@ -89,4 +90,5 @@ def get_input():
         except ValueError:
             print("You did not enter a valid scan option")
 
+    # ADD ANY NEW INPUTS ABOVE THIS LINE
     return frequency, voltage, seconds, scan_rate, scan_option
