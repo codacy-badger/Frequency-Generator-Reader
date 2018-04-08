@@ -37,7 +37,7 @@ class HantekDDS():
                            'trap_fall': 0.2,
                            'exp_mode': 'decay',
                            'exp_time': 0.001,
-                           }
+                          }
         self.halt = False
 
     def connect(self, dev=0):
