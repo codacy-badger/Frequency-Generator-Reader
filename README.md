@@ -27,7 +27,7 @@ The output consists of 3 files and 1 window.
 
 **Actually running the software:**
 
-Simply execute ```Execute.bat``` *(go figure)*
+Simply execute ```scan.py```
 
 
 
