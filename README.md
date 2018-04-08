@@ -22,7 +22,9 @@ The output consists of 3 files and 1 window.
 * Windows - Due to the lack of drivers, this software only works in Windows.
 * Hantek 1025G Drivers - You will have to get the Windows drivers for the generator. You will probably run into problems installing these drivers because they were poorly made and I hate them.
 * Measurement Computing InstaCal - This is the configuration software for the Measurement Computing USB2020.
+
 **Actually running the software:**
+
 Simply execute ```Execute.bat``` *(go figure)*
 
 
