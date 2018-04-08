@@ -1,5 +1,5 @@
 """
- **File Name:** input_func.py                                                                                          \n
+ **File Name:** input_func.py                                                                                         \n
  **Project:** CURRENTLY UNNAMED                                                                                       \n
  **Company:** Research in Flows, Inc                                                                                  \n
  **Author:** David Gurevich                                                                                           \n
@@ -31,9 +31,11 @@ def show_data(wave):
     :type wave: list
     :return: None
     """
+    pl.xlabel('Points')
+    pl.ylabel('Voltage')
     pl.plot(wave)
+    pl.savefig('Output/OutputPlot.png')
     pl.show()
-
 
 def get_input():
     """
