@@ -90,5 +90,20 @@ def get_input():
         except ValueError:
             print("You did not enter a valid scan option")
 
+    while True:
+        try:
+            graph_option_input = str(input("Graph result? (Y/N):\n-->")).lower()
+            if graph_option_input == "y":
+                graph_option = True
+                break
+            elif graph_option_input == "n":
+                graph_option = False
+                break
+            else:
+                print("You did not enter a valid input!")
+        except ValueError:
+            print("You did not enter a valid input!")
+
+
     # ADD ANY NEW INPUTS ABOVE THIS LINE
-    return frequency, voltage, seconds, scan_rate, scan_option
+    return frequency, voltage, seconds, scan_rate, scan_option, graph_option

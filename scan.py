@@ -29,7 +29,7 @@ if __name__ == '__main__':
         print("Failed to Connect to HantekDDS.")
         sys.exit()
 
-    FREQUENCY, VOLTAGE, SECONDS, SCAN_RATE, SCAN_OPTION = get_input()
+    FREQUENCY, VOLTAGE, SECONDS, SCAN_RATE, SCAN_OPTION, GRAPH_OPTION = get_input()
     COUNT = SCAN_RATE * SECONDS
     FUNCTION_GENERATOR.drive_periodic(VOLTAGE, FREQUENCY)
 
@@ -39,7 +39,10 @@ if __name__ == '__main__':
     FILE.close()
 
     os.system("C_ScanA.exe")
-    FILE = open("Output/voltage output.txt", "r")
-    TO_GRAPH = [float(i) for i in FILE.readlines()]
-    show_data(TO_GRAPH)
+
+    if GRAPH_OPTION:
+        FILE = open("Output/voltage output.txt", "r")
+        TO_GRAPH = [float(i) for i in FILE.readlines()]
+        show_data(TO_GRAPH)
+
     sys.exit()

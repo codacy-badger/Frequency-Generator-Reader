@@ -1,9 +1,10 @@
 # Compiled Python Files
 __pycache__/
+/__pycache__
 
 # Output Folders
 Output/
 Scans/
 
 # Developer BuildC File
-BuildC.bat
+*.bat
