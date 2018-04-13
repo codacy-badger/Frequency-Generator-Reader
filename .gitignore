@@ -12,3 +12,6 @@ Scans/
 # Coverage
 .coverage
 coverage.xml
+
+# PyLintRC
+.pylintrc

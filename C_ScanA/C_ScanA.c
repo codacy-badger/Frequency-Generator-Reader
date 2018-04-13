@@ -33,7 +33,7 @@
 #include "cbw.h"
 
 void scan_a_in(long count, long rate, int scanType) {
-  int BoardNum = 1;
+  int BoardNum = 0;
   int ULStat = 0;
   int LowChan = 0;
   int HighChan = 0;
@@ -83,7 +83,7 @@ void scan_a_in(long count, long rate, int scanType) {
   ULStat = cbAInScan(BoardNum, LowChan, HighChan, Count, &Rate, Gain, MemHandle,
                      Options);
   for (int j = 0; j < Count; j++) {
-    if (ADData[j] != 0) {
+    if (ADData[j] != 0 || ADData[j] != 4095) {
       inputDetected = 1;
       break;
     }
