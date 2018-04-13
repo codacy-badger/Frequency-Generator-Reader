@@ -20,7 +20,7 @@ import os
 import sys
 import pathlib
 
-from input_func import get_input, SCAN_OPTIONS
+from input_func import show_data, get_input, SCAN_OPTIONS, use_matlab
 from hantekdds import htdds_wrapper as hantek
 
 if __name__ == '__main__':
@@ -30,6 +30,7 @@ if __name__ == '__main__':
         sys.exit()
 
     FREQUENCY, VOLTAGE, SECONDS, SCAN_RATE, SCAN_OPTION, GRAPH_OPTION = get_input()
+    USE_MATLAB_BOOL = use_matlab()
     COUNT = SCAN_RATE * SECONDS
     FUNCTION_GENERATOR.drive_periodic(VOLTAGE, FREQUENCY)
 
@@ -40,7 +41,11 @@ if __name__ == '__main__':
 
     os.system("C_ScanA.exe")
 
-    if GRAPH_OPTION:
+    if GRAPH_OPTION and not USE_MATLAB_BOOL:
+        FILE = open("Output/voltage output.txt", "r")
+        TO_GRAPH = [float(i) for i in FILE.readlines()]
+        show_data(TO_GRAPH)
+    elif GRAPH_OPTION and USE_MATLAB_BOOL:
         os.system("matlab_plot.exe")
 
     sys.exit()

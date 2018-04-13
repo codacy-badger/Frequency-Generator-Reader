@@ -108,3 +108,22 @@ def get_input():
 
     # ADD ANY NEW INPUTS ABOVE THIS LINE
     return frequency, voltage, seconds, scan_rate, scan_option, graph_option
+
+def use_matlab():
+    '''
+    (None) -> Boolean
+
+    Determines whether or not to use matlab grapher
+    '''
+    while True:
+        try:
+            grapher_input = str(
+                input("Use MatLab to graph? (Y/N):\n-->")).lower()
+            if grapher_input == "y":
+                return True
+            elif grapher_input == "n":
+                return False
+            else:
+                print("You did not enter a valid input!")
+        except ValueError:
+            print("You did not enter a valid input!")
