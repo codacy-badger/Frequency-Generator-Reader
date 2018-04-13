@@ -82,7 +82,8 @@ def get_input():
 
     while True:
         try:
-            scan_option = str(input("Input the Scan options (ex. BIP5VOLTS):\n-->"))
+            scan_option = str(
+                input("Input the Scan options (ex. BIP5VOLTS):\n-->"))
             if scan_option in SCAN_OPTIONS:
                 break
             else:
@@ -92,7 +93,8 @@ def get_input():
 
     while True:
         try:
-            graph_option_input = str(input("Graph result? (Y/N):\n-->")).lower()
+            graph_option_input = str(
+                input("Graph result? (Y/N):\n-->")).lower()
             if graph_option_input == "y":
                 graph_option = True
                 break
