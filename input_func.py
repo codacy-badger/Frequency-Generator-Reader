@@ -109,6 +109,7 @@ def get_input():
     # ADD ANY NEW INPUTS ABOVE THIS LINE
     return frequency, voltage, seconds, scan_rate, scan_option, graph_option
 
+
 def use_matlab():
     '''
     (None) -> Boolean
