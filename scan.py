@@ -20,7 +20,7 @@ import os
 import sys
 import pathlib
 
-from input_func import show_data, get_input, SCAN_OPTIONS, use_matlab
+from input_func import show_data, get_input, SCAN_OPTIONS
 from hantekdds import htdds_wrapper as hantek
 
 if __name__ == '__main__':
@@ -29,8 +29,7 @@ if __name__ == '__main__':
         print("Failed to Connect to HantekDDS.")
         sys.exit()
 
-    FREQUENCY, VOLTAGE, SECONDS, SCAN_RATE, SCAN_OPTION, GRAPH_OPTION = get_input()
-    USE_MATLAB_BOOL = use_matlab()
+    FREQUENCY, VOLTAGE, SECONDS, SCAN_RATE, SCAN_OPTION, GRAPH_OPTION, USE_MATLAB_BOOL = get_input()
     COUNT = SCAN_RATE * SECONDS
     FUNCTION_GENERATOR.drive_periodic(VOLTAGE, FREQUENCY)
 
