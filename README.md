@@ -2,7 +2,7 @@
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/a7f6ffc1e54c4987857f00c48a3705c7)](https://app.codacy.com/app/davidgur/Frequency-Generator-Reader?utm_source=github.com&utm_medium=referral&utm_content=davidgur/Frequency-Generator-Reader&utm_campaign=badger)
 
-The currently unnamed frequency generator and reader, which, upon completion will be used in CrossFlow utilities in industrial applications.
+The currently unnamed frequency generator and reader, which, upon completion will be used in ultrasonic utilities in industrial applications.
 
 It interacts with the Hantek 1025G 25MHz Arbitrary function generator as well as the Measurement Computing USB 2020 high-speed simultaneous USB DAQ device.
 
