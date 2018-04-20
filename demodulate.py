@@ -5,7 +5,6 @@
  **Author:** David Gurevich                                                                                           \n
  **Required Modules:**
        * numpy                                                                                                        \n
-       * matplotlib.pyplot                                                                                            \n
        * scipy                                                                                                        \n
 
 This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License.
@@ -14,21 +13,18 @@ Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 """
 
 import numpy as np
-import matplotlib.pyplot as plt
 from scipy.signal import hilbert, medfilt
 
 
 def hilbert_envelope(duration, fs, signal, acc):
     samples = int(fs*duration)
-    t = np.arange(samples) / fs
-
     signal_length = len(signal)
 
     analytic_signal = hilbert(signal)
     print("Completed Hilbert transformation")
     amplitude_envelope = np.abs(analytic_signal)
-    instantaneous_phase = np.unwrap(np.angle(analytic_signal))
-    instantaneous_frequency = (np.diff(instantaneous_phase) / (2.0*np.pi) * fs)
+    # instantaneous_phase = np.unwrap(np.angle(analytic_signal))
+    # instantaneous_frequency = (np.diff(instantaneous_phase) / (2.0*np.pi) * fs)
 
     if signal_length % acc == 0:
         kernel_size = int(signal_length/acc) - 1
