@@ -4,15 +4,12 @@
  **Company:** Research in Flows, Inc                                                                                  \n
  **Author:** David Gurevich                                                                                           \n
  **Required Modules:**
-       * matplotlib                                                                                                   \n
        * mcculw                                                                                                       \n
 
 This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License.
 To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/3.0/ or send a letter to
 Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 """
-
-from matplotlib import pyplot as pl
 
 from mcculw.enums import ULRange
 
@@ -22,20 +19,6 @@ SCAN_OPTIONS = {
     "BIP1VOLTS": ULRange.BIP1VOLTS,
     "BIP10VOLTS": ULRange.BIP10VOLTS
 }
-
-
-def show_data(wave):
-    """
-    Use PyPlot from MatPlotLib to plot the wave, and then display it in a TKinter window.                             \n
-    :param wave: List containing all voltage values of scanned wave.
-    :type wave: list
-    :return: None
-    """
-    pl.xlabel('Points')
-    pl.ylabel('Voltage')
-    pl.plot(wave)
-    pl.savefig('Output/OutputPlot.png')
-    pl.show()
 
 
 def get_input():
@@ -52,19 +35,38 @@ def get_input():
     :return: FREQUENCY, VOLTAGE, SECONDS, SCAN_RATE, SCAN_OPTION
     :rtype: tuple
     """
-    while True:
-        try:
-            frequency = float(input("Input Frequency (Hz): \n-->"))
-            break
-        except ValueError:
-            print("You did not enter a valid frequency!")
+
+    frequency = 0
+    voltage = 0
 
     while True:
         try:
-            voltage = float(input("Input Voltage (V): \n-->"))
-            break
+            gen_fq = str(
+                input("Use this program to generate frequency? (Y/N):\n-->")).lower()
+            if gen_fq == "y":
+                gen_fq_bool = True
+                break
+            elif gen_fq == "n":
+                gen_fq_bool = False
+                break
+            else:
+                print("You did not enter a valid input!")
         except ValueError:
-            print("You did not enter a valid voltage")
+            print("You did not enter a valid input!")
+    if gen_fq_bool:
+        while True:
+            try:
+                frequency = float(input("Input Frequency (Hz): \n-->"))
+                break
+            except ValueError:
+                print("You did not enter a valid frequency!")
+
+        while True:
+            try:
+                voltage = float(input("Input Voltage (V): \n-->"))
+                break
+            except ValueError:
+                print("You did not enter a valid voltage")
 
     while True:
         try:
@@ -79,6 +81,13 @@ def get_input():
             break
         except ValueError:
             print("You did not enter a valid frequency")
+
+    while True:
+        try:
+            filter_sensitivity = int(input("Input the filter sensitivity: \n-->"))
+            break
+        except ValueError:
+            print("You did not enter a valid filter sensitivity")
 
     while True:
         try:
@@ -122,4 +131,4 @@ def get_input():
             print("You did not enter a valid input!")
 
     # ADD ANY NEW INPUTS ABOVE THIS LINE
-    return frequency, voltage, seconds, scan_rate, scan_option, graph_option, use_matlab
+    return gen_fq_bool, frequency, voltage, seconds, scan_rate, scan_option, graph_option, use_matlab, filter_sensitivity

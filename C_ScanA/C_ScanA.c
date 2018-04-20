@@ -92,16 +92,17 @@ void scan_a_in(long count, long rate, int scanType) {
   if (inputDetected == 1) {
     printf("Scan Complete! \n");
 
-    fOutput = fopen("Output/output.txt", "w+");
-    fVoltageOutput = fopen("Output/voltage output.txt", "w+");
+    fOutput = fopen("Output/daq_output.csv", "w+");
 
     printf("Writing results to file...\n");
 
+    fprintf(fOutput, "RAW DATA, VOLTAGE\n");
+
     for (int i = 0; i < Count; i++) {
-      fprintf(fOutput, "%4u\n", ADData[i]);
+      fprintf(fOutput, "%4u,", ADData[i]);
 
       cbToEngUnits32(BoardNum, Gain, ADData[i], &engUnitOutput);
-      fprintf(fVoltageOutput, "%.8f\n", engUnitOutput);
+      fprintf(fOutput, " %.8f\n", engUnitOutput);
 
       int percentage = ((double)i / (int)Count) * 100;
       printf("\r%d / %ld --- %d%%", i, Count, percentage);
@@ -109,7 +110,6 @@ void scan_a_in(long count, long rate, int scanType) {
 
     printf("\nWrite Complete!\n");
     fclose(fOutput);
-    fclose(fVoltageOutput);
   } else {
     printf("Scan Failed!\n");
   }
