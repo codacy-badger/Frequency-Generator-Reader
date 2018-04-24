@@ -1,80 +1,69 @@
-#!/usr/bin/env python
-
 """
- **File Name:** scan.py                                                       \n
- **Project** CURRENTLY UNNAMED                                                \n
- **Company:** Research in Flows, Inc                                          \n
- **Author:** David Gurevich                                                   \n
+ **File Name:** scan.py                                                                                               \n
+ **Project:** CURRENTLY UNNAMED                                                                                       \n
+ **Company:** Research in Flows, Inc                                                                                  \n
+ **Author:** David Gurevich                                                                                           \n
  **Required Modules:**
-       * input_func.py                                                        \n
-       * hantekdds/htdds_wrapper.py                                           \n
+       * numpy                                                                                                        \n
 
-This work is licensed under the Creative Commons
-Attribution-NonCommercial-NoDerivs 3.0 Unported License.
-To view a copy of this license, visit
-http://creativecommons.org/licenses/by-nc-nd/3.0/ or send a letter to
+This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License.
+To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/3.0/ or send a letter to
 Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 """
 
-import os
-import sys
-import pathlib
 import csv
-import shutil
+import os
+import pathlib
+import sys
 
-from input_func import get_input, SCAN_OPTIONS
+import numpy as np
+
 from hantekdds import htdds_wrapper as hantek
-import demodulate
-import plot
+from src import plot
+from src.input_func import get_input, SCAN_OPTIONS
 
 if __name__ == '__main__':
-    FUNCTION_GENERATOR = hantek.HantekDDS()
-    if not FUNCTION_GENERATOR.connect():
-        print("Failed to Connect to HantekDDS.")
+
+    function_generator = hantek.HantekDDS()
+    if not function_generator.connect():
+        print("Failed to connect to Hantek 1025G module.")
         sys.exit()
 
-    shutil.rmtree('Output', ignore_errors=True)
+    bool_gen_fq, fq, voltage, dur, scan_fq, scan_option, bool_graph = get_input()
 
-    GEN_FQ_BOOL, FREQUENCY, VOLTAGE, SECONDS, SCAN_RATE, SCAN_OPTION, GRAPH_OPTION, USE_MATLAB_BOOL, FILTER_SENSITIVITY = get_input()
-    COUNT = SCAN_RATE * SECONDS
-    if GEN_FQ_BOOL:
-        FUNCTION_GENERATOR.drive_periodic(VOLTAGE, FREQUENCY)
+    if bool_gen_fq:
+        function_generator.drive_periodic(voltage, fq)
 
     pathlib.Path('Output').mkdir(parents=True, exist_ok=True)
-    FILE = open('Output/config.txt', 'w')
-    FILE.write(str(COUNT) + "\n" + str(SCAN_RATE) +
-               "\n" + str(int(SCAN_OPTIONS[SCAN_OPTION])))
-    FILE.close()
+
+    config_file = open('Output/config.txt', 'w')
+    config_file.write(
+        str(scan_fq * dur) + "\n" +
+        str(scan_fq) + "\n" +
+        str(int(SCAN_OPTIONS[scan_option]))
+    )
+    config_file.close()
 
     os.system("C_ScanA.exe")
 
-    TO_GRAPH = []
+    # Get DAQ data
 
-    with open('Output/daq_output.csv') as f:
-        next(f, None)
-        rows = csv.reader(f)
+    eng_unit_signal = []
+
+    with open('Output/daq_output.csv') as daq_out:
+        next(daq_out, None)
+        rows = csv.reader(daq_out)
         for row in rows:
-            TO_GRAPH.append(float(row[1]))
+            eng_unit_signal.append(float(row[1]))
 
-    analytic_signal, amplitude_envelope, fil_amplitude_envelope = demodulate.hilbert_envelope(
-        SECONDS, SCAN_RATE, TO_GRAPH, FILTER_SENSITIVITY)
+    # Write fourier transformation
 
-    with open('Output/output.csv', 'w') as n_f:
-        with open('Output/daq_output.csv', 'r') as o_f:
-            n_writer = csv.writer(n_f)
-            n_writer.writerow(
-                ['RAW VALUE', 'VOLTAGE', 'ENVELOPE', 'FILTERED ENVELOPE'])
-            next(o_f, None)
-            o_rows = csv.reader(o_f)
-            for i, row in enumerate(o_rows):
-                row.extend([amplitude_envelope[i], fil_amplitude_envelope[i]])
-                n_writer.writerow(row)
+    fourier_transform = np.fft.rfft(eng_unit_signal)
 
-    os.remove('Output/daq_output.csv')
+    with open('Output/fourier_output.csv', 'w') as fourier_output_file:
+        out_writer = csv.writer(fourier_output_file)
+        out_writer.writerows(map(lambda x: [x], fourier_transform))
 
-    if GRAPH_OPTION and not USE_MATLAB_BOOL:
-        plot.show_data(analytic_signal, amplitude_envelope, fil_amplitude_envelope)
-    elif GRAPH_OPTION and USE_MATLAB_BOOL:
-        os.system("matlab_plot.exe")
-
+    if bool_graph:
+        plot.graph_input(eng_unit_signal, scan_fq, fourier_transform, dur)
     sys.exit()

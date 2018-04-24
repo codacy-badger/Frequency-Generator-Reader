@@ -84,13 +84,6 @@ def get_input():
 
     while True:
         try:
-            filter_sensitivity = int(input("Input the filter sensitivity: \n-->"))
-            break
-        except ValueError:
-            print("You did not enter a valid filter sensitivity")
-
-    while True:
-        try:
             scan_option = str(
                 input("Input the Scan options (ex. BIP5VOLTS):\n-->"))
             if scan_option in SCAN_OPTIONS:
@@ -115,20 +108,6 @@ def get_input():
         except ValueError:
             print("You did not enter a valid input!")
 
-    while True:
-        try:
-            grapher_input = str(
-                input("Use MatLab to graph? (Y/N):\n-->")).lower()
-            if grapher_input == "y":
-                use_matlab = True
-                break
-            elif grapher_input == "n":
-                use_matlab = False
-                break
-            else:
-                print("You did not enter a valid input!")
-        except ValueError:
-            print("You did not enter a valid input!")
 
     # ADD ANY NEW INPUTS ABOVE THIS LINE
-    return gen_fq_bool, frequency, voltage, seconds, scan_rate, scan_option, graph_option, use_matlab, filter_sensitivity
+    return gen_fq_bool, frequency, voltage, seconds, scan_rate, scan_option, graph_option

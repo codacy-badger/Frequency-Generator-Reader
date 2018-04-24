@@ -15,3 +15,10 @@ coverage.xml
 
 # PyLintRC
 .pylintrc
+
+# PyCharm IDEA folder
+.idea/
+
+# Temporarily getting rid of MatLab
+MATLAB/
+matlab_plot.exe

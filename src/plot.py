@@ -18,22 +18,35 @@ import numpy as np
 np.warnings.filterwarnings('ignore')
 
 
-def show_data(analytic_signal, amplitude_envelope, fil_amplitude_envelope):
-    x = np.arange(len(analytic_signal))
+def graph_input(signal, fs, fourier_transform, dur):
+    x_r = np.arange(len(signal))
+    y_r = signal
 
-    y = analytic_signal
-    plt.plot(x, y, label='Received Signal')
+    plt.subplot(2, 1, 1)
 
-    y = amplitude_envelope
-    plt.plot(x, y, label='Hilbert Transformation')
+    plt.plot(x_r, y_r, label="Received Signal")
 
-    y = fil_amplitude_envelope
-    plt.plot(x, y, label='Filtered Envelope')
-
-    plt.xlabel('Point number')
+    plt.xlabel('Point Number')
     plt.ylabel('Voltage (V)')
-    plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3,
-               ncol=2, mode="expand", borderaxespad=0.)
+    plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=2, mode="expand", borderaxespad=0.)
+
+    # PLOT 2
+    plt.subplot(2, 1, 2)
+
+    ts = 1.0/fs
+
+    n = len(signal)
+    k = np.arange(n)
+    T = n/fs
+    frq = k/T
+    frq = np.array(frq[range(int(n/5))])
+
+    Y = fourier_transform/n
+    Y = Y[range(int(n/5))]
+
+    plt.plot(frq, abs(Y), 'r')
+    plt.xlabel('Freq (Hz)')
+    plt.ylabel('Y(freq)')
 
     plt.savefig('Output/OutputPlot.png')
     plt.show()
