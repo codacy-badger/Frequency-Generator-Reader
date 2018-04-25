@@ -55,7 +55,6 @@ if __name__ == '__main__':
         rows = csv.reader(daq_out)
         for row in rows:
             eng_unit_signal.append(float(row[1]))
-
     # Write fourier transformation
 
     fourier_transform = np.fft.rfft(eng_unit_signal)

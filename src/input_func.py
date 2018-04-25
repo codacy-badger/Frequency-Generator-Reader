@@ -13,7 +13,7 @@ Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 
 from mcculw.enums import ULRange
 
-SCAN_OPTIONS = {
+SCAN_OPTIONS = { # THIS IS FOR THE USB2020 MODULE
     "BIP5VOLTS": ULRange.BIP5VOLTS,
     "BIP2VOLTS": ULRange.BIP2VOLTS,
     "BIP1VOLTS": ULRange.BIP1VOLTS,

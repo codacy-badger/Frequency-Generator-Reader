@@ -44,9 +44,14 @@ def graph_input(signal, fs, fourier_transform, dur):
     Y = fourier_transform/n
     Y = Y[range(int(n/5))]
 
+    max_y = max(Y)
+    max_x = frq[Y.argmax()]
+
     plt.plot(frq, abs(Y), 'r')
     plt.xlabel('Freq (Hz)')
     plt.ylabel('Y(freq)')
+
+    plt.text(max_x, max_y, str((max_x)))
 
     plt.savefig('Output/OutputPlot.png')
     plt.show()
