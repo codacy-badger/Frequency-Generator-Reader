@@ -10,13 +10,22 @@ This project allows the user to control the devices through a command line inter
 
 This project was built using [Atom](http://atom.io).
 
+## Algorithms and Process
+As of right now, the software assumes an amplitude-modulated wave as input, and using the fourier transformation, determines the frequency of the encoded wave. There is some innacuracy to it, notably, sometimes the detected frequency is a multiple of the actual frequency. This is all very work in progress. 
+
+![alt text](https://wikimedia.org/api/rest_v1/media/math/render/svg/97ad0938a279c4846d42a4bbd212f6a1f0ca4c0f "Fourier Transformation")
+
+Frequency-modulation and phase-modulation detection is currently in the works.
+
 ## Output
 
 The output consists of 3 files and 1 window.
-* ```output.txt``` - This file contains (scan_rate \*duration] elements that are the raw, 12 bit analog value received by the DAQ
-* ```voltage output.txt``` - This file converts all elements in ```output.txt``` into voltage values based on ```scan mode```
-* ```OutputPlot.png``` - This is a PyPlot that graphs the elements in ```voltage output.txt```
-* PyPlot window that graphs all elements in ```voltage output.txt```
+* ```config.txt``` - This file is used by the C software to determine how to scan the wave
+* ```daq_output.csv``` - This file contains both the raw values and the voltage values from the scanning application
+* ```fourier_output.csv``` - This file contains the fourier transformation of the voltage-based signal from the DAQ
+* ```output.csv``` - All-in-one output file containing information about the graph such as the values, fft, and envelope
+* ```OutputPlot.png``` - This is a PyPlot that graphs the elements in ```daq_output.csv``` and ```fourier_output.csv```
+* PyPlot window that graphs all elements in ```daq_output.csv``` and ```fourier_output.csv```
 
 ## Running the Software
 
@@ -24,6 +33,11 @@ The output consists of 3 files and 1 window.
 * Windows - Due to the lack of drivers, this software only works in Windows.
 * Hantek 1025G Drivers - You will have to get the Windows drivers for the generator. You will probably run into problems installing these drivers because they were poorly made and I hate them.
 * Measurement Computing InstaCal - This is the configuration software for the Measurement Computing USB2020.
+* The Following Python Libraries:
+  * MatPlotLib (Plotting)
+  * NumPy      (NumPy Arrays and FFT)
+  * PeakUtils  (Determine Peaks in FFT)
+  * MCCULW     (Measurement Computing SDK)
 
 **Actually running the software:**
 
