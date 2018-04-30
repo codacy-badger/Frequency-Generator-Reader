@@ -18,6 +18,20 @@ import numpy as np
 np.warnings.filterwarnings('ignore')
 
 
+def determine_fq(fourier_transform):
+    flat_fourier_transform = fourier_transform.flatten()
+    flat_fourier_transform.sort()
+
+    max_value_fft = flat_fourier_transform[-1]
+    next_value_fft = flat_fourier_transform[-2]
+
+    max_index = np.where(fourier_transform == max_value_fft)
+    next_index = np.where(fourier_transform == next_value_fft)
+
+    fq = (max_index[0] - next_index[0])[0]
+    return abs(fq)
+
+
 def graph_input(signal, fs, fourier_transform, dur):
     x_r = np.arange(len(signal))
     y_r = signal
@@ -44,14 +58,12 @@ def graph_input(signal, fs, fourier_transform, dur):
     Y = fourier_transform/n
     Y = Y[range(int(n/5))]
 
-    max_y = max(Y)
-    max_x = frq[Y.argmax()]
-
     plt.plot(frq, abs(Y), 'r')
     plt.xlabel('Freq (Hz)')
     plt.ylabel('Y(freq)')
 
-    plt.text(max_x, max_y, str((max_x)))
+    fq = determine_fq(fourier_transform)
+    print(fq)
 
     plt.savefig('Output/OutputPlot.png')
     plt.show()
