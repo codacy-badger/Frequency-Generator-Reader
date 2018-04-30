@@ -86,7 +86,7 @@ def get_input():
         try:
             scan_option = str(
                 input("Input the Scan options (ex. BIP5VOLTS):\n-->"))
-            if scan_option in SCAN_OPTIONS:
+            if scan_option.upper() in SCAN_OPTIONS:
                 break
             else:
                 print("You did not enter a valid scan option.")

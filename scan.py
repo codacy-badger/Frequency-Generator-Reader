@@ -40,7 +40,7 @@ if __name__ == '__main__':
     config_file.write(
         str(scan_fq * dur) + "\n" +
         str(scan_fq) + "\n" +
-        str(int(SCAN_OPTIONS[scan_option]))
+        str(int(SCAN_OPTIONS[scan_option.upper()]))
     )
     config_file.close()
 
