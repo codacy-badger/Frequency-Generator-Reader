@@ -108,6 +108,5 @@ def get_input():
         except ValueError:
             print("You did not enter a valid input!")
 
-
     # ADD ANY NEW INPUTS ABOVE THIS LINE
     return gen_fq_bool, frequency, voltage, seconds, scan_rate, scan_option, graph_option

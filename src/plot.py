@@ -21,13 +21,15 @@ np.warnings.filterwarnings('ignore')
 
 
 def determine_fq(fourier_transform, dur):
-    indices = peakutils.indexes(fourier_transform, thres=0.)
+    flat_fourier_transform = fourier_transform.flatten()
+    
+    indices = peakutils.indexes(flat_fourier_transform, thres=0.)
 
-    peaks = [fourier_transform[x] for x in indices]
+    peaks = [flat_fourier_transform[x] for x in indices]
     peaks.sort()
 
-    # if peaks[0] == flat_fourier_transform[0]:
-    #     peaks.pop(0)
+    if peaks[0] == flat_fourier_transform[0]:
+        peaks.pop(0)
 
     max_value_fft = peaks[-1]
     next_value_fft = peaks[-2]

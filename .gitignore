@@ -22,3 +22,7 @@ coverage.xml
 # Temporarily getting rid of MatLab
 MATLAB/
 matlab_plot.exe
+
+# installer files
+build/
+installer.cfg
