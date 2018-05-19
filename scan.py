@@ -5,6 +5,7 @@
  **Author:** David Gurevich                                                                                           \n
  **Required Modules:**
        * numpy                                                                                                        \n
+       * matplotlib                                                                                                   \n
 
 Frequency-Generator Reader | Local software for generating and processing high-frequency signals
 Copyright (C) 2018  David A. Gurevich
@@ -23,14 +24,10 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from mcculw import ul
-from mcculw.enums import ULRange
 from ctypes import *
 
 import numpy as np
 import matplotlib.pyplot as plt
-
-from src.progress import progress
 
 
 def scan():

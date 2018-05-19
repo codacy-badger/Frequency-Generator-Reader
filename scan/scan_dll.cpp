@@ -44,7 +44,8 @@ extern "C" {
     int Gain = 4;
     int ChannelCount = (HighChan - LowChan) + 1;
 
-    const long Count = ChannelCount * dur * rate;
+    const int Count = ChannelCount * dur * rate;
+    
     long Rate = rate;
 
     int* data = (int*)malloc((int)Count * sizeof(int));
