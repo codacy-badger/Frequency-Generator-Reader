@@ -23,58 +23,44 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import csv
-import os
-import pathlib
-import sys
+from mcculw import ul
+from mcculw.enums import ULRange
+from ctypes import *
 
 import numpy as np
+import matplotlib.pyplot as plt
 
-from hantekdds import htdds_wrapper as hantek
-from src import plot
-from src.input_func import get_input, SCAN_OPTIONS
+from src.progress import progress
+
+
+def scan():
+    lib = CDLL('src/scan.dll')
+
+    # void scan(int** input, int rate, int dur) {}
+    lib.scan.argtypes = [POINTER(POINTER(c_int)), c_int, c_int]
+    lib.scan.restype = None
+
+    # void release(int* input) {}
+    lib.release.argtypes = [POINTER(c_int)]
+    lib.release.restype = None
+
+    rate = 4000000  # 8 MHz - Maxiumum scan rate for non-BURSTIO
+    c_rate = c_int(rate)
+
+    dur = 1  # x number of seconds - Completely arbitrary number
+    c_dur = c_int(dur)
+
+    p = POINTER(c_int)()
+    lib.scan(p, c_rate, c_dur)
+    daq_data = np.fromiter(p, dtype=np.int, count=(2*dur*rate))
+    lib.release(p)
+
+    print("Scan and Convert complete!")
+
+    plt.plot(daq_data[::2])
+    plt.plot(daq_data[1::2])
+    plt.show()
+
 
 if __name__ == '__main__':
-
-    function_generator = hantek.HantekDDS()
-    if not function_generator.connect():
-        print("Failed to connect to Hantek 1025G module.")
-        sys.exit()
-
-    bool_gen_fq, fq, voltage, dur, scan_fq, scan_option, bool_graph = get_input()
-
-    if bool_gen_fq:
-        function_generator.drive_periodic(voltage, fq)
-
-    pathlib.Path('Output').mkdir(parents=True, exist_ok=True)
-
-    config_file = open('Output/config.txt', 'w')
-    config_file.write(
-        str(scan_fq * dur) + "\n" +
-        str(scan_fq) + "\n" +
-        str(int(SCAN_OPTIONS[scan_option.upper()]))
-    )
-    config_file.close()
-
-    os.system("C_ScanA.exe")
-
-    # Get DAQ data
-
-    eng_unit_signal = []
-
-    with open('Output/daq_output.csv') as daq_out:
-        next(daq_out, None)
-        rows = csv.reader(daq_out)
-        for row in rows:
-            eng_unit_signal.append(float(row[1]))
-    # Write fourier transformation
-
-    fourier_transform = np.fft.rfft(eng_unit_signal)
-
-    with open('Output/fourier_output.csv', 'w') as fourier_output_file:
-        out_writer = csv.writer(fourier_output_file)
-        out_writer.writerows(map(lambda x: [x], fourier_transform))
-
-    if bool_graph:
-        plot.graph_input(eng_unit_signal, scan_fq, fourier_transform, dur)
-    sys.exit()
+    scan()
