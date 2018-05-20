@@ -1,5 +1,5 @@
 /*
-  File Name: scan.c
+  File Name: scan_dll.cpp
   Project: Currently Unnamed
 
   Company: Research in Flows, Inc
@@ -36,7 +36,7 @@
 
 extern "C" {
 
-  __declspec(dllexport) void scan(int** input, int rate, int dur) {
+  __declspec(dllexport) void scan(int** input, int rate, float dur) {
     int BoardNum = 0;
     int ULStat = 0;
     int LowChan = 0;
@@ -44,12 +44,11 @@ extern "C" {
     int Gain = 4;
     int ChannelCount = (HighChan - LowChan) + 1;
 
-    const int Count = ChannelCount * dur * rate;
-    
+    const int Count = (int)(ChannelCount * dur * rate);
+
     long Rate = rate;
 
     int* data = (int*)malloc((int)Count * sizeof(int));
-
 
     HANDLE MemHandle = 0;
     WORD *ADData = NULL;
@@ -85,13 +84,17 @@ extern "C" {
     Options = CONVERTDATA;
 
     ULStat = cbAInScan(BoardNum, LowChan, HighChan, Count, &Rate, Gain, MemHandle, Options);
+    if (ULStat != 0) {
+      printf("There was a problem when scanning. Error Code: %d", ULStat);
+      exit(ULStat);
+    } else {
+      for (int i = 0; i < Count; i++) {
+        data[i] = ADData[i];
+      }
 
-    for (int i = 0; i < Count; i++) {
-      data[i] = ADData[i];
+      *input = data;
+      cbWinBufFree(MemHandle);
     }
-
-    *input = data;
-    cbWinBufFree(MemHandle);
   }
 
   __declspec(dllexport) void release(int* input) {

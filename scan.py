@@ -34,28 +34,30 @@ def scan():
     lib = CDLL('src/scan.dll')
 
     # void scan(int** input, int rate, int dur) {}
-    lib.scan.argtypes = [POINTER(POINTER(c_int)), c_int, c_int]
+    lib.scan.argtypes = [POINTER(POINTER(c_int)), c_int, c_float]
     lib.scan.restype = None
 
     # void release(int* input) {}
     lib.release.argtypes = [POINTER(c_int)]
     lib.release.restype = None
 
-    rate = 4000000  # 8 MHz - Maxiumum scan rate for non-BURSTIO
+    rate = 4000000  # x Hz or x / 10e6 MHz | Maxiumum scan rate for non-BURSTIO
     c_rate = c_int(rate)
 
-    dur = 1  # x number of seconds - Completely arbitrary number
-    c_dur = c_int(dur)
+    dur = 0.1  # x number of seconds - Completely arbitrary number
+    c_dur = c_float(dur)
 
+    total_data = []
     p = POINTER(c_int)()
-    lib.scan(p, c_rate, c_dur)
-    daq_data = np.fromiter(p, dtype=np.int, count=(2*dur*rate))
-    lib.release(p)
 
-    print("Scan and Convert complete!")
+    for i in range(10):
+        lib.scan(p, c_rate, c_dur)
+        total_data.extend(np.fromiter(p, dtype=np.int, count=int((2*dur*rate))))
+        lib.release(p)
 
-    plt.plot(daq_data[::2])
-    plt.plot(daq_data[1::2])
+    print("Complete!")
+    plt.plot(total_data[::2])
+    plt.plot(total_data[1::2])
     plt.show()
 
 
