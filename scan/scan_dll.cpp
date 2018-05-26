@@ -81,7 +81,7 @@ extern "C" {
       exit(1);
     }
 
-    Options = CONVERTDATA;
+    Options = CONVERTDATA + BURSTIO;
 
     ULStat = cbAInScan(BoardNum, LowChan, HighChan, Count, &Rate, Gain, MemHandle, Options);
     if (ULStat != 0) {
