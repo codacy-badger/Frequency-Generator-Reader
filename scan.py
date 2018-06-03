@@ -5,8 +5,6 @@
  **Author:** David Gurevich                                                                                           \n
  **Required Modules:**
        * numpy                                                                                                        \n
-       * matplotlib                                                                                                   \n
-	   * keyboard																									  \n
 
 Frequency-Generator Reader | Local software for generating and processing high-frequency signals
 Copyright (C) 2018  David A. Gurevich
@@ -27,40 +25,71 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from ctypes import *
 
-import keyboard
 import numpy as np
-import matplotlib.pyplot as plt
+import threading
+import pickle
+import pathlib
 
 
-def scan():
-    lib = CDLL('src/scan.dll')
+class Scanner(threading.Thread):
+    def __init__(self, id, lib):
+        threading.Thread.__init__(self)
 
-    # void scan(int** input, int rate, int dur) {}
-    lib.scan.argtypes = [POINTER(POINTER(c_int)), c_int, c_float]
-    lib.scan.restype = None
+        self.lib = lib
 
-    # void release(int* input) {}
-    lib.release.argtypes = [POINTER(c_int)]
-    lib.release.restype = None
+        # void scan(int** input, int rate, double dur) {}
+        self.lib.scan.argtypes = [POINTER(POINTER(c_int)), c_int, c_double]
+        self.lib.scan.restype = None
 
-    rate = 20000000  # x Hz or x / 10e6 MHz | Maxiumum scan rate for non-BURSTIO
-    c_rate = c_int(rate)
+        # void release(int* input) {}
+        self.lib.release.argtypes = [POINTER(c_int)]
+        self.lib.release.restype = None
 
-    dur = 0.05  # x number of seconds - Completely arbitrary number
-    c_dur = c_float(dur)
+        self.rate = 4000000  # 8 MHz per Channel
+        self.c_rate = c_int(self.rate)
 
-    total_data = []
-    p = POINTER(c_int)()
+        self.dur = 0.25  # x number of seconds
+        self.c_dur = c_double(self.dur)
 
-    for i in range(5):
-        lib.scan(p, c_rate, c_dur)
-        total_data.extend(np.fromiter(p, dtype=np.int, count=int(2*dur*rate)))
-        lib.release(p)
+        self.p = POINTER(c_int)()
 
-    plt.plot(total_data[::2])
-    plt.plot(total_data[1::2])
-    plt.show()
+        self.len = int(2 * self.dur * self.rate)
+
+        self.id = str(id)
+
+    def run(self):
+        self.lib.scan(self.p, self.c_rate, self.c_dur)
+        self.collected_data = self.p
+
+
+class Writer(threading.Thread):
+    def __init__(self, scan_thread, id):
+        threading.Thread.__init__(self)
+        self.id = str(id)
+        self.scan_thread = scan_thread
+
+    def run(self):
+        while True:
+            if hasattr(self.scan_thread, 'collected_data'):
+                self.to_write = np.fromiter(
+                    self.scan_thread.p, dtype=np.int, count=self.scan_thread.len)
+                self.scan_thread.lib.release(self.scan_thread.p)
+                pickle.dump(self.to_write, open(
+                    "Output/output" + self.id, "wb"))
+                break
 
 
 if __name__ == '__main__':
-    scan()
+    count = 3
+
+    threads = []
+    lib = CDLL("src/scan.dll")
+    pathlib.Path('Output').mkdir(parents=True, exist_ok=True)
+    for i in range(count):
+        threads.append(Scanner(i, lib))
+        threads[-1].start()
+        threads.append(Writer(threads[-1], i).start())
+
+        scan_threads = threads[::2]
+        for thread in scan_threads:
+            thread.join()

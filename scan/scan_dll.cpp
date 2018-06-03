@@ -36,7 +36,7 @@
 
 extern "C" {
 
-  __declspec(dllexport) void scan(int** input, int rate, float dur) {
+  __declspec(dllexport) void scan(int** input, int rate, double dur) {
     int BoardNum = 0;
     int ULStat = 0;
     int LowChan = 0;
@@ -99,5 +99,9 @@ extern "C" {
 
   __declspec(dllexport) void release(int* input) {
     free(input);
+  }
+
+  __declspec(dllexport) void stopBackground() {
+    cbStopBackground(0, AIFUNCTION);
   }
 }
