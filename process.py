@@ -28,18 +28,21 @@ import os
 
 from matplotlib import pyplot as plt
 
+
 if __name__ == '__main__':
     data = []
     path, dirs, files = next(os.walk("Output"))
     file_count = len(files)
     for i in range(file_count):
         str_i = str(i)
-        with open('Output/output' + str_i, 'rb') as fp:
+        with open('Output/output' + str_i + '.bin', 'rb') as fp:
             to_add = pickle.load(fp)
             data.extend(to_add)
 
     data = [int(i) for i in data]
-    print(len(data))
-    plt.plot(data[::2])
-    plt.plot(data[1::2])
+    chan1 = data[::2]
+    chan2 = data[1::2]
+
+    plt.plot(chan1[:len(chan1)])
+    plt.plot(chan2[:len(chan2)])
     plt.show()

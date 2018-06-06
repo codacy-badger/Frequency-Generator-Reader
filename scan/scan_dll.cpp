@@ -5,7 +5,7 @@
   Company: Research in Flows, Inc
   Author: David Gurevich
 
-    Frequency-Generator Reader | Local software for generating and processing high-frequency signals
+    Frequency Generator Reader | Local software for generating, reading, and processing high-frequency signals
     Copyright (C) 2018  David A. Gurevich
 
     This program is free software: you can redistribute it and/or modify
@@ -32,6 +32,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
+
 #include "cbw.h"
 
 extern "C" {
@@ -85,7 +86,7 @@ extern "C" {
 
     ULStat = cbAInScan(BoardNum, LowChan, HighChan, Count, &Rate, Gain, MemHandle, Options);
     if (ULStat != 0) {
-      printf("There was a problem when scanning. Error Code: %d", ULStat);
+      printf("There was a problem while scanning. Error Code: %d", ULStat);
       exit(ULStat);
     } else {
       for (int i = 0; i < Count; i++) {
@@ -98,7 +99,10 @@ extern "C" {
   }
 
   __declspec(dllexport) void release(int* input) {
-    free(input);
+    if (input != NULL){
+      free(input);
+      input = NULL;
+    }
   }
 
   __declspec(dllexport) void stopBackground() {

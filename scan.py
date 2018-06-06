@@ -23,19 +23,20 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import pathlib
+import pickle
+import sys
+import threading
 from ctypes import *
 
 import numpy as np
-import threading
-import pickle
-import pathlib
 
 
 class Scanner(threading.Thread):
-    def __init__(self, id, lib):
+    def __init__(self, iteration, dll_lib):
         threading.Thread.__init__(self)
 
-        self.lib = lib
+        self.lib = dll_lib
 
         # void scan(int** input, int rate, double dur) {}
         self.lib.scan.argtypes = [POINTER(POINTER(c_int)), c_int, c_double]
@@ -45,47 +46,54 @@ class Scanner(threading.Thread):
         self.lib.release.argtypes = [POINTER(c_int)]
         self.lib.release.restype = None
 
-        self.rate = 4000000  # 8 MHz per Channel
+        self.rate = 20000000  # 20 MHz per Channel
         self.c_rate = c_int(self.rate)
 
-        self.dur = 0.25  # x number of seconds
+        self.dur = 0.1  # x number of seconds
         self.c_dur = c_double(self.dur)
 
-        self.p = POINTER(c_int)()
-
+        self.P = POINTER(c_int)()
         self.len = int(2 * self.dur * self.rate)
+        self.iter = iteration
 
-        self.id = str(id)
+        self.scanned = False
 
     def run(self):
-        self.lib.scan(self.p, self.c_rate, self.c_dur)
-        self.collected_data = self.p
+        try:
+            self.lib.scan(self.P, self.c_rate, self.c_dur)
+            self.scanned = True
+            print("Scanner ", self.iter, " has completed scan.")
+        except Exception:
+            print('Scan error')
+            sys.exit(1)
 
 
 class Writer(threading.Thread):
-    def __init__(self, scan_thread, id):
+    def __init__(self, scan_thread, iter):
         threading.Thread.__init__(self)
-        self.id = str(id)
+        self.iter = str(iter)
+        self.to_write = []
         self.scan_thread = scan_thread
 
     def run(self):
         while True:
-            if hasattr(self.scan_thread, 'collected_data'):
+            if self.scan_thread.scanned:
                 self.to_write = np.fromiter(
-                    self.scan_thread.p, dtype=np.int, count=self.scan_thread.len)
-                self.scan_thread.lib.release(self.scan_thread.p)
+                    self.scan_thread.P, dtype=np.int, count=self.scan_thread.len)
+                self.scan_thread.lib.release(self.scan_thread.P)
                 pickle.dump(self.to_write, open(
-                    "Output/output" + self.id, "wb"))
+                    "Output/output" + self.iter + ".bin", "wb"))
+                print("Writer  ", self.iter, " has completed write.")
                 break
 
 
 if __name__ == '__main__':
-    count = 3
+    COUNT = 10
 
     threads = []
     lib = CDLL("src/scan.dll")
     pathlib.Path('Output').mkdir(parents=True, exist_ok=True)
-    for i in range(count):
+    for i in range(COUNT):
         threads.append(Scanner(i, lib))
         threads[-1].start()
         threads.append(Writer(threads[-1], i).start())
