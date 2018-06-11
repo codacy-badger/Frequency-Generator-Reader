@@ -65,17 +65,8 @@ extern "C" {
     cbErrHandling(PRINTALL, STOPALL);
     cbGetConfig(BOARDINFO, BoardNum, 0 , BIADRES, &ADRes);
 
-    if (ADRes > 16) {
-      HighResAD = TRUE;
-    }
-
-    if (HighResAD) {
-      MemHandle = cbWinBufAlloc32(Count);
-      ADData32 = (DWORD *)MemHandle;
-    } else {
-      MemHandle = cbWinBufAlloc(Count);
-      ADData = (WORD *)MemHandle;
-    }
+    MemHandle = cbWinBufAlloc(Count);
+    ADData = (WORD *)MemHandle;
 
     if (!MemHandle) {
       printf("\nOut of Memory\n");

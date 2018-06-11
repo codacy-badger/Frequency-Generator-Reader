@@ -1,5 +1,5 @@
 """
- **File Name:** plot.py                                                                                               \n
+ **File Name:** process.py                                                                                            \n
  **Project:** CURRENTLY UNNAMED                                                                                       \n
  **Company:** Research in Flows, Inc                                                                                  \n
  **Author:** David Gurevich                                                                                           \n
@@ -26,6 +26,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import pickle
 import os
 
+from src.util import determine_fq
+
+from mcculw import ul
+from mcculw.enums import ULRange
+from mcculw.ul import ULError
+
+import numpy as np
+
 from matplotlib import pyplot as plt
 
 
@@ -39,10 +47,10 @@ if __name__ == '__main__':
             to_add = pickle.load(fp)
             data.extend(to_add)
 
-    data = [int(i) for i in data]
+    data = [ul.to_eng_units(0, ULRange.BIP1VOLTS, int(i)) for i in data]
     chan1 = data[::2]
     chan2 = data[1::2]
 
-    plt.plot(chan1[:len(chan1)])
-    plt.plot(chan2[:len(chan2)])
+    plt.plot(chan1)
+    plt.plot(chan2)
     plt.show()

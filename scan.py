@@ -3,7 +3,7 @@
  **Project:** CURRENTLY UNNAMED                                                                                       \n
  **Company:** Research in Flows, Inc                                                                                  \n
  **Author:** David Gurevich                                                                                           \n
- **Required Modules:**
+ **Required Modules:**                                                                                                \n
        * numpy                                                                                                        \n
 
 Frequency-Generator Reader | Local software for generating and processing high-frequency signals
@@ -46,10 +46,10 @@ class Scanner(threading.Thread):
         self.lib.release.argtypes = [POINTER(c_int)]
         self.lib.release.restype = None
 
-        self.rate = 20000000  # 20 MHz per Channel
+        self.rate = 250000  # 20 MHz per Channel
         self.c_rate = c_int(self.rate)
 
-        self.dur = 0.1  # x number of seconds
+        self.dur = 1  # x number of seconds
         self.c_dur = c_double(self.dur)
 
         self.P = POINTER(c_int)()
