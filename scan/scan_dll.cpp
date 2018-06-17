@@ -3,7 +3,7 @@
   Project: Currently Unnamed
 
   Company: Research in Flows, Inc
-  Author: David Gurevich
+  Author: David A. Gurevich
 
     Frequency Generator Reader | Local software for generating, reading, and processing high-frequency signals
     Copyright (C) 2018  David A. Gurevich

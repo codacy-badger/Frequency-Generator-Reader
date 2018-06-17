@@ -2,9 +2,10 @@
  **File Name:** scan.py                                                                                               \n
  **Project:** CURRENTLY UNNAMED                                                                                       \n
  **Company:** Research in Flows, Inc                                                                                  \n
- **Author:** David Gurevich                                                                                           \n
+ **Author:** David A. Gurevich                                                                                        \n
  **Required Modules:**                                                                                                \n
        * numpy                                                                                                        \n
+       * HantekDDS                                                                                                    \n
 
 Frequency-Generator Reader | Local software for generating and processing high-frequency signals
 Copyright (C) 2018  David A. Gurevich
@@ -30,6 +31,7 @@ import threading
 from ctypes import *
 
 import numpy as np
+import hantekdds.htdds_wrapper as hantekdds
 
 
 class Scanner(threading.Thread):
@@ -46,10 +48,10 @@ class Scanner(threading.Thread):
         self.lib.release.argtypes = [POINTER(c_int)]
         self.lib.release.restype = None
 
-        self.rate = 250000  # 20 MHz per Channel
+        self.rate = 20000000  # 20 MHz per Channel
         self.c_rate = c_int(self.rate)
 
-        self.dur = 1  # x number of seconds
+        self.dur = 0.05  # x number of seconds
         self.c_dur = c_double(self.dur)
 
         self.P = POINTER(c_int)()
@@ -62,7 +64,6 @@ class Scanner(threading.Thread):
         try:
             self.lib.scan(self.P, self.c_rate, self.c_dur)
             self.scanned = True
-            print("Scanner ", self.iter, " has completed scan.")
         except Exception:
             print('Scan error')
             sys.exit(1)
@@ -78,22 +79,39 @@ class Writer(threading.Thread):
     def run(self):
         while True:
             if self.scan_thread.scanned:
-                self.to_write = np.fromiter(
-                    self.scan_thread.P, dtype=np.int, count=self.scan_thread.len)
+                try:
+                    self.to_write = np.fromiter(self.scan_thread.P, dtype=np.int, count=self.scan_thread.len)
+                except Exception:
+                    print("There was an error converting the pointer (", self.scan_thread.P, ") to an interable")
+
+                try:
+                    pickle.dump(self.to_write, open("Output/output" + self.iter + ".bin", "wb"))
+                except Exception:
+                    print("There was an error dumping the data.")
+
                 self.scan_thread.lib.release(self.scan_thread.P)
-                pickle.dump(self.to_write, open(
-                    "Output/output" + self.iter + ".bin", "wb"))
-                print("Writer  ", self.iter, " has completed write.")
                 break
 
 
-if __name__ == '__main__':
-    COUNT = 10
-
-    threads = []
-    lib = CDLL("src/scan.dll")
+def initialize():
+    lib = CDLL('src/scan.dll')
     pathlib.Path('Output').mkdir(parents=True, exist_ok=True)
-    for i in range(COUNT):
+
+    function_generator = hantekdds.HantekDDS()
+    if not function_generator.connect():
+        print("There was an error connecting to the Hantek 1025G generator module")
+        sys.exit(1)
+    function_generator.drive_periodic(frequency=1.0)
+
+    return lib
+
+
+if __name__ == '__main__':
+    lib = initialize()
+
+    thread_count = 5
+    threads = []
+    for i in range(thread_count):
         threads.append(Scanner(i, lib))
         threads[-1].start()
         threads.append(Writer(threads[-1], i).start())

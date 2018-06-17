@@ -47,7 +47,7 @@ class HantekDDS():
             if n_devices:
                 if bool(check(dev)):
                     self.dev_id = dev
-                    print('HANTEK: Connected as device {:d}'.format(dev))
+                    # print('HANTEK: Connected as device {:d}'.format(dev))
                     return True
                 else:
                     time.sleep(1)

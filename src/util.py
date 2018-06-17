@@ -2,7 +2,7 @@
  **File Name:** plot.py                                                                                               \n
  **Project:** CURRENTLY UNNAMED                                                                                       \n
  **Company:** Research in Flows, Inc                                                                                  \n
- **Author:** David Gurevich                                                                                           \n
+ **Author:** David A. Gurevich                                                                                        \n
  **Required Modules:**
        * numpy                                                                                                        \n
        * matplotlib.pyplot                                                                                            \n

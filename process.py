@@ -2,7 +2,7 @@
  **File Name:** process.py                                                                                            \n
  **Project:** CURRENTLY UNNAMED                                                                                       \n
  **Company:** Research in Flows, Inc                                                                                  \n
- **Author:** David Gurevich                                                                                           \n
+ **Author:** David A. Gurevich                                                                                        \n
  **Required Modules:**
        * matplotlib                                                                                                   \n
 
@@ -26,13 +26,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import pickle
 import os
 
-from src.util import determine_fq
-
 from mcculw import ul
 from mcculw.enums import ULRange
-from mcculw.ul import ULError
-
-import numpy as np
 
 from matplotlib import pyplot as plt
 
