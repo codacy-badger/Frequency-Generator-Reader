@@ -53,11 +53,9 @@ extern "C" {
 
     HANDLE MemHandle = 0;
     WORD *ADData = NULL;
-    DWORD *ADData32 = NULL;
 
     unsigned Options;
     float RevLevel = (float)CURRENTREVNUM;
-    BOOL HighResAD = FALSE;
     int ADRes;
 
     ULStat = cbDeclareRevision(&RevLevel);

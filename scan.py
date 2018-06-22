@@ -1,11 +1,11 @@
 """
- **File Name:** scan.py                                                                                               \n
- **Project:** CURRENTLY UNNAMED                                                                                       \n
- **Company:** Research in Flows, Inc                                                                                  \n
- **Author:** David A. Gurevich                                                                                        \n
- **Required Modules:**                                                                                                \n
-       * numpy                                                                                                        \n
-       * HantekDDS                                                                                                    \n
+ **File Name:** scan.py                                                                          \n
+ **Project:** CURRENTLY UNNAMED                                                                  \n
+ **Company:** Research in Flows, Inc                                                             \n
+ **Author:** David A. Gurevich                                                                   \n
+ **Required Modules:**                                                                           \n
+       * numpy                                                                                   \n
+       * HantekDDS                                                                               \n
 
 Frequency-Generator Reader | Local software for generating and processing high-frequency signals
 Copyright (C) 2018  David A. Gurevich
@@ -28,7 +28,8 @@ import pathlib
 import pickle
 import sys
 import threading
-from ctypes import *
+import shutil
+from ctypes import c_int, c_double, POINTER, CDLL
 
 import numpy as np
 import hantekdds.htdds_wrapper as hantekdds
@@ -95,6 +96,7 @@ class Writer(threading.Thread):
 
 def initialize():
     lib = CDLL('src/scan.dll')
+    shutil.rmtree('Output')
     pathlib.Path('Output').mkdir(parents=True, exist_ok=True)
 
     function_generator = hantekdds.HantekDDS()

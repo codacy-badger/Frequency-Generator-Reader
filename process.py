@@ -1,10 +1,10 @@
 """
- **File Name:** process.py                                                                                            \n
- **Project:** CURRENTLY UNNAMED                                                                                       \n
- **Company:** Research in Flows, Inc                                                                                  \n
- **Author:** David A. Gurevich                                                                                        \n
+ **File Name:** process.py                                                                        \n
+ **Project:** CURRENTLY UNNAMED                                                                   \n
+ **Company:** Research in Flows, Inc                                                              \n
+ **Author:** David A. Gurevich                                                                    \n
  **Required Modules:**
-       * matplotlib                                                                                                   \n
+       * matplotlib                                                                               \n
 
 Frequency-Generator Reader | Local software for generating and processing high-frequency signals
 Copyright (C) 2018  David A. Gurevich
@@ -33,19 +33,19 @@ from matplotlib import pyplot as plt
 
 
 if __name__ == '__main__':
-    data = []
-    path, dirs, files = next(os.walk("Output"))
-    file_count = len(files)
-    for i in range(file_count):
+    DATA = []
+    PATH, DIRS, FILES = next(os.walk("Output"))
+    FILE_COUNT = len(FILES)
+    for i in range(FILE_COUNT):
         str_i = str(i)
         with open('Output/output' + str_i + '.bin', 'rb') as fp:
             to_add = pickle.load(fp)
-            data.extend(to_add)
+            DATA.extend(to_add)
 
-    data = [ul.to_eng_units(0, ULRange.BIP1VOLTS, int(i)) for i in data]
-    chan1 = data[::2]
-    chan2 = data[1::2]
+    DATA = [ul.to_eng_units(0, ULRange.BIP1VOLTS, int(i)) for i in DATA]
+    CHAN1 = DATA[::2]
+    CHAN2 = DATA[1::2]
 
-    plt.plot(chan1)
-    plt.plot(chan2)
+    plt.plot(CHAN1)
+    plt.plot(CHAN2)
     plt.show()

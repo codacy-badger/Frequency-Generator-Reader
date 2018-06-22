@@ -23,39 +23,35 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-import sys
 import numpy as np
 import hantekdds.htdds_wrapper as hantekdds
 
 import matplotlib.pyplot as plt
-import matplotlib.animation as animation
-from matplotlib import style
+import ctypes
 
-from ctypes import *
-
-function_generator = hantekdds.HantekDDS()
-function_generator.drive_periodic(frequency=1000.0)
+FUNCTION_GENERATOR = hantekdds.HantekDDS()
+FUNCTION_GENERATOR.drive_periodic(frequency=1.0)
 
 
 def run_scan():
-    lib = CDLL('src/scan.dll')
+    lib = ctypes.CDLL('src/scan.dll')
 
-    lib.scan.argtypes = [POINTER(POINTER(c_int)), c_int, c_double]
+    lib.scan.argtypes = [ctypes.POINTER(ctypes.POINTER(ctypes.c_int)), ctypes.c_int, ctypes.c_double]
     lib.scan.restype = None
 
-    lib.release.argtypes = [POINTER(c_int)]
+    lib.release.argtypes = [ctypes.POINTER(ctypes.c_int)]
     lib.release.restype = None
 
-    rate = 100000
-    c_rate = c_int(rate)
+    rate = 200000
+    c_rate = ctypes.c_int(rate)
 
-    dur = 0.01
-    c_dur = c_double(dur)
+    dur = 0.5
+    c_dur = ctypes.c_double(dur)
 
-    P = POINTER(c_int)()
+    p = ctypes.POINTER(c_int)()
     arr_len = int(2 * dur * rate)
 
-    lib.scan(P, c_rate, c_dur)
+    lib.scan(p, c_rate, c_dur)
 
     arr = np.fromiter(P, dtype=np.int, count=arr_len)
     return arr
@@ -65,4 +61,4 @@ if __name__ == '__main__':
     while True:
         plt.clf()
         plt.plot(run_scan()[::2])
-        plt.pause(0.01)
+        plt.pause(0.5)

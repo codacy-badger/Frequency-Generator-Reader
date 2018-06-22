@@ -26,3 +26,12 @@ matlab_plot.exe
 # installer files
 build/
 installer.cfg
+
+# Visual Studio Files
+.vs/
+/.vs
+*.pyproj
+*.sln
+*.pyperf
+
+requirements.txt
