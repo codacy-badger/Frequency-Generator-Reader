@@ -30,10 +30,10 @@ import sys
 import threading
 import shutil
 
+from ctypes import c_int, c_double, POINTER, CDLL
+
 import numpy as np
 import hantekdds.htdds_wrapper as hantekdds
-
-from ctypes import c_int, c_double, POINTER, CDLL
 
 
 class Scanner(threading.Thread):
@@ -125,7 +125,7 @@ class Writer(threading.Thread):
         Initialization of Writer thread.
 
         Args:
-            scan_thread (Scanner() Class): The writer's corresponding scan thread that it reports to.
+            scan_thread (Scanner() Class):The writer's corresponding scan thread that it reports to.
             iter (int):                    Iteration of for loop that generates the thread.
         """
         threading.Thread.__init__(self)

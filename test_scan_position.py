@@ -1,11 +1,11 @@
 """
- **File Name:** test_scan_position.py                                                                                 \n
- **Project:** CURRENTLY UNNAMED                                                                                       \n
- **Company:** Research in Flows, Inc                                                                                  \n
- **Author:** David A. Gurevich                                                                                        \n
- **Required Modules:**                                                                                                \n
-       * numpy                                                                                                        \n
-       * HantekDDS                                                                                                    \n
+ **File Name:** test_scan_position.py                                                             \n
+ **Project:** CURRENTLY UNNAMED                                                                   \n
+ **Company:** Research in Flows, Inc                                                              \n
+ **Author:** David A. Gurevich                                                                    \n
+ **Required Modules:**                                                                            \n
+       * numpy                                                                                    \n
+       * HantekDDS                                                                                \n
 
 Frequency-Generator Reader | Local software for generating and processing high-frequency signals
 Copyright (C) 2018  David A. Gurevich
@@ -23,11 +23,11 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-import numpy as np
-import hantekdds.htdds_wrapper as hantekdds
-import matplotlib.pyplot as plt
-
 import ctypes
+
+import numpy as np
+import matplotlib.pyplot as plt
+import hantekdds.htdds_wrapper as hantekdds
 
 FUNCTION_GENERATOR = hantekdds.HantekDDS()
 FUNCTION_GENERATOR.drive_periodic(frequency=120000.0)
@@ -36,7 +36,8 @@ FUNCTION_GENERATOR.drive_periodic(frequency=120000.0)
 def run_scan():
     lib = ctypes.CDLL('src/scan.dll')
 
-    lib.scan.argtypes = [ctypes.POINTER(ctypes.POINTER(ctypes.c_int)), ctypes.c_int, ctypes.c_double]
+    lib.scan.argtypes = [ctypes.POINTER(ctypes.POINTER(ctypes.c_int)),
+                        ctypes.c_int, ctypes.c_double]
     lib.scan.restype = None
 
     lib.release.argtypes = [ctypes.POINTER(ctypes.c_int)]
