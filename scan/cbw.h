@@ -18,8 +18,7 @@
 #include <time.h>
 #endif
 
-
-/* Current Revision Number */
+ /* Current Revision Number */
 #define CURRENTREVNUM      6.5
 
 /* System error code */
@@ -153,7 +152,7 @@
 #define NOPCMREGKEY             131	  /* No registry entry for this PCMCIA board */
 #define NOCBUL32SYS             132	  /* CBUL32.SYS device driver is not loaded */
 #define NODMAMEMORY             133   /* No DMA buffer available to device driver */
-#define IRQNOTAVAILABLE         134	  /* IRQ in being used by another device */	
+#define IRQNOTAVAILABLE         134	  /* IRQ in being used by another device */
 #define NOT7266CTR              135   /* This board does not have an LS7266 counter */
 #define BADQUADRATURE           136   /* Invalid quadrature specified */
 #define BADCOUNTMODE            137   /* Invalid counting mode specified */
@@ -162,8 +161,8 @@
 #define BADINVERTINDEX          140   /* Invalid invert index specified */
 #define BADFLAGPINS             141   /* Invalid flag pins specified */
 #define NOCTRSTATUS             142	  /* This board does not support cbCStatus() */
-#define NOGATEALLOWED           143	  /* Gating and indexing not allowed simultaneously */		     
-#define NOINDEXALLOWED          144   /* Indexing not allowed in non-quadratue mode */   
+#define NOGATEALLOWED           143	  /* Gating and indexing not allowed simultaneously */
+#define NOINDEXALLOWED          144   /* Indexing not allowed in non-quadratue mode */
 #define OPENCONNECTION          145   /* Temperature input has open connection */
 #define BMCONTINUOUSCOUNT       146   /* Count must be integer multiple of packetsize for recycle mode. */
 #define BADCALLBACKFUNC         147   /* Invalid pointer to callback function passed as arg */
@@ -174,7 +173,7 @@
 #define BADEVENTSIZE            152   /* Invalid event count specified. */
 #define CANTINSTALLEVENT        153	  /* Unable to install event handler */
 #define BADBUFFERSIZE           154   /* Buffer is too small for operation */
-#define BADAIMODE               155   /* Invalid analog input mode(RSE, NRSE, or DIFF) */ 
+#define BADAIMODE               155   /* Invalid analog input mode(RSE, NRSE, or DIFF) */
 #define BADSIGNAL               156   /* Invalid signal type specified. */
 #define BADCONNECTION           157   /* Invalid connection specified. */
 #define BADINDEX                158   /* Invalid index specified, or reached end of internal connection list. */
@@ -247,7 +246,6 @@
 #define AIINPUTMODENOTCONFIGURABLE		1033    /* Input mode not configurable */
 #define INVALIDEXTPACEREDGE				1034	/* Invalid external pacer edge */
 #define CMREXCEEDED						1035	/* Common-mode voltage range exceeded */
-
 
 #define AIFUNCTION      1    /* Analog Input Function    */
 #define AOFUNCTION      2    /* Analog Output Function   */
@@ -386,7 +384,6 @@
 #define IDLE             0
 #define RUNNING          1
 
-
 /* Option Flags */
 #define FOREGROUND       0x0000    /* Run in foreground, don't return till done */
 #define BACKGROUND       0x0001    /* Run in background, return immediately */
@@ -445,7 +442,6 @@
 #define CTR64BIT		 0x0400	   /* Return 64-bit counter data */
 #define NOCLEAR			 0x0800	   /* Disables clearing counters when scan starts */
 
-
 #define ENABLED          1
 #define DISABLED         0
 
@@ -456,8 +452,7 @@
    to NOTUSED */
 #define NOTUSED          -1
 
-
-/* types of error reporting */
+   /* types of error reporting */
 #define DONTPRINT        0
 #define PRINTWARNINGS    1
 #define PRINTFATAL       2
@@ -484,7 +479,7 @@
 #define CTRBANK1		 12		// Bank 1 of counter
 #define CTRBANK2		 13		// Bank 2 of counter
 #define CTRBANK3		 14		// Bank 3 of counter
-#define PADZERO			 15		// Dummy channel. Fills the corresponding data elements with zero 
+#define PADZERO			 15		// Dummy channel. Fills the corresponding data elements with zero
 #define DIGITAL			 16
 #define CTR				 17
 
@@ -492,7 +487,7 @@
 #define SETPOINT_ENABLE  	0x100  // Enable setpoint detection
 
 /* setpoint flags*/
-#define SF_EQUAL_LIMITA					0x00 // Channel = LimitA value 
+#define SF_EQUAL_LIMITA					0x00 // Channel = LimitA value
 #define	SF_LESSTHAN_LIMITA				0x01 // Channel < LimitA value
 #define SF_INSIDE_LIMITS				0x02 // Channel Inside LimitA and LimitB (LimitA < Channel < LimitB)
 #define SF_GREATERTHAN_LIMITB			0x03 // Channel > LimitB
@@ -500,7 +495,7 @@
 #define SF_HYSTERESIS					0x05 // Use As Hysteresis
 #define	SF_UPDATEON_TRUEONLY			0x00 // Latch output condition (output = output1 for duration of acquisition)
 #define	SF_UPDATEON_TRUEANDFALSE		0x08 // Do not latch output condition (output = output1 when criteria met else output = output2)
- 
+
 /* Setpoint output channels */
 #define SO_NONE			0 // No Output
 #define SO_DIGITALPORT	1 // Output to digital Port
@@ -564,7 +559,6 @@
 /* Default option */
 #define DEFAULTOPTION	 0x0000
 
-
 /* Types of digital I/O Ports */
 #define AUXPORT          1
 #define AUXPORT0         1
@@ -604,18 +598,15 @@
 #define EIGHTHPORTCL     40
 #define EIGHTHPORTCH     41
 
-
 /* Analog input modes */
 #define DIFFERENTIAL        0
 #define SINGLE_ENDED        1
 #define GROUNDED	    16
 
-
 /* Selectable analog input modes (PCI-6000 series) */
 #define RSE             0x1000      /* Referenced Single-Ended */
 #define NRSE            0x2000      /* Non-Referenced Single-Ended */
 #define DIFF            0x4000      /* Differential */
-
 
 /* Selectable A/D Ranges codes */
 #define BIP60VOLTS       20              /* -60 to 60 Volts */
@@ -642,7 +633,6 @@
 #define BIPPT156VOLTS    18				 /* -0.156 to +0.156 Volts */
 #define BIPPT125VOLTS    22				 /* -0.125 to +0.125 Volts */
 #define BIPPT078VOLTS    19				 /* -0.078 to +0.078 Volts */
-
 
 #define UNI10VOLTS       100            /* 0 to 10 Volts*/
 #define UNI5VOLTS        101            /* 0 to 5 Volts */
@@ -825,7 +815,7 @@
 #define HOLDREG17       117
 #define HOLDREG18       118
 #define HOLDREG19       119
-#define HOLDREG20       120 
+#define HOLDREG20       120
 
 #define ALARM1CHIP1     201
 #define ALARM2CHIP1     202
@@ -835,7 +825,6 @@
 #define ALARM2CHIP3     402
 #define ALARM1CHIP4     501
 #define ALARM2CHIP4     502
-
 
 /* LS7266 Counter registers */
 #define COUNT1          601
@@ -1014,7 +1003,6 @@
 #define CLEAR_ON_Z_OFF	0x0000
 #define CLEAR_ON_Z_ON	0x0020
 
-
 /* 25xx series counter debounce time constants */
 #define CTR_DEBOUNCE500ns      0
 #define CTR_DEBOUNCE1500ns     1
@@ -1022,8 +1010,8 @@
 #define CTR_DEBOUNCE7500ns     3
 #define CTR_DEBOUNCE15500ns    4
 #define CTR_DEBOUNCE31500ns    5
-#define CTR_DEBOUNCE63500ns    6   
-#define CTR_DEBOUNCE127500ns   7   
+#define CTR_DEBOUNCE63500ns    6
+#define CTR_DEBOUNCE127500ns   7
 #define CTR_DEBOUNCE100us      8
 #define CTR_DEBOUNCE300us      9
 #define CTR_DEBOUNCE700us      10
@@ -1085,7 +1073,7 @@
 
 /* Signal I/O Configuration Parameters */
 /* --Connections */
-#define AUXIN0          0x01           
+#define AUXIN0          0x01
 #define AUXIN1          0x02
 #define AUXIN2          0x04
 #define AUXIN3          0x08
@@ -1099,10 +1087,9 @@
 
 #define MAX_CONNECTIONS 4     /* maximum number connections per output signal type */
 
-
 /* --Signal Types */
-#define ADC_CONVERT     0x0001   
-#define ADC_GATE        0x0002  
+#define ADC_CONVERT     0x0001
+#define ADC_GATE        0x0002
 #define ADC_START_TRIG  0x0004
 #define ADC_STOP_TRIG   0x0008
 #define ADC_TB_SRC      0x0010
@@ -1129,7 +1116,6 @@
 /* -- Signal Polarity */
 #define INVERTED        1
 #define NONINVERTED     0
-
 
 /* Types of configuration information */
 #define GLOBALINFO         1
@@ -1253,22 +1239,22 @@
 #define BIPWRJMPR            207     /* MetraBus controller board Pwr jumper */
 #define BINUMTEMPCHANS       208     /* Number of Temperature channels */
 #define BIADTRIGSRC          209     /* A/D trigger source */
-#define BIBNCSRC             210     /* BNC source */ 
+#define BIBNCSRC             210     /* BNC source */
 #define BIBNCTHRESHOLD       211     /* BNC Threshold 2.5V or 0.0V */
 #define BIBURSTMODE          212     /* Board supports BURSTMODE */
 #define BIDITHERON           213     /* A/D Dithering enabled */
 #define BISERIALNUM          214    /* Serial Number for USB boards */
 #define BIDACUPDATEMODE      215    /* Update immediately or upon AOUPDATE command */
 #define BIDACUPDATECMD       216    /* Issue D/A UPDATE command */
-#define BIDACSTARTUP         217    /* Store last value written for startup */ 
+#define BIDACSTARTUP         217    /* Store last value written for startup */
 #define BIADTRIGCOUNT        219    /* Number of samples to acquire per trigger in retrigger mode */
 #define BIADFIFOSIZE         220    /* Set FIFO override size for retrigger mode */
 #define BIADSOURCE           221    /* Set source to internal reference or external connector(-1) */
-#define BICALOUTPUT          222    /* CAL output pin setting */ 
+#define BICALOUTPUT          222    /* CAL output pin setting */
 #define BISRCADPACER         223    /* Source A/D Pacer output */
 #define BIMFGSERIALNUM       224    /* Manufacturers 8-byte serial number */
 #define BIPCIREVID           225    /* Revision Number stored in PCI header */
-#define BIEXTCLKTYPE         227    
+#define BIEXTCLKTYPE         227
 #define BIDIALARMMASK        230
 
 #define BINETIOTIMEOUT       247
@@ -1329,7 +1315,6 @@
 #define BIDEVMACADDR		  364
 #define BIUSERDEVIDNUM		  365
 #define BIADAIMODE			  373
-
 
 /* Type of digital device information */
 #define DIBASEADR           0       /* Base address */
@@ -1400,7 +1385,6 @@
 #define AI_CHAN_TYPE_FULL_BRIDGE_62PT5mVV	504
 #define AI_CHAN_TYPE_FULL_BRIDGE_7PT8mVV	505
 
-
 /* Thermocouple Types */
 #define TC_TYPE_J		1
 #define TC_TYPE_K		2
@@ -1434,7 +1418,6 @@
 #define VER_FPGA				3
 #define VER_FW_MEASUREMENT_EXP	4
 
-
 /* Types of events */
 #define	ON_SCAN_ERROR				0x0001
 #define ON_EXTERNAL_INTERRUPT		0x0002
@@ -1442,15 +1425,10 @@
 #define ON_DATA_AVAILABLE			0x0008
 #define ON_END_OF_AI_SCAN			0x0010	// deprecated, use ON_END_OF_INPUT_SCAN
 #define ON_END_OF_AO_SCAN			0x0020	// deprecated, use ON_END_OF_OUTPUT_SCAN
-#define ON_END_OF_INPUT_SCAN		0x0010  
-#define ON_END_OF_OUTPUT_SCAN		0x0020  
+#define ON_END_OF_INPUT_SCAN		0x0010
+#define ON_END_OF_OUTPUT_SCAN		0x0020
 #define ON_CHANGE_DI             0x0040
 #define ALL_EVENT_TYPES          0xffff
-
-
-
-
-
 
 #define NUM_EVENT_TYPES		6
 #define MAX_NUM_EVENT_TYPES 32
@@ -1466,23 +1444,19 @@
 #define LATCH_DI			1
 #define LATCH_DO			2
 
-
 // time zone constants
 #define TIMEZONE_LOCAL		0
 #define TIMEZONE_GMT		1
 
-
 // time format constants
 #define TIMEFORMAT_12HOUR	0
 #define TIMEFORMAT_24HOUR	1
-
 
 // delimiter constants
 #define DELIMITER_COMMA		0
 #define DELIMITER_SEMICOLON	1
 #define DELIMITER_SPACE		2
 #define DELIMITER_TAB		3
-
 
 // AI channel units in binary file
 #define UNITS_TEMPERATURE	0
@@ -1500,23 +1474,21 @@
 #define CAL_TABLE_FACTORY	0
 #define CAL_TABLE_FIELD		1
 
-
 #ifndef USHORT
-  typedef unsigned short USHORT;
+typedef unsigned short USHORT;
 #endif
-
 
 typedef enum
 {
 	USB_IFC = 1 << 0,
 	BLUETOOTH_IFC = 1 << 1,
 	ETHERNET_IFC = 1 << 2,
-	ANY_IFC  = USB_IFC | BLUETOOTH_IFC | ETHERNET_IFC
+	ANY_IFC = USB_IFC | BLUETOOTH_IFC | ETHERNET_IFC
 } DaqDeviceInterface;
 
-#pragma pack(1) 
+#pragma pack(1)
 
-typedef struct 
+typedef struct
 {
 	CHAR					ProductName[64];
 	UINT					ProductID;			// product ID
@@ -1525,28 +1497,24 @@ typedef struct
 	CHAR					UniqueID[64];		// unique identifier for device. Serial number for USB deivces and MAC address for  bth and net devices
 	ULONGLONG				NUID;				// numeric representation of uniqueID
 	CHAR					Reserved[512];		// reserved for the future.
-												
 } DaqDeviceDescriptor;
 
 #pragma pack()
 
-
 #define EXTCCONV 	__stdcall
-
-
 
 /*
  * Universal Library Function Prototypes.
  * 3 flavors: WIN32, WIN16, LabWindows/CVI
- *                                    
+ *
  */
 
 #if !defined (NT_DRIVER) && ! defined (WIN95_DRIVER)
 
 #if defined (__cplusplus)
-    extern "C"
-    {
-#endif  
+extern "C"
+{
+#endif
 
 #if defined (_WIN32)
 	/* Win32 prototypes */
@@ -1555,176 +1523,175 @@ typedef struct
 #undef EVENTCALLBACK
 #endif
 
-    typedef void (__stdcall *EVENTCALLBACK)(int, unsigned, unsigned, void*);
+	typedef void(__stdcall *EVENTCALLBACK)(int, unsigned, unsigned, void*);
 
-    int EXTCCONV cbACalibrateData (int BoardNum, long NumPoints, int Gain, 
-                                   USHORT *ADData);
-    int EXTCCONV cbGetRevision (float *RevNum, float *VxDRevNum);
-    int EXTCCONV cbLoadConfig(char *CfgFileName);
-    int EXTCCONV cbSaveConfig(char *CfgFileName);
-    int EXTCCONV cbAConvertData (int BoardNum, long NumPoints, USHORT *ADData, 
-		                         USHORT *ChanTags);
-    int EXTCCONV cbAConvertPretrigData (int BoardNum, long PreTrigCount, 
-		                                long TotalCount, USHORT *ADData, 
-										USHORT *ChanTags);
-    int EXTCCONV cbAIn (int BoardNum, int Chan, int Gain, USHORT *DataValue);
-    int EXTCCONV cbAIn32 (int BoardNum, int Chan, int Gain, ULONG *DataValue, int Options);
-    int EXTCCONV cbAInScan (int BoardNum, int LowChan, int HighChan, long Count,
-                            long *Rate, int Gain, HGLOBAL MemHandle, 
-							int Options);
-    int EXTCCONV cbALoadQueue (int BoardNum, short *ChanArray, short *GainArray, 
-		                       int NumChans);
-    int EXTCCONV cbAOut (int BoardNum, int Chan, int Gain, USHORT DataValue);
-    int EXTCCONV cbAOutScan (int BoardNum, int LowChan, int HighChan, 
-		                     long Count, long *Rate, int Gain, 
-							 HGLOBAL MemHandle, int Options);
-    int EXTCCONV cbAPretrig (int BoardNum, int LowChan, int HighChan,
-                             long *PreTrigCount, long *TotalCount, long *Rate, 
-							 int Gain, HGLOBAL MemHandle, int Options);
-    int EXTCCONV cbATrig (int BoardNum, int Chan, int TrigType, 
-		                  USHORT TrigValue, int Gain, USHORT *DataValue);
-    int EXTCCONV cbC7266Config (int BoardNum, int CounterNum, int Quadrature,
-                                int CountingMode, int DataEncoding, int IndexMode,
-                                int InvertIndex, int FlagPins, int GateEnable);
-    int EXTCCONV cbC8254Config (int BoardNum, int CounterNum, int Config);
-    int EXTCCONV cbC8536Config (int BoardNum, int CounterNum, int OutputControl,
-                                int RecycleMode, int TrigType);
-    int EXTCCONV cbC9513Config (int BoardNum, int CounterNum, int GateControl,
-                                int CounterEdge, int CountSource, 
-								int SpecialGate, int Reload, int RecycleMode, 
-								int BCDMode, int CountDirection, 
-								int OutputControl);
-    int EXTCCONV cbC8536Init (int BoardNum, int ChipNum, int Ctr1Output);
-    int EXTCCONV cbC9513Init (int BoardNum, int ChipNum, int FOutDivider, 
-		                      int FOutSource, int Compare1, int Compare2, 
-							  int TimeOfDay);
-    int EXTCCONV cbCFreqIn (int BoardNum, int SigSource, int GateInterval,
-                            USHORT *Count, long *Freq);
-    int EXTCCONV cbCIn (int BoardNum, int CounterNum, USHORT *Count);
-    int EXTCCONV cbCIn32 (int BoardNum, int CounterNum, ULONG *Count);
-	int EXTCCONV cbCIn64 (int BoardNum, int CounterNum, ULONGLONG *Count);
-    int EXTCCONV cbCLoad (int BoardNum, int RegNum, unsigned int LoadValue);
-    int EXTCCONV cbCLoad32 (int BoardNum, int RegNum, ULONG LoadValue);
-	int EXTCCONV cbCLoad64 (int BoardNum, int RegNum, ULONGLONG LoadValue);
-    int EXTCCONV cbCStatus (int BoardNum, int CounterNum, ULONG *StatusBits);
-    int EXTCCONV cbCStoreOnInt (int BoardNum, int IntCount, short *CntrControl,
-                                HGLOBAL MemHandle);
-	int EXTCCONV cbCInScan(int BoardNum, int FirstCtr,int LastCtr, LONG Count,
-							LONG *Rate, HGLOBAL MemHandle, ULONG Options);
-	int EXTCCONV cbCConfigScan(int BoardNum, int CounterNum, int Mode,int DebounceTime,
-								int DebounceMode, int EdgeDetection,
-								int TickSize, int MappedChannel);
-    int EXTCCONV cbCClear (int BoardNum, int CounterNum);
-    int EXTCCONV cbTimerOutStart (int BoardNum, int TimerNum, double *Frequency);
-    int EXTCCONV cbTimerOutStop (int BoardNum, int TimerNum);
-	int EXTCCONV cbPulseOutStart (int BoardNum, int TimerNum, double *Frequency, double *DutyCycle, unsigned int PulseCount, double *InitialDelay, int IdleState, int Options);
-    int EXTCCONV cbPulseOutStop (int BoardNum, int TimerNum);
-    int EXTCCONV cbDBitIn (int BoardNum, int PortType, int BitNum, 
-                           USHORT *BitValue);
-    int EXTCCONV cbDBitOut (int BoardNum, int PortType, int BitNum, USHORT BitValue);
-    int EXTCCONV cbDConfigPort (int BoardNum, int PortType, int Direction);
-    int EXTCCONV cbDConfigBit (int BoardNum, int PortType, int BitNum, int Direction);
-    int EXTCCONV cbDIn (int BoardNum, int PortType, USHORT *DataValue);
-	int EXTCCONV cbDIn32 (int BoardNum, int PortType, UINT *DataValue);
-    int EXTCCONV cbDInScan (int BoardNum, int PortType, long Count, long *Rate,
-                            HGLOBAL MemHandle, int Options);
-    int EXTCCONV cbDOut(int BoardNum, int PortType, USHORT DataValue);
+	int EXTCCONV cbACalibrateData(int BoardNum, long NumPoints, int Gain,
+		USHORT *ADData);
+	int EXTCCONV cbGetRevision(float *RevNum, float *VxDRevNum);
+	int EXTCCONV cbLoadConfig(char *CfgFileName);
+	int EXTCCONV cbSaveConfig(char *CfgFileName);
+	int EXTCCONV cbAConvertData(int BoardNum, long NumPoints, USHORT *ADData,
+		USHORT *ChanTags);
+	int EXTCCONV cbAConvertPretrigData(int BoardNum, long PreTrigCount,
+		long TotalCount, USHORT *ADData,
+		USHORT *ChanTags);
+	int EXTCCONV cbAIn(int BoardNum, int Chan, int Gain, USHORT *DataValue);
+	int EXTCCONV cbAIn32(int BoardNum, int Chan, int Gain, ULONG *DataValue, int Options);
+	int EXTCCONV cbAInScan(int BoardNum, int LowChan, int HighChan, long Count,
+		long *Rate, int Gain, HGLOBAL MemHandle,
+		int Options);
+	int EXTCCONV cbALoadQueue(int BoardNum, short *ChanArray, short *GainArray,
+		int NumChans);
+	int EXTCCONV cbAOut(int BoardNum, int Chan, int Gain, USHORT DataValue);
+	int EXTCCONV cbAOutScan(int BoardNum, int LowChan, int HighChan,
+		long Count, long *Rate, int Gain,
+		HGLOBAL MemHandle, int Options);
+	int EXTCCONV cbAPretrig(int BoardNum, int LowChan, int HighChan,
+		long *PreTrigCount, long *TotalCount, long *Rate,
+		int Gain, HGLOBAL MemHandle, int Options);
+	int EXTCCONV cbATrig(int BoardNum, int Chan, int TrigType,
+		USHORT TrigValue, int Gain, USHORT *DataValue);
+	int EXTCCONV cbC7266Config(int BoardNum, int CounterNum, int Quadrature,
+		int CountingMode, int DataEncoding, int IndexMode,
+		int InvertIndex, int FlagPins, int GateEnable);
+	int EXTCCONV cbC8254Config(int BoardNum, int CounterNum, int Config);
+	int EXTCCONV cbC8536Config(int BoardNum, int CounterNum, int OutputControl,
+		int RecycleMode, int TrigType);
+	int EXTCCONV cbC9513Config(int BoardNum, int CounterNum, int GateControl,
+		int CounterEdge, int CountSource,
+		int SpecialGate, int Reload, int RecycleMode,
+		int BCDMode, int CountDirection,
+		int OutputControl);
+	int EXTCCONV cbC8536Init(int BoardNum, int ChipNum, int Ctr1Output);
+	int EXTCCONV cbC9513Init(int BoardNum, int ChipNum, int FOutDivider,
+		int FOutSource, int Compare1, int Compare2,
+		int TimeOfDay);
+	int EXTCCONV cbCFreqIn(int BoardNum, int SigSource, int GateInterval,
+		USHORT *Count, long *Freq);
+	int EXTCCONV cbCIn(int BoardNum, int CounterNum, USHORT *Count);
+	int EXTCCONV cbCIn32(int BoardNum, int CounterNum, ULONG *Count);
+	int EXTCCONV cbCIn64(int BoardNum, int CounterNum, ULONGLONG *Count);
+	int EXTCCONV cbCLoad(int BoardNum, int RegNum, unsigned int LoadValue);
+	int EXTCCONV cbCLoad32(int BoardNum, int RegNum, ULONG LoadValue);
+	int EXTCCONV cbCLoad64(int BoardNum, int RegNum, ULONGLONG LoadValue);
+	int EXTCCONV cbCStatus(int BoardNum, int CounterNum, ULONG *StatusBits);
+	int EXTCCONV cbCStoreOnInt(int BoardNum, int IntCount, short *CntrControl,
+		HGLOBAL MemHandle);
+	int EXTCCONV cbCInScan(int BoardNum, int FirstCtr, int LastCtr, LONG Count,
+		LONG *Rate, HGLOBAL MemHandle, ULONG Options);
+	int EXTCCONV cbCConfigScan(int BoardNum, int CounterNum, int Mode, int DebounceTime,
+		int DebounceMode, int EdgeDetection,
+		int TickSize, int MappedChannel);
+	int EXTCCONV cbCClear(int BoardNum, int CounterNum);
+	int EXTCCONV cbTimerOutStart(int BoardNum, int TimerNum, double *Frequency);
+	int EXTCCONV cbTimerOutStop(int BoardNum, int TimerNum);
+	int EXTCCONV cbPulseOutStart(int BoardNum, int TimerNum, double *Frequency, double *DutyCycle, unsigned int PulseCount, double *InitialDelay, int IdleState, int Options);
+	int EXTCCONV cbPulseOutStop(int BoardNum, int TimerNum);
+	int EXTCCONV cbDBitIn(int BoardNum, int PortType, int BitNum,
+		USHORT *BitValue);
+	int EXTCCONV cbDBitOut(int BoardNum, int PortType, int BitNum, USHORT BitValue);
+	int EXTCCONV cbDConfigPort(int BoardNum, int PortType, int Direction);
+	int EXTCCONV cbDConfigBit(int BoardNum, int PortType, int BitNum, int Direction);
+	int EXTCCONV cbDIn(int BoardNum, int PortType, USHORT *DataValue);
+	int EXTCCONV cbDIn32(int BoardNum, int PortType, UINT *DataValue);
+	int EXTCCONV cbDInScan(int BoardNum, int PortType, long Count, long *Rate,
+		HGLOBAL MemHandle, int Options);
+	int EXTCCONV cbDOut(int BoardNum, int PortType, USHORT DataValue);
 	int EXTCCONV cbDOut32(int BoardNum, int PortType, UINT DataValue);
-    int EXTCCONV cbDOutScan (int BoardNum, int PortType, long Count, long *Rate,
-                             HGLOBAL MemHandle, int Options);
-	int EXTCCONV cbDInArray (int BoardNum, int LowPort, int HighPort, ULONG *DataArray);
-	int EXTCCONV cbDOutArray (int BoardNum, int LowPort, int HighPort, ULONG *DataArray);
-	int EXTCCONV cbDClearAlarm (int BoardNum, int PortType, UINT Mask);
-    int EXTCCONV cbErrHandling (int ErrReporting, int ErrHandling);
-    int EXTCCONV cbFileAInScan (int BoardNum, int LowChan, int HighChan,
-                                long Count, long *Rate, int Gain, 
-								char *FileName, int Options);
-    int EXTCCONV cbFileGetInfo (char *FileName, short *LowChan, short *HighChan,
-		                        long *PreTrigCount, long *TotalCount, 
-								long *Rate, int *Gain);
-    int EXTCCONV cbFilePretrig (int BoardNum, int LowChan, int HighChan,
-                                long *PreTrigCount, long *TotalCount, 
-								long *Rate, int Gain, char *FileName, 
-								int Options);
-    int EXTCCONV cbFileRead (char *FileName, long FirstPoint, long *NumPoints,
-                             USHORT *DataBuffer);
-    int EXTCCONV cbFlashLED(int BoardNum);
-    int EXTCCONV cbGetErrMsg (int ErrCode, char *ErrMsg);
-    int EXTCCONV cbGetIOStatus (int BoardNum, short *Status, long *CurCount,
-                              long *CurIndex,int FunctionType);
-    int EXTCCONV cbRS485 (int BoardNum, int Transmit, int Receive);
-    int EXTCCONV cbStopIOBackground (int BoardNum, int FunctionType);
-    int EXTCCONV cbTIn (int BoardNum, int Chan, int Scale, float *TempValue,
-                        int Options);
-    int EXTCCONV cbTInScan (int BoardNum, int LowChan, int HighChan, int Scale,
-                            float *DataBuffer, int Options);
-    int EXTCCONV cbMemSetDTMode (int BoardNum, int Mode);
-    int EXTCCONV cbMemReset (int BoardNum);
-    int EXTCCONV cbMemRead (int BoardNum, USHORT *DataBuffer, long FirstPoint, 
-		                    long Count);
-    int EXTCCONV cbMemWrite (int BoardNum, USHORT *DataBuffer,long FirstPoint, 
-		                     long Count);
-    int EXTCCONV cbMemReadPretrig (int BoardNum, USHORT *DataBuffer,
-                                   long FirstPoint, long Count);
-    int EXTCCONV cbWinBufToArray (HGLOBAL MemHandle, USHORT *DataArray, 
-		                          long FirstPoint, long Count);
-	int EXTCCONV cbWinBufToArray32 (HGLOBAL MemHandle, ULONG *DataArray, 
-							  long FirstPoint, long Count);
+	int EXTCCONV cbDOutScan(int BoardNum, int PortType, long Count, long *Rate,
+		HGLOBAL MemHandle, int Options);
+	int EXTCCONV cbDInArray(int BoardNum, int LowPort, int HighPort, ULONG *DataArray);
+	int EXTCCONV cbDOutArray(int BoardNum, int LowPort, int HighPort, ULONG *DataArray);
+	int EXTCCONV cbDClearAlarm(int BoardNum, int PortType, UINT Mask);
+	int EXTCCONV cbErrHandling(int ErrReporting, int ErrHandling);
+	int EXTCCONV cbFileAInScan(int BoardNum, int LowChan, int HighChan,
+		long Count, long *Rate, int Gain,
+		char *FileName, int Options);
+	int EXTCCONV cbFileGetInfo(char *FileName, short *LowChan, short *HighChan,
+		long *PreTrigCount, long *TotalCount,
+		long *Rate, int *Gain);
+	int EXTCCONV cbFilePretrig(int BoardNum, int LowChan, int HighChan,
+		long *PreTrigCount, long *TotalCount,
+		long *Rate, int Gain, char *FileName,
+		int Options);
+	int EXTCCONV cbFileRead(char *FileName, long FirstPoint, long *NumPoints,
+		USHORT *DataBuffer);
+	int EXTCCONV cbFlashLED(int BoardNum);
+	int EXTCCONV cbGetErrMsg(int ErrCode, char *ErrMsg);
+	int EXTCCONV cbGetIOStatus(int BoardNum, short *Status, long *CurCount,
+		long *CurIndex, int FunctionType);
+	int EXTCCONV cbRS485(int BoardNum, int Transmit, int Receive);
+	int EXTCCONV cbStopIOBackground(int BoardNum, int FunctionType);
+	int EXTCCONV cbTIn(int BoardNum, int Chan, int Scale, float *TempValue,
+		int Options);
+	int EXTCCONV cbTInScan(int BoardNum, int LowChan, int HighChan, int Scale,
+		float *DataBuffer, int Options);
+	int EXTCCONV cbMemSetDTMode(int BoardNum, int Mode);
+	int EXTCCONV cbMemReset(int BoardNum);
+	int EXTCCONV cbMemRead(int BoardNum, USHORT *DataBuffer, long FirstPoint,
+		long Count);
+	int EXTCCONV cbMemWrite(int BoardNum, USHORT *DataBuffer, long FirstPoint,
+		long Count);
+	int EXTCCONV cbMemReadPretrig(int BoardNum, USHORT *DataBuffer,
+		long FirstPoint, long Count);
+	int EXTCCONV cbWinBufToArray(HGLOBAL MemHandle, USHORT *DataArray,
+		long FirstPoint, long Count);
+	int EXTCCONV cbWinBufToArray32(HGLOBAL MemHandle, ULONG *DataArray,
+		long FirstPoint, long Count);
 
-	int EXTCCONV cbWinBufToArray64 (HGLOBAL MemHandle, ULONGLONG *DataArray, 
-							  long FirstPoint, long Count);
+	int EXTCCONV cbWinBufToArray64(HGLOBAL MemHandle, ULONGLONG *DataArray,
+		long FirstPoint, long Count);
 
-	HGLOBAL EXTCCONV cbScaledWinBufAlloc (long NumPoints);
-	int EXTCCONV cbScaledWinBufToArray (HGLOBAL MemHandle, double *DataArray, 
-							  long FirstPoint, long Count);
-		
-    int EXTCCONV cbWinArrayToBuf (USHORT *DataArray, HGLOBAL MemHandle, 
-		                          long FirstPoint, long Count);
-	int EXTCCONV cbWinArrayToBuf32 (ULONG *DataArray, HGLOBAL MemHandle, 
-		                          long FirstPoint, long Count);
-	int EXTCCONV cbScaledWinArrayToBuf (double *DataArray, HGLOBAL MemHandle, 
-		                          long FirstPoint, long Count);
+	HGLOBAL EXTCCONV cbScaledWinBufAlloc(long NumPoints);
+	int EXTCCONV cbScaledWinBufToArray(HGLOBAL MemHandle, double *DataArray,
+		long FirstPoint, long Count);
 
-    HGLOBAL EXTCCONV cbWinBufAlloc (long NumPoints);
-    HGLOBAL EXTCCONV cbWinBufAlloc32 (long NumPoints);
-    HGLOBAL EXTCCONV cbWinBufAlloc64 (long NumPoints);
-    int EXTCCONV cbWinBufFree (HGLOBAL MemHandle);
-    int EXTCCONV cbInByte (int BoardNum, int PortNum);
-    int EXTCCONV cbOutByte (int BoardNum, int PortNum, int PortVal);
-    int EXTCCONV cbInWord (int BoardNum, int PortNum);
-    int EXTCCONV cbOutWord (int BoardNum, int PortNum, int PortVal);
+	int EXTCCONV cbWinArrayToBuf(USHORT *DataArray, HGLOBAL MemHandle,
+		long FirstPoint, long Count);
+	int EXTCCONV cbWinArrayToBuf32(ULONG *DataArray, HGLOBAL MemHandle,
+		long FirstPoint, long Count);
+	int EXTCCONV cbScaledWinArrayToBuf(double *DataArray, HGLOBAL MemHandle,
+		long FirstPoint, long Count);
 
-    int EXTCCONV cbGetConfig (int InfoType, int BoardNum, int DevNum, 
-                              int ConfigItem, int *ConfigVal);
-    int EXTCCONV cbGetConfigString (int InfoType, int BoardNum, int DevNum, 
-                              int ConfigItem, char* ConfigVal, int* maxConfigLen);
+	HGLOBAL EXTCCONV cbWinBufAlloc(long NumPoints);
+	HGLOBAL EXTCCONV cbWinBufAlloc32(long NumPoints);
+	HGLOBAL EXTCCONV cbWinBufAlloc64(long NumPoints);
+	int EXTCCONV cbWinBufFree(HGLOBAL MemHandle);
+	int EXTCCONV cbInByte(int BoardNum, int PortNum);
+	int EXTCCONV cbOutByte(int BoardNum, int PortNum, int PortVal);
+	int EXTCCONV cbInWord(int BoardNum, int PortNum);
+	int EXTCCONV cbOutWord(int BoardNum, int PortNum, int PortVal);
 
-    int EXTCCONV cbSetConfig (int InfoType, int BoardNum, int DevNum, 
-		                      int ConfigItem, int ConfigVal);
-    int EXTCCONV cbSetConfigString (int InfoType, int BoardNum, int DevNum, 
-		                      int ConfigItem, char* ConfigVal, int* configLen);
+	int EXTCCONV cbGetConfig(int InfoType, int BoardNum, int DevNum,
+		int ConfigItem, int *ConfigVal);
+	int EXTCCONV cbGetConfigString(int InfoType, int BoardNum, int DevNum,
+		int ConfigItem, char* ConfigVal, int* maxConfigLen);
 
-    int EXTCCONV cbToEngUnits (int BoardNum, int Range, USHORT DataVal, 
-		                       float *EngUnits);
-    int EXTCCONV cbToEngUnits32 (int BoardNum, int Range, ULONG DataVal, 
-		                       double *EngUnits);
-    int EXTCCONV cbFromEngUnits (int BoardNum, int Range, float EngUnits, 
-		                         USHORT *DataVal);
-    int EXTCCONV cbGetBoardName (int BoardNum, char *BoardName);
-    int EXTCCONV cbDeclareRevision(float *RevNum);
-    int EXTCCONV cbSetTrigger (int BoardNum, int TrigType, USHORT LowThreshold, 
-		                       USHORT HighThreshold);
- 
-	int EXTCCONV cbEnableEvent(int BoardNum, unsigned EventType, unsigned Count, 
-					EVENTCALLBACK CallbackFunc, void *UserData);
+	int EXTCCONV cbSetConfig(int InfoType, int BoardNum, int DevNum,
+		int ConfigItem, int ConfigVal);
+	int EXTCCONV cbSetConfigString(int InfoType, int BoardNum, int DevNum,
+		int ConfigItem, char* ConfigVal, int* configLen);
+
+	int EXTCCONV cbToEngUnits(int BoardNum, int Range, USHORT DataVal,
+		float *EngUnits);
+	int EXTCCONV cbToEngUnits32(int BoardNum, int Range, ULONG DataVal,
+		double *EngUnits);
+	int EXTCCONV cbFromEngUnits(int BoardNum, int Range, float EngUnits,
+		USHORT *DataVal);
+	int EXTCCONV cbGetBoardName(int BoardNum, char *BoardName);
+	int EXTCCONV cbDeclareRevision(float *RevNum);
+	int EXTCCONV cbSetTrigger(int BoardNum, int TrigType, USHORT LowThreshold,
+		USHORT HighThreshold);
+
+	int EXTCCONV cbEnableEvent(int BoardNum, unsigned EventType, unsigned Count,
+		EVENTCALLBACK CallbackFunc, void *UserData);
 
 	int EXTCCONV cbDisableEvent(int BoardNum, unsigned EventType);
-   int EXTCCONV cbSelectSignal(int BoardNum,  int Direction, int Signal, int Connection, int Polarity);
-   int EXTCCONV cbGetSignal(int BoardNum, int Direction, int Signal, int Index, int* Connection, int* Polarity);
+	int EXTCCONV cbSelectSignal(int BoardNum, int Direction, int Signal, int Connection, int Polarity);
+	int EXTCCONV cbGetSignal(int BoardNum, int Direction, int Signal, int Index, int* Connection, int* Polarity);
 
-   int EXTCCONV cbSetCalCoeff(int BoardNum, int FunctionType, int Channel, int Range, int Item, int Value, int Store);
-   int EXTCCONV cbGetCalCoeff(int BoardNum, int FunctionType, int Channel, int Range, int Item, int* Value);
-
+	int EXTCCONV cbSetCalCoeff(int BoardNum, int FunctionType, int Channel, int Range, int Item, int Value, int Store);
+	int EXTCCONV cbGetCalCoeff(int BoardNum, int FunctionType, int Channel, int Range, int Item, int* Value);
 
 	// Get log file name
 
@@ -1741,8 +1708,8 @@ typedef struct
 	int EXTCCONV cbLogGetFileInfo(char* filename, int* version, int* fileSize);
 
 	// Get sample info for log file
-	int EXTCCONV cbLogGetSampleInfo(char* filename, int* sampleInterval, int* sampleCount, 
-									int* startDate, int* startTime);
+	int EXTCCONV cbLogGetSampleInfo(char* filename, int* sampleInterval, int* sampleCount,
+		int* startDate, int* startTime);
 
 	// Get the AI channel count for log file
 	int EXTCCONV cbLogGetAIChannelCount(char* filename, int* aiCount);
@@ -1772,22 +1739,22 @@ typedef struct
 	int EXTCCONV cbLogConvertFile(char* srcFilename, char* destFilename, int startSample, int count, int delimiter);
 
 	int EXTCCONV cbDaqInScan(int BoardNum, short *ChanArray, short *ChanTypeArray, short *GainArray, int ChanCount, long *Rate,
-							long *PretrigCount, long *TotalCount, HGLOBAL MemHandle, int Options);
-	int EXTCCONV cbDaqSetTrigger(int BoardNum, int TrigSource, int TrigSense, int TrigChan, int ChanType, 
-							   int Gain, float Level, float Variance, int TrigEvent);
-	int EXTCCONV cbDaqSetSetpoints (int BoardNum, float *LimitAArray, float *LimitBArray, float *Reserved, int *SetpointFlagsArray,
-		                       int *SetpointOutputArray, float *Output1Array, float *Output2Array, float *OutputMask1Array,
-				       float *OutputMask2Array, int SetpointCount);
+		long *PretrigCount, long *TotalCount, HGLOBAL MemHandle, int Options);
+	int EXTCCONV cbDaqSetTrigger(int BoardNum, int TrigSource, int TrigSense, int TrigChan, int ChanType,
+		int Gain, float Level, float Variance, int TrigEvent);
+	int EXTCCONV cbDaqSetSetpoints(int BoardNum, float *LimitAArray, float *LimitBArray, float *Reserved, int *SetpointFlagsArray,
+		int *SetpointOutputArray, float *Output1Array, float *Output2Array, float *OutputMask1Array,
+		float *OutputMask2Array, int SetpointCount);
 
 	int EXTCCONV cbDaqOutScan(int BoardNum, short *ChanArray, short *ChanTypeArray, short *GainArray, int ChanCount, long *Rate,
-							 long Count, HGLOBAL MemHandle, int Options);
+		long Count, HGLOBAL MemHandle, int Options);
 	int EXTCCONV cbGetTCValues(int BoardNum, short *ChanArray, short *ChanTypeArray, int ChanCount, HGLOBAL MemHandle, int FirstPoint,
-							 long Count, int Scale, float *TempValArray);
+		long Count, int Scale, float *TempValArray);
 
-	int EXTCCONV cbVIn (int BoardNum, int Chan, int Gain, float *DataValue, int Options);
-	int EXTCCONV cbVIn32 (int BoardNum, int Chan, int Gain, double *DataValue, int Options);
-	int EXTCCONV cbVOut (int BoardNum, int Chan, int Gain, float DataValue, int Options);
-	
+	int EXTCCONV cbVIn(int BoardNum, int Chan, int Gain, float *DataValue, int Options);
+	int EXTCCONV cbVIn32(int BoardNum, int Chan, int Gain, double *DataValue, int Options);
+	int EXTCCONV cbVOut(int BoardNum, int Chan, int Gain, float DataValue, int Options);
+
 	int EXTCCONV cbDeviceLogin(int BoardNum, char* AccountName, char* Password);
 	int EXTCCONV cbDeviceLogout(int BoardNum);
 
@@ -1800,18 +1767,17 @@ typedef struct
 	int EXTCCONV cbCreateDaqDevice(int BdNum, DaqDeviceDescriptor DeviceDescriptor);
 	int EXTCCONV cbGetDaqDeviceInventory(DaqDeviceInterface InterfaceType, DaqDeviceDescriptor* Inventory, INT* NumberOfDevices);
 	int EXTCCONV cbReleaseDaqDevice(int BdNum);
-	int EXTCCONV cbGetBoardNumber (DaqDeviceDescriptor DeviceDescriptor);
+	int EXTCCONV cbGetBoardNumber(DaqDeviceDescriptor DeviceDescriptor);
 	int EXTCCONV cbGetNetDeviceDescriptor(CHAR* Host, INT Port, DaqDeviceDescriptor* DeviceDescriptor, INT Timeout);
 
-
-//****************************************************************************
-//   Legacy Function Prototypes: to revert to legacy calls, un-comment the
-//          prototypes immediately below.
-//
-//      int EXTCCONV cbGetStatus (int BoardNum, short *Status, long *CurCount, long *CurIndex);
-//      int EXTCCONV cbStopBackground (int BoardNum);
-//
-//   Remove the following if using the above legacy function prototypes.
+	//****************************************************************************
+	//   Legacy Function Prototypes: to revert to legacy calls, un-comment the
+	//          prototypes immediately below.
+	//
+	//      int EXTCCONV cbGetStatus (int BoardNum, short *Status, long *CurCount, long *CurIndex);
+	//      int EXTCCONV cbStopBackground (int BoardNum);
+	//
+	//   Remove the following if using the above legacy function prototypes.
 #define cbGetStatus cbGetIOStatus
 #define cbStopBackground cbStopIOBackground
 //****************************************************************************
@@ -1819,7 +1785,7 @@ typedef struct
 #endif  /* if defined (_WIN32) */
 
 #if defined (__cplusplus)
-    }
+}
 #endif
 
 #endif  /* ifndef NT_DRIVER */

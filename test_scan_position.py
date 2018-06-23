@@ -25,12 +25,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 import numpy as np
 import hantekdds.htdds_wrapper as hantekdds
-
 import matplotlib.pyplot as plt
+
 import ctypes
 
 FUNCTION_GENERATOR = hantekdds.HantekDDS()
-FUNCTION_GENERATOR.drive_periodic(frequency=1.0)
+FUNCTION_GENERATOR.drive_periodic(frequency=120000.0)
 
 
 def run_scan():
@@ -42,18 +42,18 @@ def run_scan():
     lib.release.argtypes = [ctypes.POINTER(ctypes.c_int)]
     lib.release.restype = None
 
-    rate = 200000
+    rate = 16000000
     c_rate = ctypes.c_int(rate)
 
-    dur = 0.5
+    dur = 0.00005
     c_dur = ctypes.c_double(dur)
 
-    p = ctypes.POINTER(c_int)()
+    p = ctypes.POINTER(ctypes.c_int)()
     arr_len = int(2 * dur * rate)
 
     lib.scan(p, c_rate, c_dur)
 
-    arr = np.fromiter(P, dtype=np.int, count=arr_len)
+    arr = np.fromiter(p, dtype=np.int, count=arr_len)
     return arr
 
 
@@ -61,4 +61,4 @@ if __name__ == '__main__':
     while True:
         plt.clf()
         plt.plot(run_scan()[::2])
-        plt.pause(0.5)
+        plt.pause(0.00005)
