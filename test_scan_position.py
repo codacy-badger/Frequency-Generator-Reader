@@ -30,14 +30,14 @@ import matplotlib.pyplot as plt
 import hantekdds.htdds_wrapper as hantekdds
 
 FUNCTION_GENERATOR = hantekdds.HantekDDS()
-FUNCTION_GENERATOR.drive_periodic(frequency=120000.0)
+FUNCTION_GENERATOR.drive_periodic(frequency=1000000.0, amplitude=3.5)
 
 
 def run_scan():
     lib = ctypes.CDLL('src/scan.dll')
 
     lib.scan.argtypes = [ctypes.POINTER(ctypes.POINTER(ctypes.c_int)),
-                        ctypes.c_int, ctypes.c_double]
+                         ctypes.c_int, ctypes.c_double]
     lib.scan.restype = None
 
     lib.release.argtypes = [ctypes.POINTER(ctypes.c_int)]
@@ -46,7 +46,7 @@ def run_scan():
     rate = 16000000
     c_rate = ctypes.c_int(rate)
 
-    dur = 0.00005
+    dur = 0.005
     c_dur = ctypes.c_double(dur)
 
     p = ctypes.POINTER(ctypes.c_int)()
@@ -61,5 +61,8 @@ def run_scan():
 if __name__ == '__main__':
     while True:
         plt.clf()
+        # axes = plt.gca()
+        # axes.set_ylim([3040, 3080])
         plt.plot(run_scan()[::2])
-        plt.pause(0.00005)
+        plt.plot(run_scan()[1::2])
+        plt.pause(0.005)

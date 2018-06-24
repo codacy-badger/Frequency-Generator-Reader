@@ -37,3 +37,5 @@ installer.cfg
 requirements.txt
 
 .mypy_cache/
+
+Saved Output/

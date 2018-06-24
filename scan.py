@@ -37,10 +37,10 @@ import hantekdds.htdds_wrapper as hantekdds
 
 
 class Scanner(threading.Thread):
-    """ 
+    """
     Thread responsible for retrieving information from USB-2020 Module.
 
-    This class if a child class of the threading.Thread class. It is to be 
+    This class if a child class of the threading.Thread class. It is to be
     executed as a thread ( thread.start() .)
 
     Attributes:
@@ -59,7 +59,7 @@ class Scanner(threading.Thread):
         scanned (bool):              Indicator for Writer() thread when to dump information.
     """
     def __init__(self, iteration, dll_lib):
-        """ 
+        """
         Initialization of Scanner thread.
 
         Args:
@@ -79,10 +79,10 @@ class Scanner(threading.Thread):
         self.lib.release.argtypes = [POINTER(c_int)]
         self.lib.release.restype = None
 
-        self.rate = 20000000  # 20 MHz per Channel
+        self.rate = 16000000  # 20 MHz per Channel
         self.c_rate = c_int(self.rate)
 
-        self.dur = 0.05  # x number of seconds
+        self.dur = 1  # x number of seconds
         self.c_dur = c_double(self.dur)
 
         self.P = POINTER(c_int)()
@@ -171,14 +171,13 @@ def initialize():
         lib (ctypes.CDLL): see above
     """
     lib = CDLL('src/scan.dll')
-    shutil.rmtree('Output')
     pathlib.Path('Output').mkdir(parents=True, exist_ok=True)
 
     function_generator = hantekdds.HantekDDS()
     if not function_generator.connect():
         print("There was an error connecting to the Hantek 1025G generator module")
         sys.exit(1)
-    function_generator.drive_periodic(frequency=1.0)
+    function_generator.drive_periodic(frequency=1000000.0)
 
     return lib
 
@@ -186,7 +185,7 @@ def initialize():
 if __name__ == '__main__':
     lib = initialize()
 
-    thread_count = 2
+    thread_count = 5
     threads = []
     for i in range(thread_count):
         threads.append(Scanner(i, lib))

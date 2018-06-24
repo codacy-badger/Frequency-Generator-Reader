@@ -41,7 +41,7 @@ extern "C" {
 		int ULStat = 0;
 		int LowChan = 0;
 		int HighChan = 1;
-		int Gain = 4;
+		int Gain = BIP5VOLTS;
 		int ChannelCount = (HighChan - LowChan) + 1;
 
 		const int Count = (int)(ChannelCount * dur * rate);
