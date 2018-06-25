@@ -1,10 +1,8 @@
 """
- **File Name:** process.py                                                                        \n
- **Project:** CURRENTLY UNNAMED                                                                   \n
- **Company:** Research in Flows, Inc                                                              \n
- **Author:** David A. Gurevich                                                                    \n
- **Required Modules:**
-       * matplotlib                                                                               \n
+ **File Name:** gen_png.py                                                                       \n
+ **Project:** CURRENTLY UNNAMED                                                                  \n
+ **Company:** Research in Flows, Inc                                                             \n
+ **Author:** David A. Gurevich                                                                   \n
 
 Frequency-Generator Reader | Local software for generating and processing high-frequency signals
 Copyright (C) 2018  David A. Gurevich
@@ -25,27 +23,37 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import pickle
 import os
-
-from mcculw import ul
-from mcculw.enums import ULRange
+import time
+import io
+import base64
 
 from matplotlib import pyplot as plt
 
 
-if __name__ == '__main__':
-    DATA = []
-    PATH, DIRS, FILES = next(os.walk("Output"))
-    FILE_COUNT = len(FILES)
-    for i in range(FILE_COUNT):
+def gen_image():
+    data = []
+    path, dirs, files = next(os.walk("Output"))
+    file_count = len(files)
+    for i in range(file_count):
         str_i = str(i)
         with open('Output/output' + str_i + '.bin', 'rb') as fp:
             to_add = pickle.load(fp)
-            DATA.extend(to_add)
+            data.extend(to_add)
 
-    DATA = [ul.to_eng_units(0, ULRange.BIP1VOLTS, int(i)) for i in DATA]
-    CHAN1 = DATA[::2]
-    CHAN2 = DATA[1::2]
+    chan1 = data[::2]
+    chan2 = data[1::2]
 
-    plt.plot(CHAN1)
-    plt.plot(CHAN2)
-    plt.show()
+    img = io.BytesIO()
+    plt.rcParams["figure.figsize"] = (16, 9)
+    plt.plot(chan1)
+    plt.plot(chan2)
+    plt.savefig(img, format="png")
+    plt.clf()
+    img.seek(0)
+
+    plot_url = base64.b64encode(img.getvalue()).decode()
+    return plot_url
+
+
+if __name__ == '__main__':
+    gen_image()

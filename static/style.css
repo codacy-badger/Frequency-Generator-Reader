@@ -1,0 +1,150 @@
+/*
+File Name: index.html
+Project: Currently Unnamed
+
+Company: Research in Flows, Inc
+Author: David A. Gurevich
+
+Frequency Generator Reader | Local software for generating, reading, and processing high-frequency signals
+Copyright (C) 2018  David A. Gurevich
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published
+by the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+.sidenav {
+  height: 100%;
+  width: 22%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #444;
+  overflow-x: hidden;
+  padding-top: 20px;
+  color: #eeeeee;
+  font-family: 'Roboto', sans-serif;
+}
+
+.sidenav img {
+  padding-bottom: 1%;
+}
+
+.sidenav .txt-in {
+  width: 50%;
+  padding-top: 10px;
+}
+
+.sidenav .label {
+  padding-left: 2px;
+  width: 50%;
+  padding-top: 10px;
+}
+
+.sidenav .foot {
+  bottom: 2%;
+}
+
+.main {
+  margin-left: 22%;
+  padding: 0px 10px;
+  color: #eeeeee;
+}
+
+.main img {
+  width: 100%;
+}
+
+.btn {
+  font: 1rem 'Roboto', sans-serif;
+  padding: 10px 24px;
+  background: #4286f4;
+  border: none;
+  width: 100%;
+  height: 5%;
+}
+
+.btn-green {
+  font: 1rem 'Roboto', sans-serif;
+  padding: 10px 24px;
+  background: #4bc635;
+  border: none;
+  width: 100%;
+  height: 5%;
+}
+
+.btn-disabled {
+  font: 1rem 'Roboto', sans-serif;
+  padding: 10px 24px;
+  background: #9a9c9e;
+  color: #434444;
+  border: none;
+  width: 100%;
+  height: 5%;
+}
+
+.btn button:hover input:hover {
+  padding-top: 40%;
+  background-color: #3063b5;
+  border: 1px blue;
+  color: white;
+  padding: 10px 24px;
+  cursor: pointer;
+  float: left;
+  width: 50%;
+  z-index: 2;
+}
+
+.btn-group button {
+  padding-top: 40%;
+  background-color: #4286f4;
+  border: 1px blue;
+  color: white;
+  padding: 10px 24px;
+  cursor: pointer;
+  float: left;
+  width: 50%;
+  z-index: 2;
+}
+
+.btn-group button:not(:last-child) {
+  border-right: none;
+}
+
+.btn-group:after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.btn-group button:hover {
+  background-color: #2a5daf;
+}
+
+.btn-group .not-ready {
+  background-color: #9a9c9e;
+  border: 1px #434444;
+  color: black;
+  padding: 10px 24px;
+  cursor: pointer;
+  float: left;
+}
+
+.btn-group .not-ready button:hover {
+  background-color: #9a9c9e;
+  border: 1px #434444;
+  color: black;
+  padding: 10px 24px;
+  cursor: pointer;
+  float: left;
+}

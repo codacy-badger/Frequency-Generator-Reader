@@ -4,6 +4,7 @@
 
 The currently unnamed frequency generator and reader, which, upon completion will be used in ultrasonic utilities in industrial applications.
 
+It is controlled by a Flask-run control panel that can be started by running ```controller.py```.
 It interacts with the Hantek 1025G 25MHz Arbitrary function generator as well as the Measurement Computing USB 2020 high-speed simultaneous USB DAQ device.
 
 This project was built using [Atom](http://atom.io).
@@ -18,10 +19,12 @@ This project was built using [Atom](http://atom.io).
   * MatPlotLib (Plotting)
   * NumPy      (NumPy Arrays)
   * MCCULW     (Measurement Computing SDK)
+  * Flask      (This project uses flask)
+  * WTForms    (Form building)
 
 **Actually running the software:**
 
-Simply execute ```scan.py```
+Simply execute ```scan.py``` in the ```scanner``` folder for a basic scan, or execute ```controller.py``` for a full control panel.
 
 ## Authors
 

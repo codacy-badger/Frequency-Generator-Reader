@@ -1,0 +1,74 @@
+<!--
+File Name: index.html
+Project: Currently Unnamed
+
+Company: Research in Flows, Inc
+Author: David A. Gurevich
+
+Frequency Generator Reader | Local software for generating, reading, and processing high-frequency signals
+Copyright (C) 2018  David A. Gurevich
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published
+by the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Control Panel</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=deive-width, initial-scale=1">
+  <meta name="theme-color" content="#eeeeee">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="static/style.css">
+</head>
+
+<body>
+  <div class="sidenav">
+    <div align="center">
+      <img src="static/icon.png" width=50%>
+      <h1>Research in Flows, Inc.</h1>
+      <h2>Scanner Control Panel</h4>
+      <form method=post action="">
+        <table>
+          {% for field in form %}
+          <tr>
+            <td class="label">{{ field.label }}</td>
+            <td class="txt-in">{{ field }}</td>
+          </tr>
+          <p />
+          {% endfor %}
+        </table>
+          <input type="submit" class="btn" value="Scan"/>
+          {% if result == None %}
+          <input type="button" class="btn-disabled" value="Download" disabled />
+          {% else %}
+          <a href="{{ result }}.zip"><input type="button" class="btn-green" value="Download"/></a>
+          {% endif %}
+        </form>
+        <p class="foot">David Gurevich</p>
+      </div>
+    </div>
+  <div class="main">
+    <p>
+      {% if img != None %}
+      <img src="data:image/png;base64,{{ img }}">
+      {% endif %}
+      {% if img==None %}
+      <img src="static/default_img.png">
+      {% endif %}
+    </p>
+  </div>
+</body>
+</html>

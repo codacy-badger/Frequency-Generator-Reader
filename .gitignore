@@ -2,10 +2,6 @@
 __pycache__/
 /__pycache__
 
-# Output Folders
-Output/
-Scans/
-
 # Developer BuildC File
 *.bat
 
@@ -37,5 +33,3 @@ installer.cfg
 requirements.txt
 
 .mypy_cache/
-
-Saved Output/

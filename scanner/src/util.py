@@ -1,5 +1,5 @@
 """
- **File Name:** plot.py                                                                                               \n
+ **File Name:** util.py                                                                                               \n
  **Project:** CURRENTLY UNNAMED                                                                                       \n
  **Company:** Research in Flows, Inc                                                                                  \n
  **Author:** David A. Gurevich                                                                                        \n
@@ -68,20 +68,21 @@ def graph_input(signal, fs, fourier_transform, dur):
 
     plt.xlabel('Point Number')
     plt.ylabel('Voltage (V)')
-    plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=2, mode="expand", borderaxespad=0.)
+    plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3,
+               ncol=2, mode="expand", borderaxespad=0.)
 
     # PLOT 2
     plt.subplot(2, 1, 2)
 
-    ts = 1.0/fs
+    ts = 1.0 / fs
 
     n = len(signal)
     k = np.arange(n)
-    T = n/fs
-    frq = k/T
+    T = n / fs
+    frq = k / T
     frq = np.array(frq[range(int(n / 2))])
 
-    Y = fourier_transform/n
+    Y = fourier_transform / n
     Y = Y[range(int(n / 2))]
 
     plt.plot(frq, abs(Y), 'r')

@@ -3,9 +3,6 @@
  **Project:** CURRENTLY UNNAMED                                                                  \n
  **Company:** Research in Flows, Inc                                                             \n
  **Author:** David A. Gurevich                                                                   \n
- **Required Modules:**                                                                           \n
-       * numpy                                                                                   \n
-       * HantekDDS                                                                               \n
 
 Frequency-Generator Reader | Local software for generating and processing high-frequency signals
 Copyright (C) 2018  David A. Gurevich
@@ -29,6 +26,8 @@ import pickle
 import sys
 import threading
 import shutil
+import os
+import os.path
 
 from ctypes import c_int, c_double, POINTER, CDLL
 
@@ -58,7 +57,8 @@ class Scanner(threading.Thread):
         iter (int):                  Number generated in for loop when designating threads.
         scanned (bool):              Indicator for Writer() thread when to dump information.
     """
-    def __init__(self, iteration, dll_lib):
+
+    def __init__(self, iteration, dll_lib, rate, dur):
         """
         Initialization of Scanner thread.
 
@@ -68,7 +68,6 @@ class Scanner(threading.Thread):
 
         """
         threading.Thread.__init__(self)
-
         self.lib = dll_lib
 
         # void scan(int** input, int rate, double dur) {}
@@ -79,17 +78,17 @@ class Scanner(threading.Thread):
         self.lib.release.argtypes = [POINTER(c_int)]
         self.lib.release.restype = None
 
-        self.rate = 16000000  # 20 MHz per Channel
+        self.rate = int(rate)
         self.c_rate = c_int(self.rate)
 
-        self.dur = 1  # x number of seconds
+        self.dur = dur
         self.c_dur = c_double(self.dur)
 
-        self.P = POINTER(c_int)()
-        self.len = int(2 * self.dur * self.rate)
+        self.p = POINTER(c_int)()
+        self.len = int(2 * self.rate * self.dur)
         self.iter = iteration
 
-        self.scanned = False
+        self.complete = False
 
     def run(self):
         """
@@ -99,12 +98,8 @@ class Scanner(threading.Thread):
         When scanned, set scanned to True in order to indicate to WRITER thread
         that it can start writing.
         """
-        try:
-            self.lib.scan(self.P, self.c_rate, self.c_dur)
-            self.scanned = True
-        except Exception:
-            print('Scan error')
-            sys.exit(1)
+        self.lib.scan(self.p, self.c_rate, self.c_dur)
+        self.complete = True
 
 
 class Writer(threading.Thread):
@@ -120,6 +115,7 @@ class Writer(threading.Thread):
         to_write (list):               Iterable that the pointer will be converted into.
         scan_thread (Scanner() Class): scan_thread argument saved to corresponsing thread.
     """
+
     def __init__(self, scan_thread, iter):
         """
         Initialization of Writer thread.
@@ -132,6 +128,7 @@ class Writer(threading.Thread):
         self.iter = str(iter)
         self.to_write = []
         self.scan_thread = scan_thread
+        self.complete = False
 
     def run(self):
         """
@@ -142,22 +139,26 @@ class Writer(threading.Thread):
         the list. Finally, releases the pointer.
         """
         while True:
-            if self.scan_thread.scanned:
+            if self.scan_thread.complete:
                 try:
-                    self.to_write = np.fromiter(self.scan_thread.P, dtype=np.int, count=self.scan_thread.len)
+                    self.to_write = np.fromiter(
+                        self.scan_thread.p, dtype=np.int, count=self.scan_thread.len)
                 except Exception:
-                    print("There was an error converting the pointer (", self.scan_thread.P, ") to an interable")
+                    print("There was an error convertering the pointer(",
+                          self.scan_thread.p, ") to an iterable")
 
                 try:
-                    pickle.dump(self.to_write, open("Output/output" + self.iter + ".bin", "wb"))
+                    pickle.dump(self.to_write, open(
+                        "Output/output" + self.iter + ".bin", "wb"))
                 except Exception:
-                    print("There was an error dumping the data.")
+                    print("There was an error dumpin the data.")
 
-                self.scan_thread.lib.release(self.scan_thread.P)
+                self.scan_thread.lib.release(self.scan_thread.p)
+                self.complete = True
                 break
 
 
-def initialize():
+def initialize(fq):
     """
     Getting values and hardware ready for scanning.
 
@@ -170,28 +171,43 @@ def initialize():
     Returns:
         lib (ctypes.CDLL): see above
     """
-    lib = CDLL('src/scan.dll')
+    lib = CDLL('scanner/src/scan.dll')
     pathlib.Path('Output').mkdir(parents=True, exist_ok=True)
+    for the_file in os.listdir('Output'):
+        file_path = os.path.join('Output', the_file)
+        try:
+            if os.path.isfile(file_path):
+                os.unlink(file_path)
+        except Exception:
+            print("Error deleting files")
 
     function_generator = hantekdds.HantekDDS()
     if not function_generator.connect():
-        print("There was an error connecting to the Hantek 1025G generator module")
+        print("There was an error connecting to the hantek 1025G generator module")
         sys.exit(1)
-    function_generator.drive_periodic(frequency=1000000.0)
 
+    function_generator.drive_periodic(frequency=float(fq))
     return lib
 
 
-if __name__ == '__main__':
-    lib = initialize()
+def run_scan(fq, rate, dur, thread_count):
+    lib = initialize(fq)
 
-    thread_count = 5
     threads = []
-    for i in range(thread_count):
-        threads.append(Scanner(i, lib))
+    for i in range(int(thread_count)):
+        threads.append(Scanner(i, lib, rate, dur))
         threads[-1].start()
-        threads.append(Writer(threads[-1], i).start())
+        threads.append(Writer(threads[-1], i))
+        threads[-1].start()
 
         scan_threads = threads[::2]
         for thread in scan_threads:
             thread.join()
+
+    while True:
+        if all(thread.complete for thread in threads):
+            return True
+            break
+
+    if __name__ == '__main__':
+        run_scan(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
