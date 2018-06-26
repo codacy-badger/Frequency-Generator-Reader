@@ -1,0 +1,3 @@
+C:\Users\david\Dropbox\Work\Yura Program\obj\Debug\Yura Program.pyproj.CoreCompileInputs.cache
+C:\Users\david\Dropbox\Work\Yura Program\bin\Microsoft.PythonTools.WebRole.dll
+C:\Users\david\Dropbox\Work\Yura Program\bin\wfastcgi.py

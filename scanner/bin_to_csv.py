@@ -24,7 +24,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import pickle
 import shutil
 import csv
-import sys
 import os
 
 
@@ -53,7 +52,7 @@ def bin_to_csv():
                 csv_writer.writerow([int_chan1[i], int_chan2[i]])
 
         os.unlink(file_path)
-
+    os.unlink('static/output.zip')
     zip_file_name = 'static/output'
     zip_folder('Output', zip_file_name)
     return zip_file_name

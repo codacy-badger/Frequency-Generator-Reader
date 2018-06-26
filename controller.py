@@ -21,8 +21,6 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import sys
-
 from model import InputForm
 from flask import Flask, render_template, request
 
@@ -37,6 +35,7 @@ app = Flask(__name__)
 def csv_index():
     form = InputForm(request.form)
     if request.method == 'POST' and form.validate():
+        zip_file = None
         if run_scan(form.fq.data, form.rate.data, form.dur.data, form.thread_count.data):
             if form.graph_data.data:
                 png_img = gen_image()

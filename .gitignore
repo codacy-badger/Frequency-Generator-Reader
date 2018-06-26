@@ -33,3 +33,8 @@ installer.cfg
 requirements.txt
 
 .mypy_cache/
+
+Output/*.csv
+Yura Program.pyproj
+Yura Program.pyproj.user
+static/output.zip
