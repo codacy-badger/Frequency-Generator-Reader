@@ -27,12 +27,11 @@ import sys
 import threading
 import shutil
 import os
-import os.path
+import numpy as np
+
+import scanner.hantekdds.htdds_wrapper as hantekdds
 
 from ctypes import c_int, c_double, POINTER, CDLL
-
-import numpy as np
-import hantekdds.htdds_wrapper as hantekdds
 
 
 class Scanner(threading.Thread):
@@ -78,17 +77,17 @@ class Scanner(threading.Thread):
         self.lib.release.argtypes = [POINTER(c_int)]
         self.lib.release.restype = None
 
-        self.rate = int(rate)
-        self.c_rate = c_int(self.rate)
+        self.rate = int(rate)           # Convert rate (float) to integer
+        self.c_rate = c_int(self.rate)  # convert self.rate to C integer
 
         self.dur = dur
-        self.c_dur = c_double(self.dur)
+        self.c_dur = c_double(self.dur) # Convert duration to C double
 
-        self.p = POINTER(c_int)()
+        self.p = POINTER(c_int)()       # Generate integer pointer
         self.len = int(2 * self.rate * self.dur)
-        self.iter = iteration
+        self.iter = iteration           # Thread identifier
 
-        self.complete = False
+        self.complete = False           # Completion signal to check when data can be written
 
     def run(self):
         """
@@ -139,21 +138,22 @@ class Writer(threading.Thread):
         the list. Finally, releases the pointer.
         """
         while True:
-            if self.scan_thread.complete:
+            if self.scan_thread.complete:       # Check if scanner thread is complete
                 try:
-                    self.to_write = np.fromiter(
+                    self.to_write = np.fromiter( # Generate numpy iterable from integer pointer
                         self.scan_thread.p, dtype=np.int, count=self.scan_thread.len)
                 except Exception:
                     print("There was an error convertering the pointer(",
                           self.scan_thread.p, ") to an iterable")
+                    sys.exit(1)
 
                 try:
-                    pickle.dump(self.to_write, open(
+                    pickle.dump(self.to_write, open( # Dump the data to a bin file
                         "Output/output" + self.iter + ".bin", "wb"))
                 except Exception:
-                    print("There was an error dumpin the data.")
+                    print("There was an error dumping the data")
 
-                self.scan_thread.lib.release(self.scan_thread.p)
+                self.scan_thread.lib.release(self.scan_thread.p) # Release the thread when done
                 self.complete = True
                 break
 
@@ -171,9 +171,9 @@ def initialize(fq):
     Returns:
         lib (ctypes.CDLL): see above
     """
-    lib = CDLL('scanner/src/scan.dll')
-    pathlib.Path('Output').mkdir(parents=True, exist_ok=True)
-    for the_file in os.listdir('Output'):
+    lib = CDLL('scanner/src/scan.dll')  # Load DLL file
+    pathlib.Path('Output').mkdir(parents=True, exist_ok=True) # Make the output path if it doesn't already exist
+    for the_file in os.listdir('Output'): # If the output folder alreaady exists, delete all the files inside it
         file_path = os.path.join('Output', the_file)
         try:
             if os.path.isfile(file_path):
@@ -182,11 +182,11 @@ def initialize(fq):
             print("Error deleting files")
 
     function_generator = hantekdds.HantekDDS()
-    if not function_generator.connect():
+    if not function_generator.connect(): # Attempt a connection to the function generator
         print("There was an error connecting to the hantek 1025G generator module")
         sys.exit(1)
 
-    function_generator.drive_periodic(frequency=float(fq))
+    function_generator.drive_periodic(frequency=float(fq)) # Drive a sine wave of frequency fq
     return lib
 
 
@@ -195,10 +195,10 @@ def run_scan(fq, rate, dur, thread_count):
 
     threads = []
     for i in range(int(thread_count)):
-        threads.append(Scanner(i, lib, rate, dur))
-        threads[-1].start()
-        threads.append(Writer(threads[-1], i))
-        threads[-1].start()
+        threads.append(Scanner(i, lib, rate, dur)) # Scanner thread first
+        threads[-1].start()                        # Start the scanner thread
+        threads.append(Writer(threads[-1], i))     # Writer thread with corresponding scanner thread
+        threads[-1].start()                        # Start writer thread
 
         scan_threads = threads[::2]
         for thread in scan_threads:

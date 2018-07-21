@@ -28,13 +28,26 @@ import os
 
 
 def zip_folder(folder_path, output_path):
+    """
+    Makes a ZIP folder out of a regular Windows directory.
+    """
     shutil.make_archive(output_path, 'zip', folder_path)
 
 
 def bin_to_csv():
-    int_data = []
-    int_chan1 = []
-    int_chan2 = []
+    """
+    Converts dumped .bin files into human-readable CSV files.
+
+    Attr:
+        int_data: List of collected data in integer form.
+        int_chan1: List of collected data from channel 1 in integer form.
+        int_chan2: List of collected data from channel 2 in integer form.
+        new_file_name: The name of the CSV file to be saved.
+        zip_file_name: The name of the ZIP folder where all the CSV files should be placed.
+    """
+    int_data =  []  # All Data
+    int_chan1 = []  # Channel 0
+    int_chan2 = []  # Channel 1
 
     for filename in os.listdir('Output'):
         file_path = 'Output/' + filename
@@ -52,7 +65,10 @@ def bin_to_csv():
                 csv_writer.writerow([int_chan1[i], int_chan2[i]])
 
         os.unlink(file_path)
-    os.unlink('static/output.zip')
+    try:
+        os.unlink('static/output.zip')
+    except:
+        print("No existing output.zip")
     zip_file_name = 'static/output'
     zip_folder('Output', zip_file_name)
     return zip_file_name

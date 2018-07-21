@@ -38,3 +38,7 @@ Output/*.csv
 Yura Program.pyproj
 Yura Program.pyproj.user
 static/output.zip
+
+dist/
+
+Output/

@@ -30,6 +30,20 @@ from matplotlib import pyplot as plt
 
 
 def gen_image():
+    """
+    (None) --> Base64 Encoded PNG Image
+
+    Scans the output files of scan.py, plots the data
+    using matplotlib, and exporting it as a PNG base64 encoded image.
+
+    Attr:
+        data: List containing all collected data.
+        chan1: Every odd element in 'data' list. Represents 1st channel collection.
+        chan2: Every even element in 'data' list. Represents 2nd channel collection.
+        plot_url: MatPlotLib graph exported as a png and encoded in base64.
+        file_count: Number of files in 'Output' folder.
+
+    """
     data = []
     path, dirs, files = next(os.walk("Output"))
     file_count = len(files)
@@ -43,6 +57,7 @@ def gen_image():
     chan2 = data[1::2]
 
     img = io.BytesIO()
+
     plt.rcParams["figure.figsize"] = (16, 9)
     plt.plot(chan1)
     plt.plot(chan2)

@@ -32,8 +32,8 @@ import peakutils
 np.warnings.filterwarnings('ignore')
 
 
-def determine_fq(fourier_transform, dur):
-    flat_fourier_transform = fourier_transform.flatten()
+def determine_fq(data, dur):
+    flat_fourier_transform = np.fft.fft(data).flatten()
 
     indices = peakutils.indexes(flat_fourier_transform, thres=0.)
 
