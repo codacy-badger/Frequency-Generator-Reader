@@ -1,7 +1,5 @@
 # Frequency Generator and Reader
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a7f6ffc1e54c4987857f00c48a3705c7)](https://app.codacy.com/app/davidgur/Frequency-Generator-Reader?utm_source=github.com&utm_medium=referral&utm_content=davidgur/Frequency-Generator-Reader&utm_campaign=badger)
-
 The currently unnamed frequency generator and reader, which, upon completion will be used in ultrasonic utilities in industrial applications.
 
 It is controlled by a Flask-run control panel that can be started by running ```controller.py```.
