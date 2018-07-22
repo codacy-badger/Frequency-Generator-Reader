@@ -39,7 +39,7 @@ extern "C" {
 	__declspec(dllexport) void scan(int** input, int rate, double dur) {
 		/*
 			(int*, int, double) --> (None)
-			
+
 			Connects to USB2020 module, scans using settings as inputted by user, and
 			saves information to inputted pointer.
 		*/
@@ -47,8 +47,8 @@ extern "C" {
 		int ULStat = 0;								// Initialize ULStat
 		int LowChan = 0;							// Channel 0
 		int HighChan = 1;							// Channel 1
-		int Gain = BIP5VOLTS;						// Digital values conditioned for +/- 5V input 
-		int ChannelCount = (HighChan - LowChan) + 1; 
+		int Gain = BIP1VOLTS;						// Digital values conditioned for +/- 1V input
+		int ChannelCount = (HighChan - LowChan) + 1;
 
 		const int Count = (int)(ChannelCount * dur * rate);
 
@@ -83,7 +83,6 @@ extern "C" {
 		ULStat = cbAInScan(BoardNum, LowChan, HighChan, Count, &Rate, Gain, MemHandle, Options);
 		if (ULStat != 0) {
 			printf("There was a problem while scanning. Error Code: %d\n", ULStat);
-			exit(ULStat);
 		}
 		else {
 			for (int i = 0; i < Count; i++) {

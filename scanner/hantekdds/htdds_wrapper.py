@@ -71,7 +71,7 @@ class HantekDDS():
         else:
             print('HantekDDS method set_waveform() returned failure code.')
 
-    def drive_periodic(self, amplitude=1.0, frequency=1000.0,
+    def drive_periodic(self, amplitude=0.01, frequency=1000.0,
                        offset=0, phase=0, function='sine', **kwargs):
         """ Direct the device to drive a periodic function.
 

@@ -51,24 +51,30 @@ def index():
         png_img: base64 encoded PNG image of graphed data.
     """
     form = InputForm(request.form)
-    if request.method == 'POST' and form.validate():
-        zip_file = None
-        try:
-            if run_scan(form.fq.data, form.rate.data, form.dur.data, form.thread_count.data):
+    try:
+        if request.method == 'POST' and form.validate():
+            zip_file = None
+            if run_scan(form.fq.data, form.amp.data, form.rate.data, form.dur.data, form.thread_count.data):
                 if form.graph_data.data:
                     png_img = gen_image()
                 else:
                     png_img = None
                 zip_file = bin_to_csv()
-        except Exception as e:
-            print(e)
-            return render_template('500.html', exception_message=e)
-
-    else:
-        png_img = None
-        zip_file = None
+            else:
+                return render_template('500.html', exception_message="There was a problem scanning. Consult Console.")
+        else:
+            png_img = None
+            zip_file = None
+    except Exception as e:
+        print(e)
+        return render_template('500.html', exception_message=e)
 
     return render_template('index.html', form=form, result=zip_file, img=png_img)
+
+
+@app.route('/errortest')
+def error_test():
+    return render_template('500.html', exception_message="This is a test error page")
 
 
 if __name__ == '__main__':

@@ -28,6 +28,9 @@ class InputForm(Form):
     fq = FloatField(
         label='Frequency (Hz)', default=1.0,
         validators=[validators.InputRequired()])
+    amp = FloatField(
+        label='Amplitude (V)', default=1.0,
+        validators=[validators.InputRequired()])
     rate = FloatField(
         label='Scan Rate (Hz)', default=120000.0,
         validators=[validators.InputRequired()])

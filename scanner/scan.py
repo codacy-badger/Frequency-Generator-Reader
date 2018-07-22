@@ -77,17 +77,17 @@ class Scanner(threading.Thread):
         self.lib.release.argtypes = [POINTER(c_int)]
         self.lib.release.restype = None
 
-        self.rate = int(rate)           # Convert rate (float) to integer
-        self.c_rate = c_int(self.rate)  # convert self.rate to C integer
+        self.rate = int(rate)            # Convert rate (float) to integer
+        self.c_rate = c_int(self.rate)   # convert self.rate to C integer
 
         self.dur = dur
-        self.c_dur = c_double(self.dur) # Convert duration to C double
+        self.c_dur = c_double(self.dur)  # Convert duration to C double
 
-        self.p = POINTER(c_int)()       # Generate integer pointer
+        self.p = POINTER(c_int)()        # Generate integer pointer
         self.len = int(2 * self.rate * self.dur)
-        self.iter = iteration           # Thread identifier
+        self.iter = iteration            # Thread identifier
 
-        self.complete = False           # Completion signal to check when data can be written
+        self.complete = False            # Completion signal to check when data can be written
 
     def run(self):
         """
@@ -140,25 +140,39 @@ class Writer(threading.Thread):
         while True:
             if self.scan_thread.complete:       # Check if scanner thread is complete
                 try:
-                    self.to_write = np.fromiter( # Generate numpy iterable from integer pointer
-                        self.scan_thread.p, dtype=np.int, count=self.scan_thread.len)
+                    self.to_write = np.fromiter(self.scan_thread.p, dtype=np.int, count=self.scan_thread.len)
                 except Exception:
-                    print("There was an error convertering the pointer(",
-                          self.scan_thread.p, ") to an iterable")
-                    sys.exit(1)
+                    break
 
                 try:
-                    pickle.dump(self.to_write, open( # Dump the data to a bin file
+                    pickle.dump(self.to_write, open(  # Dump the data to a bin file
                         "Output/output" + self.iter + ".bin", "wb"))
                 except Exception:
-                    print("There was an error dumping the data")
+                    raise Exception("There was an error dumping the data")
 
-                self.scan_thread.lib.release(self.scan_thread.p) # Release the thread when done
+                self.scan_thread.lib.release(self.scan_thread.p)  # Release the thread when done
                 self.complete = True
                 break
 
 
-def initialize(fq):
+def test_daq():
+    from mcculw import ul
+    from mcculw.enums import ULRange
+    from mcculw.ul import ULError
+
+    board_num = 0
+    channel = 0
+    ai_range = ULRange.BIP5VOLTS
+
+    try:
+        value = ul.a_in(board_num, channel, ai_range)
+        print("Successful connection to Measurement Computing USB2020 Module")
+        return True
+    except ULError as e:
+        return False
+
+
+def initialize(fq, amp):
     """
     Getting values and hardware ready for scanning.
 
@@ -172,8 +186,8 @@ def initialize(fq):
         lib (ctypes.CDLL): see above
     """
     lib = CDLL('scanner/src/scan.dll')  # Load DLL file
-    pathlib.Path('Output').mkdir(parents=True, exist_ok=True) # Make the output path if it doesn't already exist
-    for the_file in os.listdir('Output'): # If the output folder alreaady exists, delete all the files inside it
+    pathlib.Path('Output').mkdir(parents=True, exist_ok=True)  # Make the output path if it doesn't already exist
+    for the_file in os.listdir('Output'):  # If the output folder alreaady exists, delete all the files inside it
         file_path = os.path.join('Output', the_file)
         try:
             if os.path.isfile(file_path):
@@ -181,24 +195,29 @@ def initialize(fq):
         except Exception:
             print("Error deleting files")
 
-    function_generator = hantekdds.HantekDDS()
-    if not function_generator.connect(): # Attempt a connection to the function generator
-        print("There was an error connecting to the hantek 1025G generator module")
-        sys.exit(1)
+    if not test_daq():
+        return False
 
-    function_generator.drive_periodic(frequency=float(fq)) # Drive a sine wave of frequency fq
+    function_generator = hantekdds.HantekDDS()
+    if not function_generator.connect():  # Attempt a connection to the function generator
+        print("There was an error connecting to the hantek 1025G generator module")
+        return False
+
+    function_generator.drive_periodic(frequency=float(fq), amplitude=float(amp))  # Drive a sine wave of frequency fq
     return lib
 
 
-def run_scan(fq, rate, dur, thread_count):
-    lib = initialize(fq)
+def run_scan(fq, amp, rate, dur, thread_count):
+    lib = initialize(fq, amp)
+    if not lib:
+        return False
 
     threads = []
     for i in range(int(thread_count)):
-        threads.append(Scanner(i, lib, rate, dur)) # Scanner thread first
-        threads[-1].start()                        # Start the scanner thread
-        threads.append(Writer(threads[-1], i))     # Writer thread with corresponding scanner thread
-        threads[-1].start()                        # Start writer thread
+        threads.append(Scanner(i, lib, rate, dur))  # Scanner thread first
+        threads[-1].start()                         # Start the scanner thread
+        threads.append(Writer(threads[-1], i))      # Writer thread with corresponding scanner thread
+        threads[-1].start()                      # Start writer thread
 
         scan_threads = threads[::2]
         for thread in scan_threads:
@@ -209,5 +228,6 @@ def run_scan(fq, rate, dur, thread_count):
             return True
             break
 
-    if __name__ == '__main__':
-        run_scan(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
+
+if __name__ == '__main__':
+    run_scan(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
