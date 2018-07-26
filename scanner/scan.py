@@ -27,11 +27,13 @@ import sys
 import threading
 import shutil
 import os
+import nanotime
+import queue
 import numpy as np
 
 import scanner.hantekdds.htdds_wrapper as hantekdds
 
-from ctypes import c_int, c_double, POINTER, CDLL
+from ctypes import c_int, c_long, c_longlong, c_double, POINTER, CDLL, byref
 
 
 class Scanner(threading.Thread):
@@ -57,7 +59,7 @@ class Scanner(threading.Thread):
         scanned (bool):              Indicator for Writer() thread when to dump information.
     """
 
-    def __init__(self, iteration, dll_lib, rate, dur):
+    def __init__(self, iteration, dll_lib, rate, dur, time_collector):
         """
         Initialization of Scanner thread.
 
@@ -70,7 +72,7 @@ class Scanner(threading.Thread):
         self.lib = dll_lib
 
         # void scan(int** input, int rate, double dur) {}
-        self.lib.scan.argtypes = [POINTER(POINTER(c_int)), c_int, c_double]
+        self.lib.scan.argtypes = [POINTER(POINTER(c_int)), POINTER(c_longlong), POINTER(c_longlong), c_int, c_double]
         self.lib.scan.restype = None
 
         # void release(int* input) {}
@@ -87,6 +89,11 @@ class Scanner(threading.Thread):
         self.len = int(2 * self.rate * self.dur)
         self.iter = iteration            # Thread identifier
 
+        self.start_time = c_longlong(0)
+        self.end_time = c_longlong(0)
+
+        self.time_collector = time_collector
+
         self.complete = False            # Completion signal to check when data can be written
 
     def run(self):
@@ -97,7 +104,9 @@ class Scanner(threading.Thread):
         When scanned, set scanned to True in order to indicate to WRITER thread
         that it can start writing.
         """
-        self.lib.scan(self.p, self.c_rate, self.c_dur)
+        self.lib.scan(self.p, byref(self.start_time), byref(self.end_time), self.c_rate, self.c_dur)
+
+        self.time_collector.put((self.start_time.value, self.end_time.value))
         self.complete = True
 
 
@@ -166,7 +175,6 @@ def test_daq():
 
     try:
         value = ul.a_in(board_num, channel, ai_range)
-        print("Successful connection to Measurement Computing USB2020 Module")
         return True
     except ULError as e:
         return False
@@ -212,20 +220,29 @@ def run_scan(fq, amp, rate, dur, thread_count):
     if not lib:
         return False
 
+    crit_time_list = []
+
+    time_collector = queue.Queue()
     threads = []
     for i in range(int(thread_count)):
-        threads.append(Scanner(i, lib, rate, dur))  # Scanner thread first
+        threads.append(Scanner(i, lib, rate, dur, time_collector))  # Scanner thread first
         threads[-1].start()                         # Start the scanner thread
         threads.append(Writer(threads[-1], i))      # Writer thread with corresponding scanner thread
-        threads[-1].start()                      # Start writer thread
+        threads[-1].start()                         # Start writer thread
 
         scan_threads = threads[::2]
         for thread in scan_threads:
             thread.join()
 
+    for i in range(int(thread_count)):
+        start_time, end_time = time_collector.get()
+        crit_time_list.append(str(start_time))
+        crit_time_list.append(str(end_time))
+        time_collector.task_done()
+
     while True:
         if all(thread.complete for thread in threads):
-            return True
+            return (True, crit_time_list)
             break
 
 

@@ -26,19 +26,19 @@ from wtforms import Form, FloatField, BooleanField, validators
 
 class InputForm(Form):
     fq = FloatField(
-        label='Frequency (Hz)', default=1.0,
+        label='Frequency (Hz)', default=1000000.0,
         validators=[validators.InputRequired()])
     amp = FloatField(
         label='Amplitude (V)', default=1.0,
         validators=[validators.InputRequired()])
     rate = FloatField(
-        label='Scan Rate (Hz)', default=120000.0,
+        label='Scan Rate (Hz)', default=16000000.0,
         validators=[validators.InputRequired()])
     dur = FloatField(
-        label='Duration (s)', default=1,
+        label='Duration (s)', default=0.001,
         validators=[validators.InputRequired()])
     thread_count = FloatField(
-        label='Thead Count', default=1,
+        label='Thead Count', default=3,
         validators=[validators.InputRequired()])
     graph_data = BooleanField(
         label='Graph Data?', default=True)

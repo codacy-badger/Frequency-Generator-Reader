@@ -25,8 +25,10 @@ import pickle
 import os
 import io
 import base64
+import csv
 
 from matplotlib import pyplot as plt
+from matplotlib.lines import Line2D
 
 
 def gen_image():
@@ -44,27 +46,40 @@ def gen_image():
         file_count: Number of files in 'Output' folder.
 
     """
-    data = []
+    timestamp = []
+    chan1 = []
+    chan2 = []
+
     path, dirs, files = next(os.walk("Output"))
     file_count = len(files)
     for i in range(file_count):
         str_i = str(i)
-        with open('Output/output' + str_i + '.bin', 'rb') as fp:
-            to_add = pickle.load(fp)
-            data.extend(to_add)
-
-    chan1 = data[::2]
-    chan2 = data[1::2]
+        with open('Output/output' + str_i + '.csv') as fp:
+            csv_reader = csv.reader(fp, delimiter=',')
+            for row in csv_reader:
+                timestamp.append(float(row[0]))
+                chan1.append(float(row[1]))
+                chan2.append(float(row[2]))
 
     img = io.BytesIO()
 
     plt.rcParams["figure.figsize"] = (16, 9)
-    plt.plot(chan1)
-    plt.plot(chan2)
+
+    plt.plot(timestamp, chan1, "o", label="Channel 1")
+    plt.plot(timestamp, chan2, "o", label="Channel 2")
+
+    legend_elements = [Line2D([0], [0], color='b', lw=4, label="Channel 1"),
+                       Line2D([0], [0], color='orange', lw=4, label="Channel 2")]
+
+    legend = plt.legend(handles=legend_elements, loc='lower right')
+
+    plt.title("Amplitude (V) vs Time (nS)")
+    plt.ylabel("Amplitude (12-bit digital value)")
+    plt.xlabel("Time (nS)")
+
     plt.savefig(img, format="png")
     plt.clf()
     img.seek(0)
-
     plot_url = base64.b64encode(img.getvalue()).decode()
     return plot_url
 

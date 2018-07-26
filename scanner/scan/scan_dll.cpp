@@ -28,15 +28,18 @@
 
 */
 
-#include <windows.h>
+#include <Windows.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
+#include <chrono>
 
 #include "cbw.h"
 
+using namespace std::chrono;
+
 extern "C" {
-	__declspec(dllexport) void scan(int** input, int rate, double dur) {
+	__declspec(dllexport) void scan(int** input, long long* startTime, long long* endTime, int rate, double dur) {
 		/*
 			(int*, int, double) --> (None)
 
@@ -79,8 +82,10 @@ extern "C" {
 		Options = CONVERTDATA + BURSTIO; // CONVERTDATA converts to digital values
 										 // BURSTIO saves the data on onboard storage, then offloads it
 
-		// Run the scan
+		auto start_time = high_resolution_clock::now();
 		ULStat = cbAInScan(BoardNum, LowChan, HighChan, Count, &Rate, Gain, MemHandle, Options);
+		auto end_time = high_resolution_clock::now();
+
 		if (ULStat != 0) {
 			printf("There was a problem while scanning. Error Code: %d\n", ULStat);
 		}
@@ -90,6 +95,9 @@ extern "C" {
 			}
 
 			*input = data;
+			*startTime = duration_cast<nanoseconds>(start_time.time_since_epoch()).count();
+			*endTime = duration_cast<nanoseconds>(end_time.time_since_epoch()).count();
+
 			cbWinBufFree(MemHandle);
 		}
 	}

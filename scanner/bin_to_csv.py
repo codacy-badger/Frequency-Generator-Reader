@@ -34,7 +34,11 @@ def zip_folder(folder_path, output_path):
     shutil.make_archive(output_path, 'zip', folder_path)
 
 
-def bin_to_csv():
+def convert_to_int_list(str_list):
+    return [int(x) for x in str_list]
+
+
+def bin_to_csv(crit_time_list, start_times, end_times):
     """
     Converts dumped .bin files into human-readable CSV files.
 
@@ -45,11 +49,11 @@ def bin_to_csv():
         new_file_name: The name of the CSV file to be saved.
         zip_file_name: The name of the ZIP folder where all the CSV files should be placed.
     """
-    int_data =  []  # All Data
+    int_data = []   # All Data
     int_chan1 = []  # Channel 0
     int_chan2 = []  # Channel 1
 
-    for filename in os.listdir('Output'):
+    for i, filename in enumerate(os.listdir('Output')):
         file_path = 'Output/' + filename
         with open('Output/' + filename, 'rb') as fp:
             int_data = pickle.load(fp)
@@ -57,17 +61,23 @@ def bin_to_csv():
         int_chan1 = int_data[::2]
         int_chan2 = int_data[1::2]
 
+        crit_time_list_int = convert_to_int_list(crit_time_list)
+
+        start_time = int(start_times[i])
+        end_time = int(end_times[i])
+        step = (end_time - start_time) / len(int_chan1)
+
         new_file_name = file_path[:len(file_path) - 3] + "csv"
 
         with open(new_file_name, 'w', newline='') as csv_file:
             csv_writer = csv.writer(csv_file)
-            for i in range(len(int_chan1)):
-                csv_writer.writerow([int_chan1[i], int_chan2[i]])
+            for j in range(len(int_chan1)):
+                csv_writer.writerow([start_time + (step * j), int_chan1[j], int_chan2[j]])
 
         os.unlink(file_path)
     try:
         os.unlink('static/output.zip')
-    except:
+    except FileNotFoundError:
         print("No existing output.zip")
     zip_file_name = 'static/output'
     zip_folder('Output', zip_file_name)

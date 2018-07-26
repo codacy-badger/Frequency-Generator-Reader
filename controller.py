@@ -54,12 +54,24 @@ def index():
     try:
         if request.method == 'POST' and form.validate():
             zip_file = None
-            if run_scan(form.fq.data, form.amp.data, form.rate.data, form.dur.data, form.thread_count.data):
+            scan_status, crit_time_list = run_scan(form.fq.data, form.amp.data, form.rate.data, form.dur.data, form.thread_count.data)
+            crit_time_list = [str((int(x) - int(crit_time_list[0]))) for x in crit_time_list]
+
+            start_times = []
+            end_times = []
+
+            for i in range(0, len(crit_time_list), 2):
+                start_time = crit_time_list[i]
+                end_time = crit_time_list[i + 1]
+                start_times.append(start_time)
+                end_times.append(end_time)
+
+            if scan_status:
+                zip_file = bin_to_csv(crit_time_list, start_times, end_times)
                 if form.graph_data.data:
                     png_img = gen_image()
                 else:
                     png_img = None
-                zip_file = bin_to_csv()
             else:
                 return render_template('500.html', exception_message="There was a problem scanning. Consult Console.")
         else:
