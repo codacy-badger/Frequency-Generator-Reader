@@ -7,30 +7,17 @@
 
 Frequency-Generator Reader | Local software for generating and processing high-frequency signals
 Copyright (C) 2018  David A. Gurevich
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU Affero General Public License as published
-by the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Affero General Public License for more details.
-
-You should have received a copy of the GNU Affero General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import sys
 import os
+import sys
 
 from flask import Flask, render_template, request
 
-from scanner.scan import run_scan
 from scanner.bin_to_csv import bin_to_csv
-from scanner.gen_png import gen_image
 from scanner.model import InputForm
+from scanner.plot import create_figure
+from scanner.scan import run_scan
 
 if getattr(sys, 'frozen', False):
     template_folder = os.path.join(sys._MEIPASS, 'templates')
@@ -51,11 +38,13 @@ def index():
         png_img: base64 encoded PNG image of graphed data.
     """
     form = InputForm(request.form)
+    plots = []
     try:
         if request.method == 'POST' and form.validate():
             zip_file = None
-            scan_status, crit_time_list = run_scan(form.fq.data, form.amp.data, form.rate.data, form.dur.data, form.thread_count.data)
-            crit_time_list = [str((int(x) - int(crit_time_list[0]))) for x in crit_time_list]
+            scan_status, crit_time_list = run_scan(form.fq.data, form.amp.data, form.rate.data, form.dur.data,
+                                                   form.thread_count.data)
+            crit_time_list = [str((float(x) - float(crit_time_list[0])) / 1000000000) for x in crit_time_list]
 
             start_times = []
             end_times = []
@@ -67,21 +56,17 @@ def index():
                 end_times.append(end_time)
 
             if scan_status:
-                zip_file = bin_to_csv(crit_time_list, start_times, end_times)
+                zip_file = bin_to_csv(start_times, end_times)
                 if form.graph_data.data:
-                    png_img = gen_image()
-                else:
-                    png_img = None
+                    plots.append(create_figure())
             else:
                 return render_template('500.html', exception_message="There was a problem scanning. Consult Console.")
         else:
-            png_img = None
             zip_file = None
     except Exception as e:
         print(e)
         return render_template('500.html', exception_message=e)
-
-    return render_template('index.html', form=form, result=zip_file, img=png_img)
+    return render_template('index.html', form=form, result=zip_file, plots=plots)
 
 
 @app.route('/errortest')
@@ -90,4 +75,4 @@ def error_test():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()

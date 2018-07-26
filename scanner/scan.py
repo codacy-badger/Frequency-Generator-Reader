@@ -6,34 +6,18 @@
 
 Frequency-Generator Reader | Local software for generating and processing high-frequency signals
 Copyright (C) 2018  David A. Gurevich
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU Affero General Public License as published
-by the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Affero General Public License for more details.
-
-You should have received a copy of the GNU Affero General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import os
 import pathlib
 import pickle
-import sys
-import threading
-import shutil
-import os
-import nanotime
 import queue
+import threading
+from ctypes import c_int, c_longlong, c_double, POINTER, CDLL, byref
+
 import numpy as np
 
 import scanner.hantekdds.htdds_wrapper as hantekdds
-
-from ctypes import c_int, c_long, c_longlong, c_double, POINTER, CDLL, byref
 
 
 class Scanner(threading.Thread):
@@ -53,10 +37,9 @@ class Scanner(threading.Thread):
         c_rate (c_int):              CTypes c_int version of rate.
         dur (float):                 Duration of scan in seconds.
         c_dur (c_double):            CTypes c_double version of dur.
-        P (POINTER(c_int)):          List "retrieval" from scan function.
+        p (POINTER(c_int)):          List "retrieval" from scan function.
         len (int):                   Number of points to scan.
         iter (int):                  Number generated in for loop when designating threads.
-        scanned (bool):              Indicator for Writer() thread when to dump information.
     """
 
     def __init__(self, iteration, dll_lib, rate, dur, time_collector):
@@ -79,22 +62,22 @@ class Scanner(threading.Thread):
         self.lib.release.argtypes = [POINTER(c_int)]
         self.lib.release.restype = None
 
-        self.rate = int(rate)            # Convert rate (float) to integer
-        self.c_rate = c_int(self.rate)   # convert self.rate to C integer
+        self.rate = int(rate)  # Convert rate (float) to integer
+        self.c_rate = c_int(self.rate)  # convert self.rate to C integer
 
         self.dur = dur
         self.c_dur = c_double(self.dur)  # Convert duration to C double
 
-        self.p = POINTER(c_int)()        # Generate integer pointer
+        self.p = POINTER(c_int)()  # Generate integer pointer
         self.len = int(2 * self.rate * self.dur)
-        self.iter = iteration            # Thread identifier
+        self.iter = iteration  # Thread identifier
 
         self.start_time = c_longlong(0)
         self.end_time = c_longlong(0)
 
         self.time_collector = time_collector
 
-        self.complete = False            # Completion signal to check when data can be written
+        self.complete = False  # Completion signal to check when data can be written
 
     def run(self):
         """
@@ -147,7 +130,7 @@ class Writer(threading.Thread):
         the list. Finally, releases the pointer.
         """
         while True:
-            if self.scan_thread.complete:       # Check if scanner thread is complete
+            if self.scan_thread.complete:  # Check if scanner thread is complete
                 try:
                     self.to_write = np.fromiter(self.scan_thread.p, dtype=np.int, count=self.scan_thread.len)
                 except Exception:
@@ -174,9 +157,9 @@ def test_daq():
     ai_range = ULRange.BIP5VOLTS
 
     try:
-        value = ul.a_in(board_num, channel, ai_range)
+        ul.a_in(board_num, channel, ai_range)
         return True
-    except ULError as e:
+    except ULError:
         return False
 
 
@@ -226,9 +209,9 @@ def run_scan(fq, amp, rate, dur, thread_count):
     threads = []
     for i in range(int(thread_count)):
         threads.append(Scanner(i, lib, rate, dur, time_collector))  # Scanner thread first
-        threads[-1].start()                         # Start the scanner thread
-        threads.append(Writer(threads[-1], i))      # Writer thread with corresponding scanner thread
-        threads[-1].start()                         # Start writer thread
+        threads[-1].start()  # Start the scanner thread
+        threads.append(Writer(threads[-1], i))  # Writer thread with corresponding scanner thread
+        threads[-1].start()  # Start writer thread
 
         scan_threads = threads[::2]
         for thread in scan_threads:
@@ -242,9 +225,4 @@ def run_scan(fq, amp, rate, dur, thread_count):
 
     while True:
         if all(thread.complete for thread in threads):
-            return (True, crit_time_list)
-            break
-
-
-if __name__ == '__main__':
-    run_scan(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
+            return True, crit_time_list

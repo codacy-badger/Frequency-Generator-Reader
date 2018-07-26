@@ -42,3 +42,5 @@ static/output.zip
 dist/
 
 Output/
+
+venv/
