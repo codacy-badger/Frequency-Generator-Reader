@@ -21,7 +21,13 @@ def zip_folder(folder_path, output_path):
     shutil.make_archive(output_path, 'zip', folder_path)
 
 
-def bin_to_csv(start_times, end_times):
+def chunks(l, n):
+    """Yield successive n-sized chunks from l."""
+    for i in range(0, len(l), n):
+        yield l[i:i + n]
+
+
+def bin_to_csv():
     """
     Converts dumped .bin files into human-readable CSV files.
 
@@ -40,16 +46,18 @@ def bin_to_csv(start_times, end_times):
         int_chan1 = int_data[::2]
         int_chan2 = int_data[1::2]
 
-        start_time = float(start_times[i])
-        end_time = float(end_times[i])
-        step = (end_time - start_time) / len(int_chan1)
+        new_file_name = file_path[:len(file_path) - 4]
 
-        new_file_name = file_path[:len(file_path) - 3] + "csv"
+        split_int_chan1 = list(chunks(int_chan1, int(1E6)))
+        split_int_chan2 = list(chunks(int_chan2, int(1E6)))
 
-        with open(new_file_name, 'w', newline='') as csv_file:
-            csv_writer = csv.writer(csv_file)
-            for j, val in enumerate(int_chan1):
-                csv_writer.writerow([start_time + (step * j), val, int_chan2[j]])
+        paired_list = [[split_int_chan1[x], split_int_chan2[x]] for x in range(len(split_int_chan1))]
+
+        for x, pair in enumerate(paired_list):
+            with open(new_file_name + "-" + str(x + 1) + ".csv", 'w', newline='') as csv_file:
+                csv_writer = csv.writer(csv_file)
+                for j, val in enumerate(pair[0]):
+                    csv_writer.writerow([val, pair[1][j]])
 
         os.unlink(file_path)
     try:

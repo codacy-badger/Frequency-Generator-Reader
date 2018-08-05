@@ -102,21 +102,21 @@ class Writer(threading.Thread):
     understands. Then, pickle and dump the information. Finally, release the pointer.
 
     Attributes:
-        iter (int):                    iter argument saved to corresponsing thread.
+        thread_id (int):                    iter argument saved to respective thread.
         to_write (list):               Iterable that the pointer will be converted into.
-        scan_thread (Scanner() Class): scan_thread argument saved to corresponsing thread.
+        scan_thread (Scanner() Class): scan_thread argument saved to respective thread.
     """
 
-    def __init__(self, scan_thread, iter):
+    def __init__(self, scan_thread, thread_id):
         """
         Initialization of Writer thread.
 
         Args:
             scan_thread (Scanner() Class):The writer's corresponding scan thread that it reports to.
-            iter (int):                    Iteration of for loop that generates the thread.
+            thread_id (int):                    Iteration of for loop that generates the thread.
         """
         threading.Thread.__init__(self)
-        self.iter = str(iter)
+        self.thread_id = str(thread_id + 1)
         self.to_write = []
         self.scan_thread = scan_thread
         self.complete = False
@@ -133,12 +133,12 @@ class Writer(threading.Thread):
             if self.scan_thread.complete:  # Check if scanner thread is complete
                 try:
                     self.to_write = np.fromiter(self.scan_thread.p, dtype=np.int, count=self.scan_thread.len)
-                except Exception:
+                except ValueError:
                     break
 
                 try:
                     pickle.dump(self.to_write, open(  # Dump the data to a bin file
-                        "Output/output" + self.iter + ".bin", "wb"))
+                        "Output/DAQ-Output " + self.thread_id + ".bin", "wb"))
                 except Exception:
                     raise Exception("There was an error dumping the data")
 
@@ -170,20 +170,17 @@ def initialize(fq, amp):
     Removes and existing 'Output' folder. Makes a new one.
     Connects to Hantek 1025G function generator. Drives a sine wave.
 
-    Attributes:
-        lib (ctypes.CDLL): DLL file that contains scanning function.
-
     Returns:
         lib (ctypes.CDLL): see above
     """
     lib = CDLL('scanner/src/scan.dll')  # Load DLL file
     pathlib.Path('Output').mkdir(parents=True, exist_ok=True)  # Make the output path if it doesn't already exist
-    for the_file in os.listdir('Output'):  # If the output folder alreaady exists, delete all the files inside it
+    for the_file in os.listdir('Output'):  # If the output folder already exists, delete all the files inside it
         file_path = os.path.join('Output', the_file)
         try:
             if os.path.isfile(file_path):
                 os.unlink(file_path)
-        except Exception:
+        except OSError:
             print("Error deleting files")
 
     if not test_daq():
@@ -209,8 +206,10 @@ def run_scan(fq, amp, rate, dur, thread_count):
     threads = []
     for i in range(int(thread_count)):
         threads.append(Scanner(i, lib, rate, dur, time_collector))  # Scanner thread first
+        threads[-1].setName("Scanner " + str(i // 2))
         threads[-1].start()  # Start the scanner thread
         threads.append(Writer(threads[-1], i))  # Writer thread with corresponding scanner thread
+        threads[-1].setName("Writer " + str(i // 2))
         threads[-1].start()  # Start writer thread
 
         scan_threads = threads[::2]

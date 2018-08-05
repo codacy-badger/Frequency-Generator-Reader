@@ -14,6 +14,7 @@ import sys
 
 from flask import Flask, render_template, request
 
+from scanner.IPDetector import get_local_ip
 from scanner.bin_to_csv import bin_to_csv
 from scanner.model import InputForm
 from scanner.plot import create_figure
@@ -30,7 +31,7 @@ else:
 @app.route('/', methods=['GET', 'POST'])
 def index():
     """
-    Page to be loaded when user connects to localhost:5000/
+    Page to be loaded when user connects to host:5000/
 
     Attr:
         form: Class from model.py -- Contains input forms for scan information.
@@ -41,10 +42,9 @@ def index():
     plots = []
     try:
         if request.method == 'POST' and form.validate():
-            zip_file = None
             scan_status, crit_time_list = run_scan(form.fq.data, form.amp.data, form.rate.data, form.dur.data,
                                                    form.thread_count.data)
-            crit_time_list = [str((float(x) - float(crit_time_list[0])) / 1000000000) for x in crit_time_list]
+            crit_time_list = [str((float(x) - float(crit_time_list[0])) / 1E9) for x in crit_time_list]
 
             start_times = []
             end_times = []
@@ -56,7 +56,7 @@ def index():
                 end_times.append(end_time)
 
             if scan_status:
-                zip_file = bin_to_csv(start_times, end_times)
+                zip_file = bin_to_csv()
                 if form.graph_data.data:
                     plots.append(create_figure())
             else:
@@ -75,4 +75,4 @@ def error_test():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True, host=get_local_ip())
