@@ -60,19 +60,19 @@ def index():
                 if form.graph_data.data:
                     plots.append(create_figure())
             else:
-                return render_template('500.html', exception_message="There was a problem scanning. Consult Console.")
+                error_page("There was a problem scanning. Consult Console.")
         else:
             zip_file = None
     except Exception as e:
         print(e)
-        return render_template('500.html', exception_message=e)
+        error_page(str(e))
     return render_template('index.html', form=form, result=zip_file, plots=plots)
 
 
 @app.route('/errortest')
-def error_test():
-    return render_template('500.html', exception_message="This is a test error page")
+def error_page(exception_message="This is a test error page."):
+    return render_template('500.html', exception_message=exception_message)
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host=get_local_ip())
+    app.run(debug=True, host=get_local_ip(), port=80)

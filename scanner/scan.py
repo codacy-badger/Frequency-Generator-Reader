@@ -12,6 +12,7 @@ import os
 import pathlib
 import pickle
 import queue
+import sys
 import threading
 from ctypes import c_int, c_longlong, c_double, POINTER, CDLL, byref
 
@@ -92,6 +93,8 @@ class Scanner(threading.Thread):
         self.time_collector.put((self.start_time.value, self.end_time.value))
         self.complete = True
 
+        return
+
 
 class Writer(threading.Thread):
     """
@@ -139,12 +142,16 @@ class Writer(threading.Thread):
                 try:
                     pickle.dump(self.to_write, open(  # Dump the data to a bin file
                         "Output/DAQ-Output " + self.thread_id + ".bin", "wb"))
+                    del self.to_write
                 except Exception:
-                    raise Exception("There was an error dumping the data")
+                    print("There was an error dumping the data")
+                    sys.exit()
 
                 self.scan_thread.lib.release(self.scan_thread.p)  # Release the thread when done
                 self.complete = True
                 break
+
+        return
 
 
 def test_daq():
@@ -211,10 +218,6 @@ def run_scan(fq, amp, rate, dur, thread_count):
         threads.append(Writer(threads[-1], i))  # Writer thread with corresponding scanner thread
         threads[-1].setName("Writer " + str(i // 2))
         threads[-1].start()  # Start writer thread
-
-        scan_threads = threads[::2]
-        for thread in scan_threads:
-            thread.join()
 
     for i in range(int(thread_count)):
         start_time, end_time = time_collector.get()

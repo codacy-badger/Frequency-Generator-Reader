@@ -43,6 +43,12 @@
   text-transform: uppercase;
 }
 
+.exception_message {
+    color: #ffffff;
+    font-family: 'Source Code Pro', sans-serif;
+    font-size: 2rem;
+}
+
 @media only screen and (min-width: 567px) {
   .over404 header h1 {
      font-size: 15rem;
