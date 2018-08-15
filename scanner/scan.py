@@ -10,15 +10,12 @@ Copyright (C) 2018  David A. Gurevich
 
 import os
 import pathlib
-import pickle
 import queue
-import sys
 import threading
 from ctypes import c_int, c_longlong, c_double, POINTER, CDLL, byref
 
-import numpy as np
-
 import scanner.hantekdds.htdds_wrapper as hantekdds
+from scanner.write_csv import write_csv
 
 
 class Scanner(threading.Thread):
@@ -110,7 +107,7 @@ class Writer(threading.Thread):
         scan_thread (Scanner() Class): scan_thread argument saved to respective thread.
     """
 
-    def __init__(self, scan_thread, thread_id):
+    def __init__(self, scan_thread, thread_id, dll_lib):
         """
         Initialization of Writer thread.
 
@@ -119,9 +116,11 @@ class Writer(threading.Thread):
             thread_id (int):                    Iteration of for loop that generates the thread.
         """
         threading.Thread.__init__(self)
+
         self.thread_id = str(thread_id + 1)
         self.to_write = []
         self.scan_thread = scan_thread
+        self.dll_lib = dll_lib
         self.complete = False
 
     def run(self):
@@ -134,19 +133,7 @@ class Writer(threading.Thread):
         """
         while True:
             if self.scan_thread.complete:  # Check if scanner thread is complete
-                try:
-                    self.to_write = np.fromiter(self.scan_thread.p, dtype=np.int, count=self.scan_thread.len)
-                except ValueError:
-                    break
-
-                try:
-                    pickle.dump(self.to_write, open(  # Dump the data to a bin file
-                        "Output/DAQ-Output " + self.thread_id + ".bin", "wb"))
-                    del self.to_write
-                except Exception:
-                    print("There was an error dumping the data")
-                    sys.exit()
-
+                write_csv(self.scan_thread.p, self.scan_thread.len // 2, self.thread_id)
                 self.scan_thread.lib.release(self.scan_thread.p)  # Release the thread when done
                 self.complete = True
                 break
@@ -203,28 +190,36 @@ def initialize(fq, amp):
 
 
 def run_scan(fq, amp, rate, dur, thread_count):
-    lib = initialize(fq, amp)
-    if not lib:
-        return False
-
     crit_time_list = []
 
-    time_collector = queue.Queue()
-    threads = []
-    for i in range(int(thread_count)):
-        threads.append(Scanner(i, lib, rate, dur, time_collector))  # Scanner thread first
-        threads[-1].setName("Scanner " + str(i // 2))
-        threads[-1].start()  # Start the scanner thread
-        threads.append(Writer(threads[-1], i))  # Writer thread with corresponding scanner thread
-        threads[-1].setName("Writer " + str(i // 2))
-        threads[-1].start()  # Start writer thread
+    try:
+        lib = initialize(fq, amp)
+        if not lib:
+            return False
 
-    for i in range(int(thread_count)):
-        start_time, end_time = time_collector.get()
-        crit_time_list.append(str(start_time))
-        crit_time_list.append(str(end_time))
-        time_collector.task_done()
+        time_collector = queue.Queue()
+        threads = []
+        for i in range(int(thread_count)):
+            threads.append(Scanner(i, lib, rate, dur, time_collector))  # Scanner thread first
+            threads[-1].setName("Scanner " + str(i))
+            threads[-1].start()  # Start the scanner thread
+            threads.append(Writer(threads[-1], i, lib))  # Writer thread with corresponding scanner thread
+            threads[-1].setName("Writer " + str(i))
+            threads[-1].start()  # Start writer thread
 
-    while True:
-        if all(thread.complete for thread in threads):
-            return True, crit_time_list
+            scan_threads = threads[::2]
+            for thread in scan_threads:
+                thread.join()
+
+        for i in range(int(thread_count)):
+            start_time, end_time = time_collector.get()
+            crit_time_list.append(str(start_time))
+            crit_time_list.append(str(end_time))
+            time_collector.task_done()
+
+        while True:
+            if all(thread.complete for thread in threads):
+                return True, crit_time_list
+
+    except:
+        return False, crit_time_list

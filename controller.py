@@ -15,10 +15,10 @@ import sys
 from flask import Flask, render_template, request
 
 from scanner.IPDetector import get_local_ip
-from scanner.bin_to_csv import bin_to_csv
 from scanner.model import InputForm
 from scanner.plot import create_figure
 from scanner.scan import run_scan
+from scanner.write_csv import zip_folder
 
 if getattr(sys, 'frozen', False):
     template_folder = os.path.join(sys._MEIPASS, 'templates')
@@ -40,6 +40,7 @@ def index():
     """
     form = InputForm(request.form)
     plots = []
+    zip_file = None
     try:
         if request.method == 'POST' and form.validate():
             scan_status, crit_time_list = run_scan(form.fq.data, form.amp.data, form.rate.data, form.dur.data,
@@ -56,7 +57,7 @@ def index():
                 end_times.append(end_time)
 
             if scan_status:
-                zip_file = bin_to_csv()
+                zip_file = zip_folder()
                 if form.graph_data.data:
                     plots.append(create_figure())
             else:
