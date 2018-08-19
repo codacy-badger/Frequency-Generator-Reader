@@ -207,10 +207,6 @@ def run_scan(fq, amp, rate, dur, thread_count):
             threads[-1].setName("Writer " + str(i))
             threads[-1].start()  # Start writer thread
 
-            scan_threads = threads[::2]
-            for thread in scan_threads:
-                thread.join()
-
         for i in range(int(thread_count)):
             start_time, end_time = time_collector.get()
             crit_time_list.append(str(start_time))

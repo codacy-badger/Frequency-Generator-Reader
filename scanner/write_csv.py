@@ -1,5 +1,5 @@
 """
- **File Name:** bin_to_csv.py                                                                    \n
+ **File Name:** write_csv.py                                                                    \n
  **Project:** CURRENTLY UNNAMED                                                                  \n
  **Company:** Research in Flows, Inc                                                             \n
  **Author:** David A. Gurevich                                                                   \n
