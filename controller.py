@@ -17,7 +17,7 @@ from flask import Flask, render_template, request
 from scanner.IPDetector import get_local_ip
 from scanner.model import InputForm
 from scanner.plot import create_figure
-from scanner.scan import run_scan
+from scanner.run_scan import run_scan
 from scanner.write_csv import zip_folder
 
 if getattr(sys, 'frozen', False):
@@ -76,4 +76,4 @@ def error_page(exception_message="This is a test error page."):
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host=get_local_ip(), port=80)
+    app.run(debug=True, host=get_local_ip(), port=5000)
