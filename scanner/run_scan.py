@@ -45,14 +45,16 @@ def initialize(fq, amp):
         lib (ctypes.CDLL): see above
     """
     lib = CDLL('scanner/src/scan.dll')  # Load DLL file
-    pathlib.Path('Output').mkdir(parents=True, exist_ok=True)  # Make the output path if it doesn't already exist
-    for the_file in os.listdir('Output'):  # If the output folder already exists, delete all the files inside it
-        file_path = os.path.join('Output', the_file)
+
+    folder = 'Output/'
+    pathlib.Path(folder).mkdir(parents=True, exist_ok=True)
+    for the_file in os.listdir(folder):
+        file_path = os.path.join(folder, the_file)
         try:
             if os.path.isfile(file_path):
                 os.unlink(file_path)
-        except OSError:
-            print("Error deleting files")
+        except Exception as e:
+            print(e)
 
     if not test_daq():
         return False
@@ -66,9 +68,9 @@ def initialize(fq, amp):
     return lib
 
 
-def run_scan(fq, amp, rate, dur, thread_count):
+def run_scan(param_tup):
     crit_time_list = []
-
+    fq, amp, rate, dur, thread_count = param_tup
     try:
         lib = initialize(fq, amp)
         if not lib:

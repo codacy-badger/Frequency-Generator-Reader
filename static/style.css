@@ -45,7 +45,8 @@ Copyright (C) 2018  David A. Gurevich
 
 .main {
     margin-left: 22%;
-    color: #eeeeee;
+    background-color: #eeeeee;
+    height: 100%
 }
 
     .main img {
@@ -135,3 +136,96 @@ Copyright (C) 2018  David A. Gurevich
         cursor: pointer;
         float: left;
     }
+
+#loading-mask {
+    background-color: #eeeeee;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 9999;
+    opacity: 0;
+    animation: fadeIn 0.1s forwards;
+    font-family: 'Roboto', sans-serif;
+}
+
+#loading-mask h1 {
+    color: #444;
+    position: absolute;
+    left: 50%;
+    top: 45%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+#loading-mask p {
+    color: #444;
+    position: absolute;
+    left: 50%;
+    top: 60%;
+    -webkit-transform: translate(-60%, -50%);
+    transform: translate(-60%, -50%);
+}
+
+.one {
+    opacity: 0;
+    -webkit-animation: dot 1.3s infinite;
+    -webkit-animation-delay: 0.0s;
+    animation: dot 1.3s infinite;
+    animation-delay: 0.0s;
+}
+
+.two {
+    opacity: 0;
+    -webkit-animation: dot 1.3s infinite;
+    -webkit-animation-delay: 0.2s;
+    animation: dot 1.3s infinite;
+    animation-delay: 0.2s;
+}
+
+.three {
+    opacity: 0;
+    -webkit-animation: dot 1.3s infinite;
+    -webkit-animation-delay: 0.3s;
+    animation: dot 1.3s infinite;
+    animation-delay: 0.3s;
+}
+
+@-webkit-keyframes dot {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes dot {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    30% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}

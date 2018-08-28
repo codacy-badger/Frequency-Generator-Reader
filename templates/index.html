@@ -18,15 +18,28 @@ Copyright (C) 2018  David A. Gurevich
     <meta name="theme-color" content="#eeeeee">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <!-- Bokeh includes-->
     <link rel="stylesheet" href="https://cdn.pydata.org/bokeh/release/bokeh-0.13.0.min.css" type="text/css"/>
     <script type="text/javascript" src="https://cdn.pydata.org/bokeh/release/bokeh-0.13.0.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bokeh/0.13.0/bokeh-gl.min.js"></script>
+    <script>
+        window.onload = function () {
+            document.getElementById("loading-mask").style.display = "none";
+        };
+
+        function loadPage() {
+            document.getElementById("loading-mask").style.display = "block";
+        }
+    </script>
 
 </head>
 
 <body>
+<div id="loading-mask">
+    <h1>Processing<span class="one">.</span><span class="two">.</span><span class="three">.</span></h1>
+    <p>Server is now scanning and processing.</p>
+</div>
     <div class="sidenav">
         <div align="center">
             <img src="static/icon.png" width="50%">
@@ -42,7 +55,7 @@ Copyright (C) 2018  David A. Gurevich
                         <p />
                         {% endfor %}
                     </table>
-                    <input type="submit" class="btn" value="Scan" />
+                    <input type="submit" class="btn" value="Scan" onclick="loadPage();"/>
                     {% if result == None %}
                     <input type="button" class="btn-disabled" value="Download" disabled />
                     {% else %}
