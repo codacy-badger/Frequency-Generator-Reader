@@ -19,6 +19,7 @@ from scanner.IPDetector import get_local_ip
 from scanner.model import InputForm
 from scanner.plot import create_figure
 from scanner.run_scan import run_scan
+from scanner.string_tool import to_hz, to_volts
 from scanner.write_csv import zip_folder
 
 if getattr(sys, 'frozen', False):
@@ -56,25 +57,21 @@ def index():
                 param_tup = (form.fq.data, form.amp.data, form.rate.data, form.dur.data, form.thread_count.data)
 
                 scan_data = {
-                    "Frequency": form.fq.data,
-                    "Amplitude": form.amp.data,
-                    "Scan Rate": form.rate.data,
-                    "Scan Duration": form.dur.data,
-                    "Thread Count": form.thread_count.data,
-                    "Initialization Time": strftime("%Y-%m-%d %H:%M:%S", gmtime())
+                    "Frequency": to_hz(form.fq.data),
+                    "Amplitude": to_volts(form.amp.data),
+                    "Scan Rate": to_hz(form.rate.data),
+                    "Scan Duration": str(form.dur.data) + " second(s)",
+                    "Thread Count": int(form.thread_count.data),
+                    "Initialization Time": strftime("%Y-%m-%d %H:%M:%S", gmtime()),
+                    "Graph Data?": str(form.graph_data.data)
                 }
-
-                scan_status, crit_time_list = run_scan(param_tup)
-                crit_time_list = [str((float(x) - float(crit_time_list[0])) / 1E9) for x in crit_time_list]
-
-                start_times = []
-                end_times = []
-
-                for i in range(0, len(crit_time_list), 2):
-                    start_time = crit_time_list[i]
-                    end_time = crit_time_list[i + 1]
-                    start_times.append(start_time)
-                    end_times.append(end_time)
+                print("-" * 10)
+                print("Scan Initialized:")
+                for i in scan_data:
+                    print("\t", i, ": ", scan_data[i])
+                print("-" * 10)
+                scan_status = run_scan(param_tup)
+                del param_tup
 
                 if scan_status:
                     zip_file = zip_folder()

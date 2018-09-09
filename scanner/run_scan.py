@@ -97,4 +97,4 @@ def run_scan(param_tup):
                 return True, crit_time_list
 
     except:
-        return False, crit_time_list
+        return False

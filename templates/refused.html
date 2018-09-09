@@ -1,9 +1,21 @@
+<!--
+File Name: refused.html
+Project: Currently Unnamed
+
+Company: Research in Flows, Inc
+Author: David A. Gurevich
+
+Frequency Generator Reader | Local software for generating, reading, and processing high-frequency signals
+Copyright (C) 2018  David A. Gurevich
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Refused</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='refused.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="5"/>
 </head>
 <body>
 <div id="wrapper">
@@ -17,7 +29,8 @@
     </div>
 
     <div class="content">
-        <h1>There is currently someone else using the application. They are scanning with the following parameters:</h1>
+        <h1>There is currently someone else using the application. Your page will change when the scanner is ready. They
+            are scanning with the following parameters:</h1>
         <table>
             {% for label, value in scan_data.items() %}
                 <tr>

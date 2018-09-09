@@ -52,3 +52,9 @@ def write_csv(c_types_array, length, thread_id):
         np.savetxt(file_name, np.c_[pair[0], pair[1]], delimiter=',', fmt='%i')
 
     del paired_list
+    del split_chan1
+    del split_chan2
+
+    del data
+    del chan_1
+    del chan_2

@@ -1,3 +1,13 @@
+/*
+File Name: refused.css
+Project: Currently Unnamed
+
+Company: Research in Flows, Inc
+Author: David A. Gurevich
+
+Frequency Generator Reader | Local software for generating, reading, and processing high-frequency signals
+Copyright (C) 2018  David A. Gurevich
+*/
 @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400);
 
 html {
@@ -27,11 +37,12 @@ body {
     width: 100%;
     margin: 0 auto;
     text-align: center;
+    height: 100%;
 }
 
 h1 {
     font-weight: 300;
-    font-size: 1.5em;
+    font-size: 1.2em;
     color: #000;
 }
 
