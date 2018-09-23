@@ -27,12 +27,10 @@ Copyright (C) 2018  David A. Gurevich
         window.onload = function () {
             document.getElementById("loading-mask").style.display = "none";
         };
-
         function loadPage() {
             document.getElementById("loading-mask").style.display = "block";
         }
     </script>
-
 </head>
 
 <body>
@@ -55,9 +53,9 @@ Copyright (C) 2018  David A. Gurevich
                         <p />
                         {% endfor %}
                     </table>
-                    <input type="submit" class="btn" value="Scan" onclick="loadPage();"/>
+                    <input type="submit" class="btn" value="Run Scan"/>
                     {% if result == None %}
-                    <input type="button" class="btn-disabled" value="Download" disabled />
+                        <input type="button" class="btn-disabled" value="Download" disabled onclick="loadPage();"/>
                     {% else %}
                     <a href="{{ result }}.zip"><input type="button" class="btn-green" value="Download" /></a>
                     {% endif %}

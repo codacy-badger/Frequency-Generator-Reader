@@ -81,6 +81,8 @@ def index():
                     error_page("There was a problem scanning. Consult Console.")
             else:
                 zip_file = None
+                if form.errors != {} and not form.validate():
+                    return render_template('500.html', exception_message=form.errors)
         except Exception as e:
             print(e)
             error_page(str(e))
