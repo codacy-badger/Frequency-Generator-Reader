@@ -5,6 +5,9 @@
  **Company:** Research in Flows, Inc                                                             \n
  **Author:** David A. Gurevich                                                                   \n
 
+"Lasciate ogne speranza, voi ch'entrate"
+    - Inferno (Dante)
+
 Frequency-Generator Reader | Local software for generating and processing high-frequency signals
 Copyright (C) 2018  David A. Gurevich
 """
