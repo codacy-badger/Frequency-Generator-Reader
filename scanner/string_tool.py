@@ -48,3 +48,10 @@ def to_volts(val):
         return str(val) + " MV"
     else:
         return str(val)
+
+
+def print_scan(obj):
+    print("-" * 10 + "Scan Initialized" + "-" * 10)
+    for i in obj:
+        print('\t', i, ': ', obj[i])
+    print('-' * 36)

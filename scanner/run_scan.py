@@ -10,7 +10,6 @@ Copyright (C) 2018  David A. Gurevich
 
 import os
 import pathlib
-import queue
 from ctypes import CDLL
 
 import scanner.hantekdds.htdds_wrapper as hantekdds
@@ -18,7 +17,7 @@ from scanner.scanner_thread import Scanner
 from scanner.writer_thread import Writer
 
 
-def test_daq():
+def daq_connected():
     from mcculw import ul
     from mcculw.enums import ULRange
     from mcculw.ul import ULError
@@ -34,9 +33,19 @@ def test_daq():
         return False
 
 
+def function_generator_connected_and_initialize(fq, amp):
+    function_generator = hantekdds.HantekDDS()
+    if not function_generator.connect():
+        return False
+    else:
+        function_generator.drive_periodic(frequency=float(fq), amplitude=float(amp))
+        return True
+
+
 def initialize(fq, amp):
     """
     Getting values and hardware ready for scanning.
+    Test hardware to make sure it is there. Return any possible errors
 
     Removes and existing 'Output' folder. Makes a new one.
     Connects to Hantek 1025G function generator. Drives a sine wave.
@@ -44,7 +53,13 @@ def initialize(fq, amp):
     Returns:
         lib (ctypes.CDLL): see above
     """
-    lib = CDLL('scanner/src/scan.dll')  # Load DLL file
+    errors = []
+    lib = False
+
+    if os.path.exists('scanner/src/scan.dll'):
+        lib = CDLL('scanner/src/scan.dll')  # Load DLL file
+    else:
+        errors.append("scan.dll file not found. Contact developer.")
 
     folder = 'Output/'
     pathlib.Path(folder).mkdir(parents=True, exist_ok=True)
@@ -54,47 +69,41 @@ def initialize(fq, amp):
             if os.path.isfile(file_path):
                 os.unlink(file_path)
         except Exception as e:
-            print(e)
+            errors.append(e)
 
-    if not test_daq():
-        return False
+    if not daq_connected():
+        errors.append("The Measurement Computing USB2020 module is not connected. Ensure that all drivers are "
+                      + "installed and the USB is plugged in")
 
-    function_generator = hantekdds.HantekDDS()
-    if not function_generator.connect():  # Attempt a connection to the function generator
-        print("There was an error connecting to the hantek 1025G generator module")
-        return False
+    if not function_generator_connected_and_initialize(fq, amp):
+        errors.append("The Hantek 1025G function generator is not connected. Ensure that all drivers are installed "
+                      + "and the USB is plugged in")
 
-    function_generator.drive_periodic(frequency=float(fq), amplitude=float(amp))  # Drive a sine wave of frequency fq
-    return lib
+    return lib, errors
 
 
 def run_scan(param_tup):
-    crit_time_list = []
     fq, amp, rate, dur, thread_count = param_tup
-    try:
-        lib = initialize(fq, amp)
-        if not lib:
-            return False
 
-        time_collector = queue.Queue()
+    lib, errors = initialize(fq, amp)
+
+    if errors:
+        print("Scan could not be initialized due to existing errors. Errors: \n" + "\n".join(errors))
+        return False, errors
+    else:
         threads = []
-        for i in range(int(thread_count)):
-            threads.append(Scanner(i, lib, rate, dur, time_collector))  # Scanner thread first
-            threads[-1].setName("Scanner " + str(i))
-            threads[-1].start()  # Start the scanner thread
-            threads.append(Writer(threads[-1], i, lib))  # Writer thread with corresponding scanner thread
-            threads[-1].setName("Writer " + str(i))
-            threads[-1].start()  # Start writer thread
-
-        for i in range(int(thread_count)):
-            start_time, end_time = time_collector.get()
-            crit_time_list.append(str(start_time))
-            crit_time_list.append(str(end_time))
-            time_collector.task_done()
+        try:
+            for i in range(int(thread_count)):
+                threads.append(Scanner(i, lib, rate, dur))  # Scanner thread first
+                threads[-1].setName("Scanner " + str(i))
+                threads[-1].start()  # Start the scanner thread
+                threads.append(Writer(threads[-1], i, lib))  # Writer thread with corresponding scanner thread
+                threads[-1].setName("Writer " + str(i))
+                threads[-1].start()  # Start writer thread
+        except Exception as e:
+            errors.append(e)
+            return False, errors
 
         while True:
             if all(thread.complete for thread in threads):
-                return True, crit_time_list
-
-    except:
-        return False
+                return True, errors

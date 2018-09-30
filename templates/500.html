@@ -19,7 +19,18 @@ Copyright (C) 2018  David A. Gurevich
 		  <div class="darkOverlay"></div>
 		  <header>
 		    <h1 class="glitch" data-text="500">500</h1>
+              {% if data_type != "dict" %}
               <h3 class="exception_message" align="center"> {{ exception_message }} </h3>
+              {% else %}
+                  <table align="center" style="width:80%">
+                      {% for key in exception_message %}
+                          <tr>
+                              <td> {{ key }}</td>
+                              <td> {{ exception_message[key] }}</td>
+                          </tr>
+                      {% endfor %}
+                  </table>
+              {% endif %}
 		  </header>
 		</div>
 	</body>

@@ -19,7 +19,7 @@ from scanner.IPDetector import get_local_ip
 from scanner.model import InputForm
 from scanner.plot import create_figure
 from scanner.run_scan import run_scan
-from scanner.string_tool import to_hz, to_volts
+from scanner.string_tool import to_hz, to_volts, print_scan
 from scanner.write_csv import zip_folder
 
 if getattr(sys, 'frozen', False):
@@ -30,7 +30,7 @@ else:
     app = Flask(__name__)
 
 process_running = False
-scan_data = None
+scan_parameters_dict = None
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -44,68 +44,70 @@ def index():
         png_img: base64 encoded PNG image of graphed data.
     """
     global process_running
-    global scan_data
+    global scan_parameters_dict
 
     if not process_running:
         form = InputForm(request.form)
         plots = []
         zip_file = None
 
-        try:
-            if request.method == 'POST' and form.validate():
-                process_running = True
-                param_tup = (form.fq.data, form.amp.data, form.rate.data, form.dur.data, form.thread_count.data)
+        if request.method == 'POST' and form.validate():
+            process_running = True  # To prevent further connections
 
-                scan_data = {
-                    "Frequency": to_hz(form.fq.data),
-                    "Amplitude": to_volts(form.amp.data),
-                    "Scan Rate": to_hz(form.rate.data),
-                    "Scan Duration": str(form.dur.data) + " second(s)",
-                    "Thread Count": int(form.thread_count.data),
-                    "Initialization Time": strftime("%Y-%m-%d %H:%M:%S", gmtime()),
-                    "Graph Data?": str(form.graph_data.data)
-                }
-                print("-" * 10)
-                print("Scan Initialized:")
-                for i in scan_data:
-                    print("\t", i, ": ", scan_data[i])
-                print("-" * 10)
-                scan_status = run_scan(param_tup)
-                del param_tup
+            scan_parameters = (form.fq.data,
+                               form.amp.data,
+                               form.rate.data,
+                               form.dur.data,
+                               form.thread_count.data)
 
-                if scan_status:
-                    zip_file = zip_folder()
-                    if form.graph_data.data:
-                        plots.append(create_figure())
-                else:
-                    error_page("There was a problem scanning. Consult Console.")
-            else:
-                zip_file = None
-                if form.errors != {} and not form.validate():
-                    return render_template('500.html', exception_message=form.errors)
-        except Exception as e:
-            print(e)
-            error_page(str(e))
+            scan_parameters_dict = {
+                "Frequency": to_hz(form.fq.data),
+                "Amplitude": to_volts(form.amp.data),
+                "Scan Rate": to_hz(form.rate.data),
+                "Scan Duration": str(form.dur.data) + " second(s)",
+                "Thread Count": int(form.thread_count.data),
+                "Initialization Time": strftime("%Y-%m-%d %H:%M:%S", gmtime()),
+                "Graph Data?": str(form.graph_data.data)
+            }
 
-        process_running = False
+            print_scan(scan_parameters_dict)
+
+            # Initialize and run scan. Get completion status (True / False) and list of errors
+            scan_completed, scan_errors = run_scan(scan_parameters)
+
+            # If scan was successfully completed, Create zip folder and graph data if required
+            if scan_completed:
+                zip_file = zip_folder()
+                if form.graph_data.data:  # Graph Data?
+                    plots.append(create_figure())
+
+                process_running = False
+                return render_template('index.html', form=form, result=zip_file, plots=plots)
+            else:  # If scan was NOT successfully completed, return error page with scan errors
+                process_running = False
+                return render_template('500.html', exception_message="<br /> - ".join(scan_errors), data_type=str)
+        elif form.errors != {} and not form.validate():  # If form was NOT valid
+            return render_template('500.html', exception_message=form.errors, data_type=str(type(form.errors)))
+
         return render_template('index.html', form=form, result=zip_file, plots=plots)
-    else:
-        return render_template('refused.html', scan_data=scan_data)
+
+    else:  # If a process was running
+        return render_template('refused.html', scan_data=scan_parameters_dict)
 
 
 @app.route('/refusedtest')
-def refuse_connection():
-    return render_template('refused.html')
+def refuse_connection(scan_parameters_dict={"Test": "No Parameters here! This is a test page!"}):
+    return render_template('refused.html', scan_data=scan_parameters_dict)
 
 
 @app.route('/errortest')
-def error_page(exception_message="This is a test error page."):
-    return render_template('500.html', exception_message=exception_message)
+def error_page(obj="This is a test error message"):
+    return render_template('500.html', exception_message=obj, data_type=type(obj))
 
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template('404.html'), 404
+    return render_template('404.html')
 
 
 if __name__ == '__main__':

@@ -34,7 +34,7 @@ class Scanner(threading.Thread):
         iter (int):                  Number generated in for loop when designating threads.
     """
 
-    def __init__(self, iteration, dll_lib, rate, dur, time_collector):
+    def __init__(self, iteration, dll_lib, rate, dur):
         """
         Initialization of Scanner thread.
 
@@ -67,8 +67,6 @@ class Scanner(threading.Thread):
         self.start_time = c_longlong(0)
         self.end_time = c_longlong(0)
 
-        self.time_collector = time_collector
-
         self.complete = False  # Completion signal to check when data can be written
 
     def run(self):
@@ -80,8 +78,6 @@ class Scanner(threading.Thread):
         that it can start writing.
         """
         self.lib.scan(self.p, byref(self.start_time), byref(self.end_time), self.c_rate, self.c_dur)
-
-        self.time_collector.put((self.start_time.value, self.end_time.value))
         self.complete = True
 
         return
