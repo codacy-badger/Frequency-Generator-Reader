@@ -25,16 +25,48 @@ from scanner.run_scan import run_scan
 from scanner.string_tool import to_hz, to_volts, print_scan
 from scanner.write_csv import zip_folder
 
-if getattr(sys, 'frozen', False):
-    template_folder = os.path.join(sys._MEIPASS, 'templates')
-    static_folder = os.path.join(sys.executable, '..', 'static')
-    app = Flask(__name__, template_folder=template_folder)
-else:
-    app = Flask(__name__)
+def get_scan_parameters(form):
+    scan_parameters = (form.fq.data,
+                       form.amp.data,
+                       form.rate.data,
+                       form.dur.data,
+                       form.thread_count.data)
+    return scan_parameters
+
+def get_scan_parameters_dict(form):
+    scan_parameters_dict = {
+        "Frequency": to_hz(form.fq.data),
+        "Amplitude": to_volts(form.amp.data),
+        "Scan Rate": to_hz(form.rate.data),
+        "Scan Duration": str(form.dur.data) + " second(s)",
+        "Thread Count": int(form.thread_count.data),
+        "Initialization Time": strftime("%Y-%m-%d %H:%M:%S", gmtime()),
+        "Graph Data?": str(form.graph_data.data)
+    }
+    return scan_parameters_dict
+
+def generate_scan_param(form):
+    scan_parameters = get_scan_parameters(form)
+    scan_parameters_dict = get_scan_parameters_dict(form)
+    return scan_parameters, scan_parameters_dict
+
+def succesful_scan(form, plots):
+    zip_file = zip_folder()
+    if form.graph_data.data:  # Graph Data?
+        plots.append(create_figure())
+    
+    process_running = False
+    return process_running, zip_file
+
+def setup_scan(form):
+    scan_parameters, scan_parameters_dict = generate_scan_param(form)
+    print_scan(scan_parameters_dict)
+    return scan_parameters, scan_parameters_dict
 
 process_running = False
 scan_parameters_dict = None
 
+app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -56,39 +88,19 @@ def index():
 
         if request.method == 'POST' and form.validate():
             process_running = True  # To prevent further connections
-
-            scan_parameters = (form.fq.data,
-                               form.amp.data,
-                               form.rate.data,
-                               form.dur.data,
-                               form.thread_count.data)
-
-            scan_parameters_dict = {
-                "Frequency": to_hz(form.fq.data),
-                "Amplitude": to_volts(form.amp.data),
-                "Scan Rate": to_hz(form.rate.data),
-                "Scan Duration": str(form.dur.data) + " second(s)",
-                "Thread Count": int(form.thread_count.data),
-                "Initialization Time": strftime("%Y-%m-%d %H:%M:%S", gmtime()),
-                "Graph Data?": str(form.graph_data.data)
-            }
-
-            print_scan(scan_parameters_dict)
+            scan_parameters, scan_parameters_dict = setup_scan(form)
 
             # Initialize and run scan. Get completion status (True / False) and list of errors
             scan_completed, scan_errors = run_scan(scan_parameters)
 
             # If scan was successfully completed, Create zip folder and graph data if required
             if scan_completed:
-                zip_file = zip_folder()
-                if form.graph_data.data:  # Graph Data?
-                    plots.append(create_figure())
-
-                process_running = False
+                process_running, zip_file = succesful_scan(form, plots)
                 return render_template('index.html', form=form, result=zip_file, plots=plots)
             else:  # If scan was NOT successfully completed, return error page with scan errors
                 process_running = False
                 return render_template('500.html', exception_message="<br /> - ".join(scan_errors), data_type=str)
+
         elif form.errors != {} and not form.validate():  # If form was NOT valid
             return render_template('500.html', exception_message=form.errors, data_type=str(type(form.errors)))
 
