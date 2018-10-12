@@ -1,46 +1,21 @@
-# Compiled Python Files
-__pycache__/
-/__pycache__
-
-# Developer BuildC File
-*.bat
-
-# Coverage
-.coverage
-coverage.xml
-
-# PyLintRC
-.pylintrc
-
-# PyCharm IDEA folder
-.idea/
-
-# Temporarily getting rid of MatLab
-MATLAB/
-matlab_plot.exe
-
-# installer files
-build/
-installer.cfg
-
-# Visual Studio Files
-.vs/
-/.vs
+# PyCharm and Visual Studio files
 *.pyproj
 *.sln
-*.pyperf
 
-requirements.txt
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
 
-.mypy_cache/
+.vs
 
-Output/*.csv
-Yura Program.pyproj
-Yura Program.pyproj.user
-static/output.zip
+# Debug and Release (Visual Studio)
+/ScanUtils/Debug/
+/ScanUtils/Release/
+/ScanUtils/.vs
 
-dist/
+*/Debug/
+*/Release/
 
-Output/
-
-venv/
+# Output Files
+/Output/**
+/static/Output.zip
