@@ -1,0 +1,22 @@
+﻿  stdafx.cpp
+  dllmain.cpp
+  ScanUtils.cpp
+c:\users\david\desktop\yura program\scanutils\scanutils\cbw.hh(526): warning C4005: 'HIGH_LEVEL': macro redefinition
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\kernelspecs.h(55): note: see previous definition of 'HIGH_LEVEL'
+c:\users\david\desktop\yura program\scanutils\scanutils\scanutils.cpp(177): warning C4018: '<': signed/unsigned mismatch
+c:\users\david\desktop\yura program\scanutils\scanutils\scanutils.cpp(181): warning C4018: '<': signed/unsigned mismatch
+c:\users\david\desktop\yura program\scanutils\scanutils\scanutils.cpp(187): warning C4018: '<': signed/unsigned mismatch
+     Creating library C:\Users\david\Desktop\Yura Program\ScanUtils\Release\ScanUtils.lib and object C:\Users\david\Desktop\Yura Program\ScanUtils\Release\ScanUtils.exp
+  Generating code
+  730 of 740 functions (98.6%) were compiled, the rest were copied from previous compilation.
+    6 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  ScanUtils.vcxproj -> C:\Users\david\Desktop\Yura Program\ScanUtils\Release\ScanUtils.dll
+  C:\Users\david\Desktop\Yura Program\ScanUtils\Release\ScanUtils.dll
+  C:\Users\david\Desktop\Yura Program\ScanUtils\Release\ScanUtils.exp
+  C:\Users\david\Desktop\Yura Program\ScanUtils\Release\ScanUtils.iobj
+  C:\Users\david\Desktop\Yura Program\ScanUtils\Release\ScanUtils.ipdb
+  C:\Users\david\Desktop\Yura Program\ScanUtils\Release\ScanUtils.lib
+  C:\Users\david\Desktop\Yura Program\ScanUtils\Release\ScanUtils.pdb
+  6 File(s) copied
