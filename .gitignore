@@ -13,9 +13,13 @@
 /ScanUtils/Release/
 /ScanUtils/.vs
 
+/ScanUtils/ScanUtils/Debug/
+/ScanUtils/ScanUtils/Release/
+/ScanUtils/ScanUtils/ScanUtilsBackup.cpp
+
 */Debug/
 */Release/
 
 # Output Files
-/Output/**
+/Output/
 /static/Output.zip
